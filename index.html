@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>상하이 여행 플래너</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 헤더 -->
+    <div class="header">
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>상하이 여행 동선 메모 · 모바일 전용</span>
+      </div>
+      <div class="title-row">
+        <div>
+          <div class="title-main">상하이 3박 4일</div>
+          <div class="title-sub">2026.03.26 ~ 03.29 · 골든 튤립 번드 뉴 아시아</div>
+        </div>
+        <button class="theme-toggle" id="themeToggle">🌙 다크 모드</button>
+      </div>
+      <div class="tag-row">
+        <div class="tag">인천(ICN) ↔ 상하이 푸둥(PVG)</div>
+        <div class="tag">중국어 몰라도 쓰기 쉽게</div>
+        <div class="tag">한자 바로 복사 → 고덕지도</div>
+      </div>
+    </div>
+
+    <!-- 일정 요약 -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">
+          ✈️ 기본 일정 요약
+          <span class="section-title-badge">터치 없이 보기만</span>
+        </div>
+      </div>
+      <div class="trip-grid">
+        <div class="trip-card">
+          <div class="trip-label">
+            <span>출국 · 3월 26일(목)</span>
+            <span style="font-size:10px;color:#38bdf8;">ICN → PVG</span>
+          </div>
+          <div class="trip-main">인천 16:20 출발</div>
+          <div class="trip-sub">상하이 푸둥 도착 후 호텔 체크인</div>
+          <div class="divider-dot"></div>
+          <div class="trip-label">
+            <span>귀국 · 3월 29일(일)</span>
+            <span style="font-size:10px;color:#38bdf8;">PVG → ICN</span>
+          </div>
+          <div class="trip-main">상하이 14:35 출발</div>
+          <div class="trip-sub">점심 후 공항 이동 여유 있게</div>
+        </div>
+        <div class="trip-card">
+          <div class="trip-label">
+            <span>숙소</span>
+            <span style="font-size:10px;color:#facc15;">⭐ 기준 위치</span>
+          </div>
+          <div class="trip-main">골든 튤립 번드 뉴 아시아</div>
+          <div class="trip-sub">Golden Tulip Bund New Asia</div>
+          <div class="divider-dot"></div>
+          <div class="flight-times">
+            <span><strong>체크인</strong> · 3/26 저녁</span>
+            <span><strong>체크아웃</strong> · 3/29 오전</span>
+          </div>
+        </div>
+      </div>
+      <div class="chips-row" style="margin-top:8px;">
+        <div class="chip">택시 목적지 한자: 「外滩 新亚酒店」 근처</div>
+        <div class="chip">도시: 上海(상하이 · Shanghai)</div>
+      </div>
+    </section>
+
+    <!-- 지도 + 명소 -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">
+          🗺️ 상하이 감각적 동네 지도
+          <span class="section-title-badge">터치해서 정보 보기</span>
+        </div>
+      </div>
+      <div class="map-wrapper">
+        <div class="map-legend">
+          <div class="legend-item">
+            <span class="legend-dot attraction"></span>관광 명소
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot food"></span>맛집
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot cafe"></span>카페 / 바 / 야경
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot hotel"></span>내 숙소(⭐ 강조)
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot dessert"></span>디저트 / 배달
+          </div>
+        </div>
+
+        <svg class="map-svg" viewBox="0 0 320 220" preserveAspectRatio="xMidYMid meet">
+          <!-- 실제 PNG 이미지를 전체에 깔고, 그 위에 핀을 올림 -->
+          <image href="shanghaimap.png" x="0" y="0" width="320" height="220" />
+
+          <!-- 핀: 호텔(노란 별) -->
+          <polygon
+            points="80,62 83,70 92,70 85,75 88,84 80,79 72,84 75,75 68,70 77,70"
+            fill="#facc15"
+            stroke="#fef08a"
+            stroke-width="2.5"
+            data-place-id="hotel_golden"
+          />
+          <text x="90" y="72" class="map-pin-label">내 숙소</text>
+
+          <!-- 핀: 와이탄(외탄) -->
+          <circle cx="60" cy="50" r="6" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2" data-place-id="bund"/>
+          <text x="32" y="48" class="map-pin-label">와이탄</text>
+
+          <!-- 핀: 난징동루 -->
+          <circle cx="100" cy="55" r="6" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2" data-place-id="nanjing_east"/>
+          <text x="96" y="47" class="map-pin-label">난징동루</text>
+
+          <!-- 핀: 인민광장 -->
+          <circle cx="105" cy="80" r="5.5" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2" data-place-id="people_square"/>
+          <text x="86" y="94" class="map-pin-label">인민광장</text>
+
+          <!-- 핀: 신톈디 -->
+          <circle cx="55" cy="135" r="6" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2" data-place-id="xintiandi"/>
+          <text x="30" y="148" class="map-pin-label">신톈디</text>
+
+          <!-- 핀: 티엔즈팡 -->
+          <circle cx="95" cy="155" r="6" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2" data-place-id="tianzifang"/>
+          <text x="86" y="170" class="map-pin-label">티엔즈팡</text>
+
+          <!-- 핀: 루자쭈이 전망 -->
+          <circle cx="225" cy="70" r="6.5" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2" data-place-id="lujiazui"/>
+          <text x="212" y="84" class="map-pin-label">루자쭈이 전망</text>
+
+          <!-- 핀: 상하이 타워 -->
+          <circle cx="255" cy="58" r="5.5" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2" data-place-id="shanghai_tower"/>
+          <text x="244" y="48" class="map-pin-label">상하이타워</text>
+
+          <!-- 핀: 와이탄 야경 바 -->
+          <circle cx="70" cy="95" r="5.5" fill="#a855f7" stroke="#f3e8ff" stroke-width="2" data-place-id="bund_bar"/>
+          <text x="46" y="106" class="map-pin-label">와이탄 바</text>
+
+          <!-- 핀: 신톈디 카페/바 -->
+          <circle cx="70" cy="150" r="5.5" fill="#a855f7" stroke="#f3e8ff" stroke-width="2" data-place-id="xintiandi_cafe"/>
+          <text x="58" y="164" class="map-pin-label">신톈디 바</text>
+
+          <!-- 핀: 융캉루 바 거리 -->
+          <circle cx="40" cy="175" r="5.5" fill="#a855f7" stroke="#f3e8ff" stroke-width="2" data-place-id="yongkang_bar"/>
+          <text x="20" y="188" class="map-pin-label">융캉루 바</text>
+
+          <!-- 핀: Found 158 바몰 -->
+          <circle cx="115" cy="180" r="5.5" fill="#a855f7" stroke="#f3e8ff" stroke-width="2" data-place-id="found158"/>
+          <text x="98" y="196" class="map-pin-label">Found 158</text>
+        </svg>
+
+        <div class="map-note">※ 실제 지도와 정확히 같지는 않고, **대략적인 위치/분위기**만 보이도록 단순화한 그림이에요.</div>
+      </div>
+
+      <!-- 명소 리스트 -->
+      <div class="places-scroll" id="placesScroll">
+        <!-- JS에서 자동 생성 -->
+      </div>
+
+      <!-- 명소 상세 -->
+      <div class="place-detail" id="placeDetail">
+        <div style="font-size:11px;color:#64748b;">위 지도에서 핀을 터치하거나, 위의 목록에서 보고 싶은 장소를 눌러주세요.</div>
+      </div>
+    </section>
+
+    <!-- 4일 일정 플래너 -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">
+          📝 3박 4일 일정 메모
+          <span class="section-title-badge">입력 내용은 기기 안에 저장</span>
+        </div>
+      </div>
+
+      <div class="days-tabs" id="dayTabs">
+        <button class="day-tab active" data-day="1">D1 · 3/26 (도착)</button>
+        <button class="day-tab" data-day="2">D2 · 3/27</button>
+        <button class="day-tab" data-day="3">D3 · 3/28</button>
+        <button class="day-tab" data-day="4">D4 · 3/29 (귀국)</button>
+      </div>
+
+      <div class="plan-meta">
+        <div class="plan-chip" id="dayInfo">도착날 · 저녁 와이탄 산책 어떻게?</div>
+        <div style="display:flex;gap:4px;align-items:center;">
+          <span style="width:7px;height:7px;border-radius:999px;background:#22c55e;"></span>
+          <span>자동 저장</span>
+        </div>
+      </div>
+
+      <textarea class="plan-textarea" id="planText" placeholder="예시)
+· 공항 → 호텔 이동 (디디 or 택시)
+· 체크인 후 와이탄 야경 산책
+· 난징동루 근처 간단 야식"></textarea>
+
+      <div class="plan-buttons">
+        <button class="btn" id="insertTemplateBtn">추천 일정 불러오기</button>
+        <button class="btn btn-main" id="savePlanBtn">지금 내용 저장</button>
+      </div>
+      <div class="save-status" id="saveStatus">최근 저장: -</div>
+    </section>
+
+    <!-- 추가 메모 / 자유 일정 블록 -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">
+          📌 추가 메모 · 자유 일정
+          <span class="section-title-badge">원하는 만큼 블록 추가</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#a9b3d1;margin-bottom:6px;">
+        오늘 갑자기 생긴 약속, 예산 정리, 술집만 도는 날 동선 등 자유롭게 적고 싶은 내용을 블록 단위로 추가해서 쓸 수 있어요.
+      </div>
+      <div id="extraMemos"></div>
+      <div style="margin-top:8px;display:flex;gap:8px;">
+        <button class="btn btn-main" id="addMemoBtn">➕ 새 메모/일정 블록 추가</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
