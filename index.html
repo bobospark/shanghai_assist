@@ -86,10 +86,10 @@
               <span class="legend-item"><span class="legend-dot attraction" aria-hidden="true"></span>관광 명소</span>
               <span class="legend-item"><span class="legend-dot hotel" aria-hidden="true"></span>숙소</span>
             </div>
-            <div id="leafletMap" class="leaflet-map" role="img" aria-label="상하이 지도. 장소를 눌러 정보를 볼 수 있습니다."></div>
-            <p class="map-note">지도 위 핀을 누르면 해당 장소 정보가 아래에 표시됩니다.</p>
+            <div id="leafletMap" class="leaflet-map" role="img" aria-label="상하이 지도"></div>
+            <p class="map-note">아래 목록에서 장소를 누르면 정보가 표시됩니다.</p>
           </div>
-          <div class="places-scroll" id="placesScroll" role="list"></div>
+          <div class="places-grid" id="placesScroll" role="list"></div>
           <div class="place-detail" id="placeDetail" aria-live="polite">
             <p class="place-detail-empty">지도에서 핀을 누르거나 위 목록에서 장소를 선택하세요.</p>
           </div>
@@ -103,7 +103,7 @@
           <div class="section-header">
             <h3 id="heading-days" class="section-title">📝 3박 4일 일정 메모</h3>
           </div>
-          <div class="days-tabs" role="tablist" aria-label="날짜 선택">
+          <div id="dayTabs" class="days-tabs" role="tablist" aria-label="날짜 선택">
             <button type="button" class="day-tab active" role="tab" aria-selected="true" data-day="1">D1 · 3/26 (도착)</button>
             <button type="button" class="day-tab" role="tab" aria-selected="false" data-day="2">D2 · 3/27</button>
             <button type="button" class="day-tab" role="tab" aria-selected="false" data-day="3">D3 · 3/28</button>

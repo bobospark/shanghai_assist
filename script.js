@@ -1,27 +1,3 @@
-/* ========== 데이터 레이어: 지도에 표시할 장소만 (비율 좌표 0–100, 그림과 정확히 매칭) ========== */
-/* xPercent: 왼쪽 0 → 오른쪽 100, yPercent: 위 0 → 아래 100. PNG 위 실제 위치에 맞게 수치만 바꾸면 됨. */
-const MAP_PLACE_IDS = [
-  "hotel_golden",
-  "bund",
-  "nanjing_east",
-  "people_square",
-  "xintiandi",
-  "tianzifang",
-  "lujiazui",
-  "shanghai_tower"
-];
-
-const MAP_LOCATIONS = [
-  { id: "hotel_golden", xPercent: 25, yPercent: 20 },
-  { id: "bund", xPercent: 22, yPercent: 16 },
-  { id: "nanjing_east", xPercent: 28, yPercent: 18 },
-  { id: "people_square", xPercent: 30, yPercent: 38 },
-  { id: "xintiandi", xPercent: 28, yPercent: 52 },
-  { id: "tianzifang", xPercent: 32, yPercent: 62 },
-  { id: "lujiazui", xPercent: 72, yPercent: 26 },
-  { id: "shanghai_tower", xPercent: 78, yPercent: 22 }
-];
-
 /* ========== 명소 데이터 (전체: 지도 + 바/디저트 등) ========== */
 const places = [
   {
@@ -287,7 +263,6 @@ const placeTypeOrder = ["hotel", "attraction", "food", "cafe", "dessert"];
 const MAP_IMAGE_URL = "shanghaimap.png";
 
 let leafletMap = null;
-let leafletMarkers = [];
 
 function initLeafletMap() {
   const container = document.getElementById("leafletMap");
@@ -302,36 +277,13 @@ function initLeafletMap() {
       [0, 0],
       [h, w]
     ];
-
     leafletMap = L.map("leafletMap", {
       crs: L.CRS.Simple,
       minZoom: -2,
       maxZoom: 2
     });
-
     L.imageOverlay(MAP_IMAGE_URL, bounds).addTo(leafletMap);
     leafletMap.fitBounds(bounds);
-
-    MAP_LOCATIONS.forEach((loc) => {
-      const place = places.find((p) => p.id === loc.id);
-      if (!place) return;
-      const y = (loc.yPercent / 100) * h;
-      const x = (loc.xPercent / 100) * w;
-      const marker = L.marker([y, x], {
-        icon: L.divIcon({
-          className: "leaflet-custom-marker",
-          html: `<span class="marker-pin marker-${place.type === "hotel" ? "hotel" : "attraction"}" aria-hidden="true"></span>`,
-          iconSize: [24, 24],
-          iconAnchor: [12, 12]
-        })
-      })
-        .addTo(leafletMap)
-        .on("click", function () {
-          selectPlace(place.id);
-        });
-      marker._placeId = place.id;
-      leafletMarkers.push(marker);
-    });
   };
   img.onerror = function () {
     const w = 1000;
@@ -343,26 +295,6 @@ function initLeafletMap() {
     leafletMap = L.map("leafletMap", { crs: L.CRS.Simple, minZoom: -2, maxZoom: 2 });
     L.imageOverlay(MAP_IMAGE_URL, bounds).addTo(leafletMap);
     leafletMap.fitBounds(bounds);
-    MAP_LOCATIONS.forEach((loc) => {
-      const place = places.find((p) => p.id === loc.id);
-      if (!place) return;
-      const y = (loc.yPercent / 100) * h;
-      const x = (loc.xPercent / 100) * w;
-      const marker = L.marker([y, x], {
-        icon: L.divIcon({
-          className: "leaflet-custom-marker",
-          html: `<span class="marker-pin marker-${place.type === "hotel" ? "hotel" : "attraction"}" aria-hidden="true"></span>`,
-          iconSize: [24, 24],
-          iconAnchor: [12, 12]
-        })
-      })
-        .addTo(leafletMap)
-        .on("click", function () {
-          selectPlace(place.id);
-        });
-      marker._placeId = place.id;
-      leafletMarkers.push(marker);
-    });
   };
   img.src = MAP_IMAGE_URL;
 }
@@ -537,6 +469,34 @@ const dayTemplates = {
 let currentDay = 1;
 const STORAGE_KEY = "shanghaiTripPlans_v1";
 
+function getApiBase() {
+  return window.location.origin;
+}
+
+async function loadFromCloud() {
+  try {
+    const r = await fetch(getApiBase() + "/api/data");
+    if (!r.ok) return null;
+    const data = await r.json();
+    return {
+      plans: data.plans && typeof data.plans === "object" ? data.plans : {},
+      extraMemos: Array.isArray(data.extraMemos) ? data.extraMemos : []
+    };
+  } catch (e) {
+    return null;
+  }
+}
+
+async function saveToCloud() {
+  try {
+    await fetch(getApiBase() + "/api/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plans: plansState, extraMemos })
+    });
+  } catch (e) {}
+}
+
 function loadPlans() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -552,6 +512,7 @@ function savePlans(plans) {
   const now = new Date();
   const t = now.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
   if (saveStatus) saveStatus.textContent = "최근 저장: " + t;
+  saveToCloud();
 }
 
 let plansState = loadPlans();
@@ -592,6 +553,7 @@ function loadExtraMemos() {
 
 function saveExtraMemos(list) {
   localStorage.setItem(EXTRA_KEY, JSON.stringify(list));
+  saveToCloud();
 }
 
 let extraMemos = loadExtraMemos();
@@ -691,9 +653,17 @@ function addNewMemo() {
   renderExtraMemos();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const savedTheme = localStorage.getItem(THEME_KEY) || "light";
   applyTheme(savedTheme);
+
+  const cloud = await loadFromCloud();
+  if (cloud) {
+    plansState = cloud.plans;
+    extraMemos = cloud.extraMemos;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(plansState));
+    localStorage.setItem(EXTRA_KEY, JSON.stringify(extraMemos));
+  }
 
   const themeBtn = document.getElementById("themeToggle");
   if (themeBtn) {
