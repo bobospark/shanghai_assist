@@ -3,11 +3,15 @@
   --bg-gradient: radial-gradient(circle at top, #fdf8f3 0, #f5eadc 40%, #ebdcc9 100%);
   --card: rgba(255, 251, 247, 0.96);
   --card-elevated: #ffffff;
-  --accent: #a66539; /* 조금 더 진한 브라운 */
+  --accent: #a66539;
+  /* 조금 더 진한 브라운 */
   --accent-soft: rgba(166, 101, 57, 0.1);
-  --text-main: #1a1512; /* 훨씬 더 진한 검은색에 가까운 브라운 */
-  --text-sub: #4a4036;  /* 보조 텍스트도 충분히 진하게 */
-  --border-soft: rgba(120, 100, 80, 0.3); /* 테두리도 약간 더 선명하게 */
+  --text-main: #1a1512;
+  /* 훨씬 더 진한 검은색에 가까운 브라운 */
+  --text-sub: #4a4036;
+  /* 보조 텍스트도 충분히 진하게 */
+  --border-soft: rgba(120, 100, 80, 0.3);
+  /* 테두리도 약간 더 선명하게 */
   --chip-bg: #e6d8c9;
   --map-overlay-top: rgba(80, 60, 45, 0.85);
   --map-overlay-bottom: rgba(80, 60, 45, 0.7);
@@ -62,9 +66,17 @@ body {
 .fade-in {
   animation: fadeIn 0.5s ease-out;
 }
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header {
@@ -182,7 +194,7 @@ body {
   height: 350px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 /* 일정 요약 그리드 */
@@ -348,7 +360,8 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin-bottom: 12px;
-  max-height: 280px; /* 대략 3줄 정도 높이 */
+  max-height: 280px;
+  /* 대략 3줄 정도 높이 */
   overflow-y: auto;
   padding-right: 4px;
 }
@@ -357,9 +370,11 @@ body {
 .places-grid::-webkit-scrollbar {
   width: 4px;
 }
+
 .places-grid::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .places-grid::-webkit-scrollbar-thumb {
   background: var(--border-soft);
   border-radius: 10px;
@@ -441,10 +456,10 @@ body {
 }
 
 /* 텍스트 영역 */
-.plan-textarea, .extra-text {
+.plan-textarea,
+.extra-text {
   border-radius: var(--radius-md);
   padding: 14px;
   font-family: inherit;
   line-height: 1.6;
 }
-

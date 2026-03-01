@@ -460,7 +460,10 @@ function renderBoard() {
     div.innerHTML = `
       <div class="board-post-header">
         <span class="board-post-title">${post.title}</span>
-        <span class="board-post-date">${post.date}</span>
+        <div style="display: flex; flex-direction: column; align-items: flex-end;">
+          <span class="board-post-date">${post.date}</span>
+          <span style="font-size: 11px; color: var(--accent); font-weight: 600;">${post.author || "익명"}</span>
+        </div>
       </div>
       <div class="board-post-content">${post.content}</div>
       <button class="board-post-delete" onclick="deleteBoardPost(${index})">삭제</button>
@@ -593,15 +596,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 게시판 이벤트
   document.getElementById("addBoardPostBtn").onclick = () => {
+    const author = document.getElementById("boardAuthor").value;
     const title = document.getElementById("boardTitle").value;
     const content = document.getElementById("boardContent").value;
-    if (!title || !content) return alert("제목과 내용을 입력하세요.");
-    bulletinBoard.unshift({ title, content, date: new Date().toLocaleDateString() });
+    if (!author || !title || !content) return alert("이름, 제목, 내용을 모두 입력하세요.");
+
+    // 이름 캐시 저장
+    localStorage.setItem("shanghai_board_author", author);
+
+    bulletinBoard.unshift({
+      author,
+      title,
+      content,
+      date: new Date().toLocaleDateString()
+    });
+
     document.getElementById("boardTitle").value = "";
     document.getElementById("boardContent").value = "";
     saveData();
     renderBoard();
   };
+
+  // 작성자 이름 초기화 (캐시 로드)
+  const savedAuthor = localStorage.getItem("shanghai_board_author");
+  if (savedAuthor) {
+    document.getElementById("boardAuthor").value = savedAuthor;
+  }
 
   // 개인 메모 이벤트
   document.getElementById("addPersonalMemoBtn").onclick = () => {
