@@ -164,8 +164,108 @@ const places = [
       "방생교(放生桥) 위에서 보는 마을 풍경이 가장 예쁩니다."
     ],
     tags: ["수향마을", "근교여행", "나룻배"]
+  },
+  /* --- 양꼬치(Lamb Skewers) --- */
+  {
+    id: "fengmao",
+    type: "food",
+    emoji: "🍢",
+    koreanName: "펑마오카오촨(풍무양꼬치)",
+    chineseName: "丰茂烤串",
+    areaKorean: "난징동루 지점 등 다수",
+    areaChinese: "南京东路",
+    info: "자동으로 구워지는 기계가 있어 편리하고 위생적인 인기 양꼬치 체인점입니다.",
+    tips: ["양어깨살(羊肉串)과 냉면 조합을 추천합니다.", "대기 시 디안핑으로 미리 번호표를 뽑을 수 있습니다."],
+    tags: ["양꼬치", "현지인맛집", "체인점"]
+  },
+  {
+    id: "ager",
+    type: "food",
+    emoji: "🍖",
+    koreanName: "아거얼 카오추안",
+    chineseName: "阿哥尔羊肉串",
+    areaKorean: "용캉루/프랑스 조계지",
+    areaChinese: "徐汇区",
+    info: "길거리 분위기에서 즐기는 한입 사이즈의 양꼬치가 특징인 로컬 맛집입니다.",
+    tips: ["매콤한 시즈닝이 일품입니다.", "신천지나 우캉루 산책 후 들르기 좋습니다."],
+    tags: ["로컬", "양꼬치", "가성비"]
+  },
+  /* --- 디저트(Desserts) --- */
+  {
+    id: "lillian",
+    type: "dessert",
+    emoji: "🥧",
+    koreanName: "릴리안 베이커리",
+    chineseName: "莉莲蛋挞",
+    areaKorean: "난징동루/인민광장 등",
+    areaChinese: "黄浦区",
+    info: "상하이에서 가장 유명한 에그타르트 맛집입니다. 홍콩식과는 다른 포르투갈식의 바삭함이 특징입니다.",
+    tips: ["치즈 에그타르트도 꼭 드셔보세요.", "지하철역 상가나 백화점 지하에서 쉽게 찾을 수 있습니다."],
+    tags: ["에그타르트", "필수디저트", "가성비"]
+  },
+  {
+    id: "holiland",
+    type: "dessert",
+    emoji: "🍰",
+    koreanName: "홀리랜드",
+    chineseName: "好利来",
+    areaKorean: "푸동/신천지 등",
+    areaChinese: "浦东/黄浦",
+    info: "중국 전역에서 인기 있는 세련된 베이커리 체인입니다. 비주얼이 예쁜 케이크와 쿠키가 많습니다.",
+    tips: ["반숙 치즈 타르트가 시그니처 메뉴입니다.", "선물용 박스 포장이 잘 되어 있어 여행 선물로도 좋습니다."],
+    tags: ["베이커리", "선물용", "디저트"]
+  },
+  {
+    id: "manner",
+    type: "cafe",
+    emoji: "☕",
+    koreanName: "매너 커피",
+    chineseName: "Manner Coffee",
+    areaKorean: "상하이 전역",
+    areaChinese: "全市",
+    info: "상하이에서 시작된 스페셜티 커피 체인으로, 좁은 공간에서 훌륭한 커피를 제공하는 것으로 유명해졌습니다.",
+    tips: ["오트라떼(燕麦拿铁)가 고소하고 맛있기로 유명합니다.", "개인 컵 지참 시 할인 혜택이 있습니다."],
+    tags: ["커피", "실속형", "로컬커피"]
+  },
+  {
+    id: "luneurs",
+    type: "dessert",
+    emoji: "🍦",
+    koreanName: "루너스(Luneurs)",
+    chineseName: "Luneurs",
+    areaKorean: "프랑스 조계지/우캉루",
+    areaChinese: "徐汇区",
+    info: "아이스크림과 빵이 조화를 이루는 세련된 디저트 샵입니다. 상하이의 '힙한' 감성을 느낄 수 있습니다.",
+    tips: ["솔티드 카라멜 아이스크림이 가장 인기 있습니다.", "우캉루 점은 긴 줄을 서야 할 수도 있습니다."],
+    tags: ["아이스크림", "인생샷", "세련된"]
+  },
+  /* --- 중국 음식점(Chinese Restaurants) --- */
+  {
+    id: "jiajia",
+    type: "food",
+    emoji: "🥟",
+    koreanName: "지아지아 탕바오",
+    chineseName: "佳家汤包",
+    areaKorean: "인민광장 근처",
+    areaChinese: "黄浦区 黄河路",
+    info: "주문 즉시 쪄내는 신선한 샤오롱바오 전문점입니다. 게살 샤오롱바오가 특히 유명합니다.",
+    tips: ["인기 메뉴는 일찍 품절되니 점심시간 이전에 방문하는 것을 추천합니다.", "맞은편 '양스덤플링'과 묶어서 가기 좋습니다."],
+    tags: ["샤오롱바오", "로컬맛집", "가성비"]
+  },
+  {
+    id: "old_jesse",
+    type: "food",
+    emoji: "🥗",
+    koreanName: "노길사 (라오지스)",
+    chineseName: "老吉士",
+    areaKorean: "프랑스 조계지 (본점)",
+    areaChinese: "徐汇区 天平路",
+    info: "정통 상하이 요리(상해채)를 맛볼 수 있는 곳으로, 많은 연예인들도 찾는 유명 음식점입니다.",
+    tips: ["홍샤오로우(동파육 스타일)와 생선 머리 찜이 대표 메뉴입니다.", "좌석이 적어 사전 예약이 필수입니다."],
+    tags: ["상하이요리", "고급", "전통"]
   }
 ];
+
 
 const placeTypeLabel = {
   attraction: "관광 명소",
@@ -199,7 +299,7 @@ function initLeafletMap() {
     const w = img.naturalWidth || 1000;
     const h = img.naturalHeight || 667;
     const bounds = [[0, 0], [h, w]];
-    
+
     if (leafletMap) leafletMap.remove();
 
     leafletMap = L.map("leafletMap", {
@@ -288,15 +388,15 @@ let currentDay = 1;
 
 const dayMetaText = {
   1: "D1 · 도착 및 와이탄 야경",
-  2: "D2 · 예원 및 고층 빌딩 숲 탐방",
-  3: "D3 · 프랑스 조계지 및 세련된 카페 거리",
+  2: "D2 · 시내 탐방",
+  3: "D3 · 시외 탐방",
   4: "D4 · 마지막 쇼핑 및 공항 이동"
 };
 
 const dayTemplates = {
   1: "· 공항 도착 후 호텔 이동\n· 체크인 후 와이탄 야경 감상\n· 난징동루에서 저녁 식사",
-  2: "· 예원 정원 구경\n· 루자쭈이 이동 후 전망대 관람\n· 동방명주 야경",
-  3: "· 우캉루 산책\n· 신천지 브런치\n· 바 거리에 방문하여 분위기 즐기기",
+  2: "· 시내 탐방\n·",
+  3: "· 시외 탐방",
   4: "· 호텔 근처 카페 여유\n· 마지막 기념품 쇼핑\n· 푸둥공항으로 출발"
 };
 
@@ -353,7 +453,7 @@ function renderBoard() {
   const container = document.getElementById("boardPostsContainer");
   if (!container) return;
   container.innerHTML = bulletinBoard.length ? "" : "<p class='extra-empty'>아직 게시글이 없습니다.</p>";
-  
+
   bulletinBoard.forEach((post, index) => {
     const div = document.createElement("div");
     div.className = "board-post-card fade-in";
@@ -407,6 +507,52 @@ window.deletePersonalMemo = (index) => {
   renderPersonalMemos();
 };
 
+/* ========== 안내 가이드 렌더링 ========== */
+function renderMeituanGuide() {
+  const container = document.getElementById("meituanContent");
+  if (!container) return;
+  container.innerHTML = `
+    <div class="guide-step">
+      <h4>📱 가입 및 로그인</h4>
+      <div>· 한국 번호로 가입 가능하지만, 출국 전 위챗(WeChat) 연동을 강력 추천합니다.</div>
+      <div>· 'Meituan' 또는 'Waimai' 앱을 사용하세요.</div>
+    </div>
+    <div class="guide-step">
+      <h4>📍 주소 설정</h4>
+      <div>· 호텔 프런트에 있는 주소 카드를 사진 찍어 파파고 이미지 번역을 활용해 입력하세요.</div>
+      <div>· 문 앞(门口)에 놔달라는 요청은 <strong>'放门口'</strong>라고 적으시면 됩니다.</div>
+    </div>
+    <div class="guide-step">
+      <h4>💳 결제 방법</h4>
+      <div>· 알리페이(Alipay) 또는 위챗페이가 연동되어 있으면 매우 편리합니다.</div>
+      <div class="guide-tip-box">
+        💡 <strong>팁:</strong> 해외 카드 등록 후 결제할 때 가끔 인증이 필요할 수 있으니 미리 소액 결제를 테스트해보세요.
+      </div>
+    </div>
+  `;
+}
+
+function renderDianpingGuide() {
+  const container = document.getElementById("dianpingContent");
+  if (!container) return;
+  container.innerHTML = `
+    <div class="guide-step">
+      <h4>🔍 맛집 찾기</h4>
+      <div>· 평점 4.5점 이상, 리뷰 수 1000개 이상의 집은 실패 확률이 낮습니다.</div>
+      <div>· <strong>'附近'(부근)</strong> 기능을 눌러 내 주변 인기 식당을 확인하세요.</div>
+    </div>
+    <div class="guide-step">
+      <h4>🎫 할인 쿠폰 (优惠)</h4>
+      <div>· <strong>'买单'</strong>(결제) 버튼을 누르면 현장 할인이 되는 경우가 많습니다.</div>
+      <div>· 대표 세트 메뉴는 <strong>'套餐'</strong> 섹션에서 훨씬 저렴하게 구입 가능합니다.</div>
+    </div>
+    <div class="guide-step">
+      <h4>📸 추천 메뉴 확인</h4>
+      <div>· <strong>'推荐菜'</strong> 탭에서 사람들이 가장 많이 시키는 메뉴 사진을 직원에게 보여주며 주문하세요.</div>
+    </div>
+  `;
+}
+
 /* ========== 초기화 및 이벤트 ========== */
 document.addEventListener("DOMContentLoaded", () => {
   fetchData();
@@ -416,11 +562,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // 페이지 전환
   const switchPage = (id) => {
     document.querySelectorAll(".page").forEach(p => p.hidden = p.id !== "page-" + id);
-    document.querySelectorAll(".nav-tab").forEach(t => t.classList.toggle("active", t.id === "nav" + id.charAt(0).toUpperCase() + id.slice(1)));
+    document.querySelectorAll(".nav-tab").forEach(t => {
+      const tabId = "nav" + id.charAt(0).toUpperCase() + id.slice(1);
+      t.classList.toggle("active", t.id === tabId);
+    });
     if (id === "map" && leafletMap) setTimeout(() => leafletMap.invalidateSize(), 100);
+    if (id === "meituan") renderMeituanGuide();
+    if (id === "dianping") renderDianpingGuide();
   };
 
   document.getElementById("navMap").onclick = () => switchPage("map");
+  document.getElementById("navMeituan").onclick = () => switchPage("meituan");
+  document.getElementById("navDianping").onclick = () => switchPage("dianping");
   document.getElementById("navMemo").onclick = () => switchPage("memo");
   document.getElementById("navBoard").onclick = () => switchPage("board");
 
