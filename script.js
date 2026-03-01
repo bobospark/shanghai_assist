@@ -1,4 +1,28 @@
-// 명소/맛집/카페/바 데이터
+/* ========== 데이터 레이어: 지도에 표시할 장소만 (비율 좌표 0–100, 그림과 정확히 매칭) ========== */
+/* xPercent: 왼쪽 0 → 오른쪽 100, yPercent: 위 0 → 아래 100. PNG 위 실제 위치에 맞게 수치만 바꾸면 됨. */
+const MAP_PLACE_IDS = [
+  "hotel_golden",
+  "bund",
+  "nanjing_east",
+  "people_square",
+  "xintiandi",
+  "tianzifang",
+  "lujiazui",
+  "shanghai_tower"
+];
+
+const MAP_LOCATIONS = [
+  { id: "hotel_golden", xPercent: 25, yPercent: 20 },
+  { id: "bund", xPercent: 22, yPercent: 16 },
+  { id: "nanjing_east", xPercent: 28, yPercent: 18 },
+  { id: "people_square", xPercent: 30, yPercent: 38 },
+  { id: "xintiandi", xPercent: 28, yPercent: 52 },
+  { id: "tianzifang", xPercent: 32, yPercent: 62 },
+  { id: "lujiazui", xPercent: 72, yPercent: 26 },
+  { id: "shanghai_tower", xPercent: 78, yPercent: 22 }
+];
+
+/* ========== 명소 데이터 (전체: 지도 + 바/디저트 등) ========== */
 const places = [
   {
     id: "hotel_golden",
@@ -179,11 +203,7 @@ const places = [
       "입장료/미니멈 있는 곳도 있으니 들어가기 전에 한번 확인!"
     ],
     tags: ["바", "클럽", "야간"]
-  }
-];
-
-// 디저트 / 배달 추천
-places.push(
+  },
   {
     id: "dessert_nudake",
     type: "dessert",
@@ -244,7 +264,7 @@ places.push(
     ],
     tags: ["케이크", "인스타감성", "배달 추천"]
   }
-);
+];
 
 const placeTypeLabel = {
   attraction: "관광 명소",
@@ -264,22 +284,95 @@ const placeTypeColor = {
 
 const placeTypeOrder = ["hotel", "attraction", "food", "cafe", "dessert"];
 
+const MAP_IMAGE_URL = "shanghaimap.png";
+
+let leafletMap = null;
+let leafletMarkers = [];
+
+function initLeafletMap() {
+  const container = document.getElementById("leafletMap");
+  if (!container) return;
+
+  const img = new Image();
+  img.crossOrigin = "";
+  img.onload = function () {
+    const w = img.naturalWidth || 1000;
+    const h = img.naturalHeight || 667;
+    const bounds = [
+      [0, 0],
+      [h, w]
+    ];
+
+    leafletMap = L.map("leafletMap", {
+      crs: L.CRS.Simple,
+      minZoom: -2,
+      maxZoom: 2
+    });
+
+    L.imageOverlay(MAP_IMAGE_URL, bounds).addTo(leafletMap);
+    leafletMap.fitBounds(bounds);
+
+    MAP_LOCATIONS.forEach((loc) => {
+      const place = places.find((p) => p.id === loc.id);
+      if (!place) return;
+      const y = (loc.yPercent / 100) * h;
+      const x = (loc.xPercent / 100) * w;
+      const marker = L.marker([y, x], {
+        icon: L.divIcon({
+          className: "leaflet-custom-marker",
+          html: `<span class="marker-pin marker-${place.type === "hotel" ? "hotel" : "attraction"}" aria-hidden="true"></span>`,
+          iconSize: [24, 24],
+          iconAnchor: [12, 12]
+        })
+      })
+        .addTo(leafletMap)
+        .on("click", function () {
+          selectPlace(place.id);
+        });
+      marker._placeId = place.id;
+      leafletMarkers.push(marker);
+    });
+  };
+  img.onerror = function () {
+    const w = 1000;
+    const h = 667;
+    const bounds = [
+      [0, 0],
+      [h, w]
+    ];
+    leafletMap = L.map("leafletMap", { crs: L.CRS.Simple, minZoom: -2, maxZoom: 2 });
+    L.imageOverlay(MAP_IMAGE_URL, bounds).addTo(leafletMap);
+    leafletMap.fitBounds(bounds);
+    MAP_LOCATIONS.forEach((loc) => {
+      const place = places.find((p) => p.id === loc.id);
+      if (!place) return;
+      const y = (loc.yPercent / 100) * h;
+      const x = (loc.xPercent / 100) * w;
+      const marker = L.marker([y, x], {
+        icon: L.divIcon({
+          className: "leaflet-custom-marker",
+          html: `<span class="marker-pin marker-${place.type === "hotel" ? "hotel" : "attraction"}" aria-hidden="true"></span>`,
+          iconSize: [24, 24],
+          iconAnchor: [12, 12]
+        })
+      })
+        .addTo(leafletMap)
+        .on("click", function () {
+          selectPlace(place.id);
+        });
+      marker._placeId = place.id;
+      leafletMarkers.push(marker);
+    });
+  };
+  img.src = MAP_IMAGE_URL;
+}
+
 const placesScroll = document.getElementById("placesScroll");
 const placeDetail = document.getElementById("placeDetail");
 
-// 테마 (라이트 / 다크 브라운)
-const THEME_KEY = "shanghaiTheme";
-
-function applyTheme(theme) {
-  const next = theme === "dark" ? "dark" : "light";
-  document.body.dataset.theme = next;
-  const btn = document.getElementById("themeToggle");
-  if (btn) {
-    btn.textContent = next === "dark" ? "☀ 라이트 모드" : "🌙 다크 모드";
-  }
-}
-
 function renderPlacePills() {
+  if (!placesScroll) return;
+  placesScroll.innerHTML = "";
   const sorted = [...places].sort((a, b) => {
     const ta = placeTypeOrder.indexOf(a.type);
     const tb = placeTypeOrder.indexOf(b.type);
@@ -289,16 +382,21 @@ function renderPlacePills() {
 
   sorted.forEach((place) => {
     const btn = document.createElement("button");
+    btn.type = "button";
     btn.className = "place-pill";
     btn.dataset.placeId = place.id;
     btn.dataset.type = place.type;
+    btn.setAttribute("aria-label", `${place.koreanName} 정보 보기`);
     btn.innerHTML = `
-      <span class="place-dot ${place.type === "hotel" ? "attraction" : place.type}"></span>
+      <span class="place-dot ${place.type === "hotel" ? "attraction" : place.type}" aria-hidden="true"></span>
       <span>${place.emoji} ${place.koreanName}</span>
     `;
-    btn.addEventListener("click", () => {
-      selectPlace(place.id);
-      scrollToPin(place.id);
+    btn.addEventListener("click", () => selectPlace(place.id));
+    btn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        selectPlace(place.id);
+      }
     });
     placesScroll.appendChild(btn);
   });
@@ -310,15 +408,7 @@ function selectPlace(id) {
 
   document.querySelectorAll(".place-pill").forEach((el) => {
     el.classList.toggle("active", el.dataset.placeId === id);
-  });
-
-  const svg = document.querySelector(".map-svg");
-  svg.querySelectorAll("[data-place-id]").forEach((el) => {
-    const isTarget = el.dataset.placeId === id;
-    el.setAttribute(
-      "stroke-width",
-      isTarget ? "3" : el.tagName.toLowerCase() === "polygon" ? "2.5" : "2"
-    );
+    el.setAttribute("aria-pressed", el.dataset.placeId === id ? "true" : "false");
   });
 
   placeDetail.innerHTML = `
@@ -328,26 +418,27 @@ function selectPlace(id) {
     <div class="place-names">
       <div class="place-korean">${place.emoji} ${place.koreanName}</div>
       <div class="place-chinese-row">
+        <span class="visually-hidden">지역 한글</span>
         <span style="font-size:11px;">지역(한글): ${place.areaKorean}</span>
       </div>
       <div class="place-chinese-row">
         <span>중국어(한자): <strong id="chineseText">${place.chineseName}</strong></span>
-        <button class="copy-btn" id="copyBtn">복사</button>
+        <button type="button" class="copy-btn" id="copyBtn" aria-label="한자 이름 복사">복사</button>
       </div>
       <div class="place-chinese-row" style="font-size:11px;">
         <span>지명(한자): ${place.areaChinese}</span>
       </div>
     </div>
     <div class="place-extra">
-      <div style="margin-top:4px;">- ${place.info}</div>
+      <div style="margin-top:4px;">− ${place.info}</div>
       ${place.tips ? place.tips.map((t) => `<div>· ${t}</div>`).join("") : ""}
       <div class="place-tags">
         ${place.tags ? place.tags.map((t) => `<span class="place-tag"># ${t}</span>`).join("") : ""}
       </div>
     </div>
-    <div style="margin-top:4px;font-size:10px;color:#64748b;">
-      ※ 복사한 한자 이름은 고덕지도(高德地图)·바이두지도 검색창에 그대로 붙여넣으면 됩니다.
-    </div>
+    <p style="margin-top:4px;font-size:10px;color:var(--text-sub);">
+      ※ 복사한 한자 이름은 고덕지도·바이두지도 검색창에 붙여넣으면 됩니다.
+    </p>
   `;
 
   const copyBtn = document.getElementById("copyBtn");
@@ -370,29 +461,40 @@ function selectPlace(id) {
   }
 }
 
-function scrollToPin(id) {
-  // 예전에는 지도를 화면 중앙으로 스크롤했지만,
-  // 이제는 위치는 그대로 두고 정보만 변경하도록 비워 둠.
-  return;
+const THEME_KEY = "shanghaiTheme";
+
+function applyTheme(theme) {
+  const next = theme === "dark" ? "dark" : "light";
+  document.body.dataset.theme = next;
+  const btn = document.getElementById("themeToggle");
+  if (btn) {
+    btn.textContent = next === "dark" ? "☀ 라이트 모드" : "🌙 다크 모드";
+    btn.setAttribute("aria-label", next === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환");
+  }
 }
 
-// 지도 핀 클릭 이벤트 (별/원 공통)
-function attachMapPinEvents() {
-  const svg = document.querySelector(".map-svg");
-  svg.querySelectorAll("[data-place-id]").forEach((node) => {
-    node.style.cursor = "pointer";
-    node.addEventListener("click", () => {
-      const id = node.dataset.placeId;
-      selectPlace(id);
-      const pill = document.querySelector(`.place-pill[data-place-id="${id}"]`);
-      if (pill && pill.scrollIntoView) {
-        pill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-      }
-    });
+function switchPage(pageId) {
+  const hash = pageId === "page-map" ? "map" : "memo";
+  window.location.hash = hash;
+
+  document.querySelectorAll(".page").forEach((p) => {
+    const isActive = p.id === pageId;
+    p.classList.toggle("active", isActive);
+    p.hidden = !isActive;
   });
+
+  document.querySelectorAll(".nav-tab").forEach((a) => {
+    const isMap = a.getAttribute("href") === "#map";
+    a.classList.toggle("active", (isMap && pageId === "page-map") || (!isMap && pageId === "page-memo"));
+  });
+
+  if (pageId === "page-map" && leafletMap) {
+    setTimeout(function () {
+      leafletMap.invalidateSize();
+    }, 100);
+  }
 }
 
-// 일정 플래너 (로컬 저장)
 const dayTabs = document.getElementById("dayTabs");
 const planText = document.getElementById("planText");
 const savePlanBtn = document.getElementById("savePlanBtn");
@@ -413,7 +515,7 @@ const dayTemplates = {
   - 택시 목적지: 「外滩 新亚酒店」 또는 「金郁金香外滩新亚酒店」
 · 체크인 & 짐 정리
 · 저녁: 와이탄(外滩) 야경 + 난징동루(南京东路) 산책
-· 간단 야식 / 편의점 / 물/간식 사두기`,
+· 간단 야식 / 편의점 / 물·간식 사두기`,
   2: `· 아침: 호텔 근처에서 가볍게 식사
 · 오전: 인민광장(人民广场) & 상하이 박물관(上海博物馆) 구경
 · 점심: 난징동루 or 인민광장 근처 식당
@@ -449,63 +551,31 @@ function savePlans(plans) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(plans));
   const now = new Date();
   const t = now.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
-  saveStatus.textContent = "최근 저장: 오늘 " + t;
+  if (saveStatus) saveStatus.textContent = "최근 저장: " + t;
 }
 
 let plansState = loadPlans();
 
 function updatePlanTextarea() {
+  if (!planText) return;
   planText.value = plansState[currentDay] || "";
-  dayInfo.textContent = dayMetaText[currentDay];
+  if (dayInfo) dayInfo.textContent = dayMetaText[currentDay];
 }
 
 function switchDay(day) {
   if (day === currentDay) return;
-  plansState[currentDay] = planText.value;
+  plansState[currentDay] = planText ? planText.value : "";
   savePlans(plansState);
 
   currentDay = day;
   document.querySelectorAll(".day-tab").forEach((tab) => {
-    tab.classList.toggle("active", Number(tab.dataset.day) === currentDay);
+    const isActive = Number(tab.dataset.day) === currentDay;
+    tab.classList.toggle("active", isActive);
+    tab.setAttribute("aria-selected", isActive ? "true" : "false");
   });
   updatePlanTextarea();
 }
 
-dayTabs.addEventListener("click", (e) => {
-  const btn = e.target.closest(".day-tab");
-  if (!btn) return;
-  const day = Number(btn.dataset.day);
-  switchDay(day);
-});
-
-savePlanBtn.addEventListener("click", () => {
-  plansState[currentDay] = planText.value;
-  savePlans(plansState);
-});
-
-let autoSaveTimeout;
-planText.addEventListener("input", () => {
-  clearTimeout(autoSaveTimeout);
-  autoSaveTimeout = setTimeout(() => {
-    plansState[currentDay] = planText.value;
-    savePlans(plansState);
-  }, 600);
-});
-
-insertTemplateBtn.addEventListener("click", () => {
-  if (!planText.value.trim()) {
-    planText.value = dayTemplates[currentDay] || "";
-  } else {
-    const add = "\n\n" + (dayTemplates[currentDay] || "");
-    if (!planText.value.includes(dayTemplates[currentDay])) {
-      planText.value += add;
-    }
-  }
-  plansState[currentDay] = planText.value;
-  savePlans(plansState);
-});
-
-// 추가 메모 / 일정 블록 (자유 추가)
 const EXTRA_KEY = "shanghaiExtraMemos_v1";
 const extraMemosContainer = document.getElementById("extraMemos");
 const addMemoBtn = document.getElementById("addMemoBtn");
@@ -527,12 +597,13 @@ function saveExtraMemos(list) {
 let extraMemos = loadExtraMemos();
 
 function renderExtraMemos() {
+  if (!extraMemosContainer) return;
   extraMemosContainer.innerHTML = "";
 
   if (!extraMemos.length) {
-    const empty = document.createElement("div");
+    const empty = document.createElement("p");
     empty.className = "extra-empty";
-    empty.textContent = "아직 메모가 없어요. 아래 버튼을 눌러 오늘만의 메모/일정을 자유롭게 추가해 보세요.";
+    empty.textContent = "아직 메모가 없어요. 아래 버튼을 눌러 메모/일정을 추가해 보세요.";
     extraMemosContainer.appendChild(empty);
     return;
   }
@@ -549,16 +620,19 @@ function renderExtraMemos() {
 
     const titleInput = document.createElement("input");
     titleInput.className = "extra-title";
-    titleInput.placeholder = "예: 바만 도는 날, 마지막 날 예산 정리 등";
+    titleInput.placeholder = "예: 바만 도는 날, 마지막 날 예산 정리 등…";
     titleInput.value = memo.title || "";
+    titleInput.setAttribute("aria-label", "메모 제목");
     titleInput.addEventListener("input", () => {
       memo.title = titleInput.value;
       saveExtraMemos(extraMemos);
     });
 
     const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
     deleteBtn.className = "extra-delete-btn";
     deleteBtn.textContent = "삭제";
+    deleteBtn.setAttribute("aria-label", "이 메모 삭제");
     deleteBtn.addEventListener("click", () => {
       extraMemos = extraMemos.filter((m) => m.id !== memo.id);
       saveExtraMemos(extraMemos);
@@ -570,8 +644,9 @@ function renderExtraMemos() {
 
     const textarea = document.createElement("textarea");
     textarea.className = "extra-text";
-    textarea.placeholder = "이 메모 블록에 자유롭게 내용을 적어 두세요.\n(예: 바 동선, 예상 술값, 시간대별 동선, 공항까지 이동 계획 등)";
+    textarea.placeholder = "이 메모 블록에 자유롭게 내용을 적어 두세요…";
     textarea.value = memo.text || "";
+    textarea.setAttribute("aria-label", "메모 내용");
     textarea.addEventListener("input", () => {
       memo.text = textarea.value;
       saveExtraMemos(extraMemos);
@@ -585,25 +660,18 @@ function renderExtraMemos() {
 
     if (memo.createdAt) {
       const d = new Date(memo.createdAt);
-      const dateStr =
-        d.toLocaleDateString("ko-KR", {
-          month: "2-digit",
-          day: "2-digit"
-        }) +
+      created.textContent =
+        "작성: " +
+        d.toLocaleDateString("ko-KR", { month: "2-digit", day: "2-digit" }) +
         " " +
         d.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
-      created.textContent = "작성: " + dateStr;
-    } else {
-      created.textContent = "";
     }
-
     meta.appendChild(label);
     meta.appendChild(created);
 
     card.appendChild(header);
     card.appendChild(textarea);
     card.appendChild(meta);
-
     listEl.appendChild(card);
   });
 
@@ -612,30 +680,18 @@ function renderExtraMemos() {
 
 function addNewMemo() {
   const now = new Date();
-  const id = "memo_" + now.getTime();
-  const label = "자유 메모";
-
   extraMemos.unshift({
-    id,
+    id: "memo_" + now.getTime(),
     title: "",
     text: "",
-    label,
+    label: "자유 메모",
     createdAt: now.toISOString()
   });
-
   saveExtraMemos(extraMemos);
   renderExtraMemos();
 }
 
-if (addMemoBtn) {
-  addMemoBtn.addEventListener("click", () => {
-    addNewMemo();
-  });
-}
-
-// 초기 로드
 document.addEventListener("DOMContentLoaded", () => {
-  // 테마 초기화
   const savedTheme = localStorage.getItem(THEME_KEY) || "light";
   applyTheme(savedTheme);
 
@@ -649,26 +705,99 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const navMap = document.getElementById("navMap");
+  const navMemo = document.getElementById("navMemo");
+  if (navMap) {
+    navMap.addEventListener("click", (e) => {
+      e.preventDefault();
+      switchPage("page-map");
+    });
+  }
+  if (navMemo) {
+    navMemo.addEventListener("click", (e) => {
+      e.preventDefault();
+      switchPage("page-memo");
+    });
+  }
+
+  function onHashChange() {
+    const hash = window.location.hash.slice(1) || "map";
+    const pageId = hash === "memo" ? "page-memo" : "page-map";
+    document.querySelectorAll(".page").forEach((p) => {
+      const isActive = p.id === pageId;
+      p.classList.toggle("active", isActive);
+      p.hidden = !isActive;
+    });
+    document.querySelectorAll(".nav-tab").forEach((a) => {
+      const isMap = a.getAttribute("href") === "#map";
+      a.classList.toggle("active", (hash === "memo" && !isMap) || (hash !== "memo" && isMap));
+    });
+    if (pageId === "page-map" && leafletMap) {
+      setTimeout(function () {
+        leafletMap.invalidateSize();
+      }, 100);
+    }
+  }
+
+  window.addEventListener("hashchange", onHashChange);
+  onHashChange();
+
   renderPlacePills();
-  attachMapPinEvents();
+  initLeafletMap();
+
+  const firstPlace = places.find((p) => p.id === "hotel_golden");
+  if (firstPlace) selectPlace("hotel_golden");
+
+  if (dayTabs) {
+    dayTabs.addEventListener("click", (e) => {
+      const btn = e.target.closest(".day-tab");
+      if (!btn) return;
+      switchDay(Number(btn.dataset.day));
+    });
+  }
+
+  if (savePlanBtn) {
+    savePlanBtn.addEventListener("click", () => {
+      if (planText) plansState[currentDay] = planText.value;
+      savePlans(plansState);
+    });
+  }
+
+  let autoSaveTimeout;
+  if (planText) {
+    planText.addEventListener("input", () => {
+      clearTimeout(autoSaveTimeout);
+      autoSaveTimeout = setTimeout(() => {
+        plansState[currentDay] = planText.value;
+        savePlans(plansState);
+      }, 600);
+    });
+  }
+
+  if (insertTemplateBtn && planText) {
+    insertTemplateBtn.addEventListener("click", () => {
+      if (!planText.value.trim()) {
+        planText.value = dayTemplates[currentDay] || "";
+      } else {
+        const add = "\n\n" + (dayTemplates[currentDay] || "");
+        if (!planText.value.includes(dayTemplates[currentDay])) planText.value += add;
+      }
+      plansState[currentDay] = planText.value;
+      savePlans(plansState);
+    });
+  }
+
+  if (addMemoBtn) addMemoBtn.addEventListener("click", addNewMemo);
+
   updatePlanTextarea();
   renderExtraMemos();
 
-  const svg = document.querySelector(".map-svg");
-  const firstId = "hotel_golden";
-  const firstPin = svg.querySelector(`[data-place-id="${firstId}"]`);
-  if (firstPin) {
-    selectPlace(firstId);
-  }
-
-  if (Object.keys(plansState).length === 0) {
+  if (Object.keys(plansState).length === 0 && dayTemplates[1]) {
     plansState[1] = dayTemplates[1];
     savePlans(plansState);
     updatePlanTextarea();
-  } else {
+  } else if (saveStatus) {
     const now = new Date();
-    const t = now.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
-    saveStatus.textContent = "최근 저장: 오늘 " + t;
+    saveStatus.textContent = "최근 저장: " + now.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
   }
 });
-

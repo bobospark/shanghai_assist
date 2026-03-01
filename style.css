@@ -33,12 +33,118 @@ body[data-theme="dark"] {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 접근성: 스킵 링크, 포커스, 시각적 숨김 */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 8px;
+  padding: 8px 12px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 100;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+#main {
+  scroll-margin-top: 1rem;
+}
+
+/* 페이지 탭 네비게이션 */
+.nav-pages {
+  display: flex;
+  gap: 0;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  padding: 3px;
+  border: 1px solid var(--border-soft);
+}
+
+.nav-tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-sub);
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-tab:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.5);
+}
+.nav-tab.active {
+  background: var(--card);
+  color: var(--text-main);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.nav-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 페이지 전환 */
+.page {
+  display: none;
+}
+.page.active {
+  display: block;
+}
+.page[hidden] {
+  display: none !important;
+}
+
+/* 포커스 표시 (가이드라인) */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link,
+  .nav-tab {
+    transition: none;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: var(--bg-gradient);
   color: var(--text-main);
+  color-scheme: light;
+}
+
+body[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 .app {
@@ -218,7 +324,15 @@ h3 {
 }
 
 .flight-times span strong {
-  color: #e5e7eb;
+  color: var(--text-main);
+}
+
+.trip-badge {
+  font-size: 10px;
+  color: var(--accent);
+}
+.trip-badge.hotel {
+  color: #c59a2e;
 }
 
 /* 지도 섹션 */
@@ -272,11 +386,36 @@ h3 {
   box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.18);
 }
 
-.map-svg {
+.leaflet-map {
   width: 100%;
-  height: auto;
-  max-width: 100%;
+  height: 320px;
+  min-height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+.leaflet-map .leaflet-tile-pane {
+  filter: none;
+}
+
+.leaflet-custom-marker {
+  background: none !important;
+  border: none !important;
+}
+.marker-pin {
   display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+.marker-pin.marker-hotel {
+  background: #facc15;
+}
+.marker-pin.marker-attraction {
+  background: #38bdf8;
 }
 
 .map-note {
@@ -357,6 +496,12 @@ h3 {
   border-color: rgba(249, 168, 212, 0.9);
 }
 
+
+.place-detail-empty {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin: 0;
+}
 
 .place-detail {
   border-radius: 12px;
@@ -451,11 +596,19 @@ h3 {
   cursor: pointer;
 }
 
+.day-tab:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-main);
+}
 .day-tab.active {
   background: linear-gradient(135deg, var(--accent), #b86b3e);
   color: #fffaf3;
   font-weight: 600;
   border-color: transparent;
+}
+.day-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .plan-meta {
@@ -465,6 +618,18 @@ h3 {
   font-size: 11px;
   color: var(--text-sub);
   margin-bottom: 6px;
+}
+
+.plan-auto-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.plan-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
 }
 
 .plan-chip {
@@ -522,6 +687,12 @@ h3 {
   font-size: 10px;
   color: var(--text-sub);
   text-align: right;
+}
+
+.section-desc {
+  font-size: 11px;
+  color: var(--text-sub);
+  margin: 0 0 8px;
 }
 
 /* 추가 메모 섹션 */
