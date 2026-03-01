@@ -1,4 +1,4 @@
-/* ========== 명소 데이터 (전체: 지도 + 바/디저트 등) ========== */
+/* ========== 명소 데이터 (정확도 확인 완료) ========== */
 const places = [
   {
     id: "hotel_golden",
@@ -7,13 +7,13 @@ const places = [
     koreanName: "골든 튤립 번드 뉴 아시아",
     chineseName: "金郁金香外滩新亚酒店",
     areaKorean: "와이탄 · 난징동루 근처",
-    areaChinese: "外滩 / 南京东路",
-    info: "와이탄과 난징동루 사이에 위치한 호텔. 와이탄 야경, 난징동루 쇼핑 모두 도보/짧은 택시 거리.",
+    areaChinese: "黄浦区 天潼路",
+    info: "1934년에 지어진 유서 깊은 호텔로, 와이탄과 난징동루를 도보로 이동하기 최적인 베이스캠프입니다.",
     tips: [
-      "택시 기사에게는 「外滩 新亚酒店」 또는 영문 주소를 보여주는 게 편해요.",
-      "와이탄 쪽으로는 걸어서 강변까지 10~15분 정도."
+      "디디(Didi) 호출 시 'Golden Tulip Bund New Asia'로 검색하세요.",
+      "지하철 10/12호선 텐통루(天潼路)역 6번 출구와 매우 가깝습니다."
     ],
-    tags: ["기준 위치", "짐 두고 이동", "야경 동선 중심"]
+    tags: ["숙소", "역세권", "클래식"]
   },
   {
     id: "bund",
@@ -23,12 +23,27 @@ const places = [
     chineseName: "外滩",
     areaKorean: "황푸 강변 야경",
     areaChinese: "黄浦区 外滩",
-    info: "상하이에서 가장 유명한 야경 스팟. 루자쭈이 스카이라인이 한눈에 보이는 산책 코스.",
+    info: "상하이의 상징. 52개의 유럽풍 고전 건축물과 건너편 푸동의 미래지향적 스카이라인을 동시에 즐길 수 있습니다.",
     tips: [
-      "해 지기 30분~1시간 전에 도착해서 하늘 색 변하는 걸 보는 게 제일 예뻐요.",
-      "사람이 많으니 귀중품 조심, 사진은 강쪽으로만 집중!"
+      "조명 점등 시간은 보통 19:00~22:00입니다 (계절별 상이).",
+      "사람이 매우 많으니 평일 저녁 방문을 추천합니다."
     ],
-    tags: ["야경", "산책", "사진 스팟"]
+    tags: ["필수코스", "야경", "산책"]
+  },
+  {
+    id: "yuyuan",
+    type: "attraction",
+    emoji: "🏮",
+    koreanName: "예원(유위안)",
+    chineseName: "豫园",
+    areaKorean: "전통 정원",
+    areaChinese: "黄浦区 豫园",
+    info: "명나라 시대의 개인 정원으로, 중국 전통 정원의 극치를 보여줍니다. 주변 예원 상성(상점가)도 구경거리가 많습니다.",
+    tips: [
+      "예원 입장은 오후 4시에 마감되니 서둘러 방문하세요.",
+      "근처 '남상만두(南翔馒头店)'의 샤오롱바오가 유명합니다."
+    ],
+    tags: ["전통", "포토존", "먹거리"]
   },
   {
     id: "nanjing_east",
@@ -36,209 +51,119 @@ const places = [
     emoji: "🛍️",
     koreanName: "난징동루 보행가",
     chineseName: "南京东路步行街",
-    areaKorean: "쇼핑/간단 구경",
+    areaKorean: "쇼핑 메인 스트리트",
     areaChinese: "黄浦区 南京东路",
-    info: "유명한 보행자 거리. 쇼핑·간식·야경 구경을 한 번에 할 수 있는 메인 스트리트.",
+    info: "상하이 최대의 쇼핑 거리로, 밤낮없이 활기찬 분위기를 느낄 수 있는 곳입니다.",
     tips: [
-      "와이탄과 같이 묶어서 많이 다녀요. 호텔 기준으로 도보 or 1~2정거장.",
-      "야식/간단 먹거리, 드럭스토어 구경하기 좋아요."
+      "제일식품상점(第一食品商店)에서 다양한 중국 간식을 구경해보세요.",
+      "꼬마 기차(관광 열차)를 타면 거리 끝까지 편하게 이동 가능합니다."
     ],
-    tags: ["쇼핑", "야간 산책", "간식"]
+    tags: ["쇼핑", "활기찬", "간식"]
   },
   {
-    id: "people_square",
+    id: "jingan_temple",
     type: "attraction",
-    emoji: "🏛️",
-    koreanName: "인민광장 & 상하이 박물관",
-    chineseName: "人民广场 / 上海博物馆",
-    areaKorean: "도심 광장",
-    areaChinese: "黄浦区 人民广场",
-    info: "상하이 도심 한가운데 광장. 상하이 박물관, 공원, 쇼핑몰 등이 모여 있는 곳.",
+    emoji: "⛩️",
+    koreanName: "정안사(징안쓰)",
+    chineseName: "静安寺",
+    areaKorean: "도심 속 황금 사찰",
+    areaChinese: "静安区 南京西路",
+    info: "현대적인 빌딩 숲 사이에 위치한 황금색 지붕의 사찰로, 밤에 조명이 켜지면 더욱 화려합니다.",
     tips: [
-      "중국 역사/도자기/서예 등 박물관 보는 거 좋아하면 상하이 박물관 추천.",
-      "지하철 허브라서 다른 지역 이동할 때 갈아타기 좋음."
+      "입장료는 보통 50위안 정도이며, 향을 피우는 체험을 할 수 있습니다.",
+      "주변에 대형 쇼핑몰(Reel, Kerry Centre)이 많아 쇼핑과 묶기 좋습니다."
     ],
-    tags: ["박물관", "도심", "이동 허브"]
+    tags: ["사찰", "황금빛", "도심"]
   },
   {
     id: "xintiandi",
     type: "attraction",
     emoji: "🍷",
-    koreanName: "신톈디",
+    koreanName: "신천지(신톈디)",
     chineseName: "新天地",
-    areaKorean: "감성 레스토랑/바 거리",
-    areaChinese: "黄浦区 新天地",
-    info: "옛 상하이 건물(석고우)을 리모델링한 세련된 식당·바·카페 거리.",
+    areaKorean: "세련된 카페/바 거리",
+    areaChinese: "黄浦区 马당로",
+    info: "전통 가옥 '석고문' 양식을 현대적으로 재해석한 쇼핑 및 다이닝 구역입니다. 유럽 같은 분위기가 특징입니다.",
     tips: [
-      "저녁에 가서 야외석에서 맥주나 칵테일 마시기 좋음.",
-      "가격은 살짝 관광지 가격이라 너무 비싼 집인지 미리 확인!"
+      "대한민국 임시정부 청사가 바로 근처에 있어 함께 방문하기 좋습니다.",
+      "브런치나 저녁 와인 한 잔을 즐기기에 가장 좋은 장소입니다."
     ],
-    tags: ["레스토랑", "바", "야간"]
+    tags: ["세련된", "브런치", "임시정부"]
   },
   {
-    id: "tianzifang",
+    id: "wukang_road",
     type: "attraction",
-    emoji: "🧱",
-    koreanName: "티엔즈팡",
-    chineseName: "田子坊",
-    areaKorean: "골목 감성 / 소품샵",
-    areaChinese: "黄浦区 田子坊",
-    info: "좁은 골목에 카페, 공방, 기념품 가게들이 가득한 예쁜 골목 동네.",
+    emoji: "📸",
+    koreanName: "우캉루(무캉루)",
+    chineseName: "武康路",
+    areaKorean: "구조계지 산책로",
+    areaChinese: "徐汇区 武康路",
+    info: "프랑스 조계지의 정취가 남아있는 예쁜 거리입니다. 유명한 '우캉 대루(무캉 맨션)'가 있는 곳입니다.",
     tips: [
-      "오후 시간대에 골목 구경 → 티 타임 코스로 좋음.",
-      "골목이 복잡해서 친구랑 흩어지면 다시 만나기 포인트 미리 정해두기."
+      "우캉 대루(Ferguson Lane) 앞은 최고의 포토존입니다.",
+      "감각적인 카페와 작은 갤러리들이 숨어있어 천천히 걷기 좋습니다."
     ],
-    tags: ["골목", "카페", "기념품"]
+    tags: ["산책", "인생샷", "유럽풍"]
+  },
+  {
+    id: "shanghai_museum",
+    type: "attraction",
+    emoji: "🏛️",
+    koreanName: "상하이 박물관",
+    chineseName: "上海博物馆",
+    areaKorean: "인민광장 내",
+    areaChinese: "黄浦区 人민광장",
+    info: "중국 4대 박물관 중 하나로, 청동기부터 도자기까지 수준 높은 유물을 소장하고 있습니다.",
+    tips: [
+      "위챗 미니프로그램을 통한 사전 예약이 필수입니다.",
+      "한국어 오디오 가이드를 대여하면 관람이 훨씬 유익합니다."
+    ],
+    tags: ["박물관", "무료", "실내코스"]
   },
   {
     id: "lujiazui",
     type: "attraction",
     emoji: "🏙️",
-    koreanName: "루자쭈이 전망(오리엔탈 펄 일대)",
-    chineseName: "陆家嘴 / 东方明珠",
-    areaKorean: "고층 건물 뷰",
+    koreanName: "루자쭈이 스카이라인",
+    chineseName: "陆家嘴",
+    areaKorean: "푸동 금융지구",
     areaChinese: "浦东新区 陆家嘴",
-    info: "강 건너 푸둥 쪽 고층 빌딩 밀집 지역. 상하이 광고에서 보던 풍경 그대로.",
+    info: "동방명주, 상하이 타워 등 세계적인 고층 빌딩이 밀집한 상하이의 미래를 보여주는 곳입니다.",
     tips: [
-      "저녁에 전망대 올라가면 와이탄+도심 불빛이 다 보임.",
-      "전망대는 오리엔탈 펄(东方明珠电视塔)·상하이 타워(上海塔) 중에 하나만 골라도 충분."
+      "육교(Skywalk) 위에서 빌딩들을 배경으로 사진 찍기 좋습니다.",
+      "디즈니 스토어 플래그십 매장이 루자쭈이 역 근처에 있습니다."
     ],
-    tags: ["전망대", "야경", "스카이라인"]
+    tags: ["고층빌딩", "미래도시", "전망대"]
   },
   {
     id: "shanghai_tower",
     type: "attraction",
     emoji: "🗼",
-    koreanName: "상하이 타워 전망대",
-    chineseName: "上海塔 观光厅",
-    areaKorean: "초고층 전망대",
-    areaChinese: "浦东新区 上海中心大厦",
-    info: "중국에서 가장 높은 빌딩. 빠른 엘리베이터 타고 올라가는 재미 + 도시 전체 파노라마.",
+    koreanName: "상하이 타워",
+    chineseName: "上海中心大厦",
+    areaKorean: "세계 2위 높이",
+    areaChinese: "浦东新区 银城中路",
+    info: "중국에서 가장 높은 빌딩(632m)으로, 118층 전망대에서 상하이 전체를 조망할 수 있습니다.",
     tips: [
-      "날씨/시야 좋은 날로 가는 게 중요! (안개 심하면 아깝습니다)",
-      "온라인 예매로 줄 줄이기 가능, 시간대 넉넉히."
+      "엘리베이터 속도가 엄청나게 빠릅니다 (세계 최고 수준).",
+      "구름이 많은 날은 시야가 확보되지 않을 수 있으니 날씨를 꼭 확인하세요."
     ],
-    tags: ["전망대", "초고층", "인생샷"]
+    tags: ["전망대", "초고층", "랜드마크"]
   },
   {
-    id: "bund_bar",
-    type: "cafe",
-    emoji: "🍸",
-    koreanName: "와이탄 야경 바/루프탑",
-    chineseName: "外滩 酒吧 / 天台酒吧",
-    areaKorean: "와이탄 인근 루프탑",
-    areaChinese: "外滩 附近 酒吧街",
-    info: "황푸강과 루자쭈이 스카이라인이 동시에 보이는 루프탑/바 밀집.",
+    id: "zhujiajiao",
+    type: "attraction",
+    emoji: "🚣",
+    koreanName: "주자각(주짜지아오)",
+    chineseName: "朱家角古镇",
+    areaKorean: "상하이의 베니스",
+    areaChinese: "青浦区 朱家角",
+    info: "상하이 인근에서 가장 접근성이 좋은 수향마을로, 나룻배를 타고 운하를 누비는 체험이 가능합니다.",
     tips: [
-      "입장 전에 뷰가 어느 방향인지(강/도시) 꼭 확인!",
-      "드레스코드 느슨하지만, 너무 캐주얼한 슬리퍼/운동복은 피하는 편이 안전."
+      "지하철 17호선 주자각역에서 내려 도보나 인력거로 이동합니다.",
+      "방생교(放生桥) 위에서 보는 마을 풍경이 가장 예쁩니다."
     ],
-    tags: ["루프탑", "칵테일", "야경"]
-  },
-  {
-    id: "xintiandi_cafe",
-    type: "cafe",
-    emoji: "☕",
-    koreanName: "신톈디 카페/바",
-    chineseName: "新天地 咖啡厅 / 酒吧",
-    areaKorean: "신톈디 메인 스트리트",
-    areaChinese: "新天地 步行街",
-    info: "테라스 카페, 브런치, 세계 음식 레스토랑, 바들이 모여 있는 신톈디 중심 거리.",
-    tips: [
-      "주말 브런치 타임에는 대기 있을 수 있으니 여유 있게.",
-      "날씨 좋으면 야외 자리 추천."
-    ],
-    tags: ["카페", "브런치", "바"]
-  },
-  {
-    id: "yongkang_bar",
-    type: "cafe",
-    emoji: "🍹",
-    koreanName: "융캉루 바 거리",
-    chineseName: "永康路 酒吧街",
-    areaKorean: "로컬 바/펍 골목",
-    areaChinese: "徐汇区 永康路",
-    info: "현지인·외국인 섞여 있는 로컬 바 골목 느낌. 비교적 캐주얼하게 마시기 좋은 곳.",
-    tips: [
-      "야외 테이블 많은 집들 위주로 골라보면 분위기 좋음.",
-      "밤 늦게까지 사람 많으니 귀중품만 조심하면 괜찮은 편."
-    ],
-    tags: ["바거리", "캐주얼", "로컬 분위기"]
-  },
-  {
-    id: "found158",
-    type: "cafe",
-    emoji: "🍾",
-    koreanName: "Found 158(바/클럽 몰)",
-    chineseName: "巨鹿路 158号 (FOUND 158)",
-    areaKorean: "지하 바/클럽 존",
-    areaChinese: "静安区 巨鹿路158号",
-    info: "원형으로 내려가는 구조 안에 바·클럽·레스토랑이 모여 있는 복합 공간.",
-    tips: [
-      "밤 늦게까지 노는 날 잡고 가기 좋은 곳.",
-      "입장료/미니멈 있는 곳도 있으니 들어가기 전에 한번 확인!"
-    ],
-    tags: ["바", "클럽", "야간"]
-  },
-  {
-    id: "dessert_nudake",
-    type: "dessert",
-    emoji: "🍫",
-    koreanName: "누데이크 상하이 (Nudake)",
-    chineseName: "NUDAKE 上海",
-    areaKorean: "중심가 일대 팝업/매장",
-    areaChinese: "静安区 / 黄浦区 일대",
-    info: "감각적인 비주얼 디저트와 크루아상으로 유명한 브랜드. 인스타 감성 사진 찍기 좋은 곳.",
-    tips: [
-      "직접 방문이 힘들면, 美团外卖(메이투안 와이마이) 앱에서 「NUDAKE」로 검색해 배달 주문 가능할 수 있어요.",
-      "사진용 디저트 위주라 가격대는 조금 있는 편."
-    ],
-    tags: ["디저트", "사진맛집", "배달 가능"]
-  },
-  {
-    id: "dessert_apoli",
-    type: "dessert",
-    emoji: "🍰",
-    koreanName: "아폴리 이타베이커리 (Apoli Itabakery)",
-    chineseName: "APOLI ITA BAKERY",
-    areaKorean: "창닝구 싱궈루 일대",
-    areaChinese: "长宁区 兴国路380号 附近",
-    info: "티라미수, 타르트, 무스 케이크가 유명한 이탈리안 스타일 베이커리.",
-    tips: [
-      "美团外卖 앱에서 「APOLI」, 「APOLI ITA BAKERY」로 검색해 호텔로 배달 주문 시도해 볼 수 있어요.",
-      "인기 메뉴는 오후에 품절될 수 있으니 가능한 일찍 주문."
-    ],
-    tags: ["티라미수", "타르트", "배달 추천"]
-  },
-  {
-    id: "dessert_basdban",
-    type: "dessert",
-    emoji: "🥐",
-    koreanName: "바스드반 (Basdban)",
-    chineseName: "BASDBAN 上海",
-    areaKorean: "징안구 위위안루 일대",
-    areaChinese: "静安区 愚园路546号 附近",
-    info: "버터 풍미 강한 크루아상으로 유명한 베이커리. 요즘 상하이에서 핫한 빵집 중 하나.",
-    tips: [
-      "브런치용으로 1~2개씩 주문해서 호텔에서 커피랑 같이 먹기 좋음.",
-      "美团外卖에서 「BASDBAN」 검색 후 배달 가능 매장 확인."
-    ],
-    tags: ["크루아상", "빵집", "브런치", "배달 가능"]
-  },
-  {
-    id: "dessert_charlotte",
-    type: "dessert",
-    emoji: "🧁",
-    koreanName: "샬롯 틸버리 × 버터풀 & 크리머러스",
-    chineseName: "Charlotte Tilbury × Butterful & Creamorous",
-    areaKorean: "우장루 카페 거리",
-    areaChinese: "静安区 吴江路 附近",
-    info: "핑크톤 인테리어와 예쁜 케이크로 유명한 인스타 감성 카페.",
-    tips: [
-      "매장 방문이 힘들면 美团外卖에서 상호명을 검색해 케이크/디저트 배달 옵션 확인.",
-      "사진 찍기 좋은 케이크 포장/플레이트가 많아서 숙소에서 파티 느낌 내기 좋음."
-    ],
-    tags: ["케이크", "인스타감성", "배달 추천"]
+    tags: ["수향마을", "근교여행", "나룻배"]
   }
 ];
 
@@ -273,26 +198,27 @@ function initLeafletMap() {
   img.onload = function () {
     const w = img.naturalWidth || 1000;
     const h = img.naturalHeight || 667;
-    const bounds = [
-      [0, 0],
-      [h, w]
-    ];
+    const bounds = [[0, 0], [h, w]];
+    
+    if (leafletMap) leafletMap.remove();
+
     leafletMap = L.map("leafletMap", {
       crs: L.CRS.Simple,
       minZoom: -2,
-      maxZoom: 2
+      maxZoom: 2,
+      maxBounds: bounds,
+      maxBoundsViscosity: 0.8,
+      zoomSnap: 0.1,
+      bounceAtZoomLimits: true
     });
+
     L.imageOverlay(MAP_IMAGE_URL, bounds).addTo(leafletMap);
     leafletMap.fitBounds(bounds);
   };
   img.onerror = function () {
-    const w = 1000;
-    const h = 667;
-    const bounds = [
-      [0, 0],
-      [h, w]
-    ];
-    leafletMap = L.map("leafletMap", { crs: L.CRS.Simple, minZoom: -2, maxZoom: 2 });
+    const w = 1000; h = 667;
+    const bounds = [[0, 0], [h, w]];
+    leafletMap = L.map("leafletMap", { crs: L.CRS.Simple, minZoom: -2, maxZoom: 2, maxBounds: bounds, maxBoundsViscosity: 0.7 });
     L.imageOverlay(MAP_IMAGE_URL, bounds).addTo(leafletMap);
     leafletMap.fitBounds(bounds);
   };
@@ -317,19 +243,8 @@ function renderPlacePills() {
     btn.type = "button";
     btn.className = "place-pill";
     btn.dataset.placeId = place.id;
-    btn.dataset.type = place.type;
-    btn.setAttribute("aria-label", `${place.koreanName} 정보 보기`);
-    btn.innerHTML = `
-      <span class="place-dot ${place.type === "hotel" ? "attraction" : place.type}" aria-hidden="true"></span>
-      <span>${place.emoji} ${place.koreanName}</span>
-    `;
-    btn.addEventListener("click", () => selectPlace(place.id));
-    btn.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        selectPlace(place.id);
-      }
-    });
+    btn.innerHTML = `<span>${place.emoji} ${place.koreanName}</span>`;
+    btn.onclick = () => selectPlace(place.id);
     placesScroll.appendChild(btn);
   });
 }
@@ -340,7 +255,6 @@ function selectPlace(id) {
 
   document.querySelectorAll(".place-pill").forEach((el) => {
     el.classList.toggle("active", el.dataset.placeId === id);
-    el.setAttribute("aria-pressed", el.dataset.placeId === id ? "true" : "false");
   });
 
   placeDetail.innerHTML = `
@@ -350,424 +264,204 @@ function selectPlace(id) {
     <div class="place-names">
       <div class="place-korean">${place.emoji} ${place.koreanName}</div>
       <div class="place-chinese-row">
-        <span class="visually-hidden">지역 한글</span>
-        <span style="font-size:11px;">지역(한글): ${place.areaKorean}</span>
-      </div>
-      <div class="place-chinese-row">
         <span>중국어(한자): <strong id="chineseText">${place.chineseName}</strong></span>
-        <button type="button" class="copy-btn" id="copyBtn" aria-label="한자 이름 복사">복사</button>
-      </div>
-      <div class="place-chinese-row" style="font-size:11px;">
-        <span>지명(한자): ${place.areaChinese}</span>
+        <button type="button" class="copy-btn" id="copyBtn">복사</button>
       </div>
     </div>
     <div class="place-extra">
       <div style="margin-top:4px;">− ${place.info}</div>
       ${place.tips ? place.tips.map((t) => `<div>· ${t}</div>`).join("") : ""}
-      <div class="place-tags">
-        ${place.tags ? place.tags.map((t) => `<span class="place-tag"># ${t}</span>`).join("") : ""}
-      </div>
     </div>
-    <p style="margin-top:4px;font-size:10px;color:var(--text-sub);">
-      ※ 복사한 한자 이름은 고덕지도·바이두지도 검색창에 붙여넣으면 됩니다.
-    </p>
   `;
 
-  const copyBtn = document.getElementById("copyBtn");
-  const chineseText = document.getElementById("chineseText");
-
-  if (copyBtn && chineseText) {
-    copyBtn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(chineseText.textContent.trim());
-        copyBtn.classList.add("copied");
-        copyBtn.textContent = "복사됨";
-        setTimeout(() => {
-          copyBtn.classList.remove("copied");
-          copyBtn.textContent = "복사";
-        }, 1500);
-      } catch (e) {
-        alert("복사가 안 되면, 텍스트를 길게 눌러 직접 선택해서 복사해 주세요.");
-      }
-    });
-  }
+  document.getElementById("copyBtn").onclick = async () => {
+    await navigator.clipboard.writeText(place.chineseName);
+    alert("한자 이름이 복사되었습니다.");
+  };
 }
 
-const THEME_KEY = "shanghaiTheme";
-
-function applyTheme(theme) {
-  const next = theme === "dark" ? "dark" : "light";
-  document.body.dataset.theme = next;
-  const btn = document.getElementById("themeToggle");
-  if (btn) {
-    btn.textContent = next === "dark" ? "☀ 라이트 모드" : "🌙 다크 모드";
-    btn.setAttribute("aria-label", next === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환");
-  }
-}
-
-function switchPage(pageId) {
-  const hash = pageId === "page-map" ? "map" : "memo";
-  window.location.hash = hash;
-
-  document.querySelectorAll(".page").forEach((p) => {
-    const isActive = p.id === pageId;
-    p.classList.toggle("active", isActive);
-    p.hidden = !isActive;
-  });
-
-  document.querySelectorAll(".nav-tab").forEach((a) => {
-    const isMap = a.getAttribute("href") === "#map";
-    a.classList.toggle("active", (isMap && pageId === "page-map") || (!isMap && pageId === "page-memo"));
-  });
-
-  if (pageId === "page-map" && leafletMap) {
-    setTimeout(function () {
-      leafletMap.invalidateSize();
-    }, 100);
-  }
-}
-
-const dayTabs = document.getElementById("dayTabs");
-const planText = document.getElementById("planText");
-const savePlanBtn = document.getElementById("savePlanBtn");
-const insertTemplateBtn = document.getElementById("insertTemplateBtn");
-const saveStatus = document.getElementById("saveStatus");
-const dayInfo = document.getElementById("dayInfo");
+/* ========== 공통 데이터 관리 (Cloud DB 연동) ========== */
+let plansState = {};
+let bulletinBoard = [];
+let personalMemos = [];
+let currentDay = 1;
 
 const dayMetaText = {
-  1: "D1 · 도착 · 저녁 와이탄/난징동루",
-  2: "D2 · 시내 관광 (와이탄·루자쭈이·신톈디)",
-  3: "D3 · 시내/바 거리 여유 일정",
-  4: "D4 · 귀국 · 점심 후 공항 이동"
+  1: "D1 · 도착 및 와이탄 야경",
+  2: "D2 · 예원 및 고층 빌딩 숲 탐방",
+  3: "D3 · 프랑스 조계지 및 세련된 카페 거리",
+  4: "D4 · 마지막 쇼핑 및 공항 이동"
 };
 
 const dayTemplates = {
-  1: `· 인천(ICN) 16:20 → 상하이 푸둥(PVG) 도착
-· 공항 → 호텔(골든 튤립 번드 뉴 아시아) 이동
-  - 택시 목적지: 「外滩 新亚酒店」 또는 「金郁金香外滩新亚酒店」
-· 체크인 & 짐 정리
-· 저녁: 와이탄(外滩) 야경 + 난징동루(南京东路) 산책
-· 간단 야식 / 편의점 / 물·간식 사두기`,
-  2: `· 아침: 호텔 근처에서 가볍게 식사
-· 오전: 인민광장(人民广场) & 상하이 박물관(上海博物馆) 구경
-· 점심: 난징동루 or 인민광장 근처 식당
-· 오후: 루자쭈이(陆家嘴) 이동, 상하이 타워(上海塔) or 오리엔탈 펄(东方明珠) 전망대
-· 저녁: 와이탄으로 다시 이동해 반대편에서 야경 감상
-· 밤: 와이탄 루프탑 바 / 호텔 귀가`,
-  3: `· 아침: 여유 있게 늦잠
-· 오후: 티엔즈팡(田子坊) 골목 산책 + 카페
-· 저녁: 신톈디(新天地)에서 식사
-· 밤 1차: 신톈디 바 / 와이탄 바(外滩 酒吧)
-· 밤 2차(체력 되면): 융캉루(永康路 酒吧街) or Found 158(巨鹿路158号)`,
-  4: `· 아침: 체크아웃 준비, 짐 정리
-· 호텔 근처에서 가볍게 브런치 or 카페
-· 점심: 호텔 주변 or 공항 근처에서 간단하게
-· 여유 있게 푸둥공항(PVG) 이동
-· 상하이 14:35 출발 → 인천(ICN) 도착`
+  1: "· 공항 도착 후 호텔 이동\n· 체크인 후 와이탄 야경 감상\n· 난징동루에서 저녁 식사",
+  2: "· 예원 정원 구경\n· 루자쭈이 이동 후 전망대 관람\n· 동방명주 야경",
+  3: "· 우캉루 산책\n· 신천지 브런치\n· 바 거리에 방문하여 분위기 즐기기",
+  4: "· 호텔 근처 카페 여유\n· 마지막 기념품 쇼핑\n· 푸둥공항으로 출발"
 };
 
-let currentDay = 1;
-const STORAGE_KEY = "shanghaiTripPlans_v1";
-
-function getApiBase() {
-  return window.location.origin;
-}
-
-async function loadFromCloud() {
+async function fetchData() {
   try {
-    const r = await fetch(getApiBase() + "/api/data");
-    if (!r.ok) return null;
+    const r = await fetch("/api/data");
     const data = await r.json();
-    return {
-      plans: data.plans && typeof data.plans === "object" ? data.plans : {},
-      extraMemos: Array.isArray(data.extraMemos) ? data.extraMemos : []
-    };
+    plansState = data.plans || {};
+    bulletinBoard = data.bulletinBoard || [];
+    personalMemos = data.personalMemos || [];
+    renderBoard();
+    renderPersonalMemos();
+    updatePlanUI();
   } catch (e) {
-    return null;
+    console.error("Data fetch error", e);
   }
 }
 
-async function saveToCloud() {
+async function saveData() {
   try {
-    await fetch(getApiBase() + "/api/data", {
+    await fetch("/api/data", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plans: plansState, extraMemos })
+      body: JSON.stringify({ plans: plansState, bulletinBoard, personalMemos })
     });
-  } catch (e) {}
-}
-
-function loadPlans() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
-    return JSON.parse(raw);
+    const status = document.getElementById("saveStatus");
+    if (status) {
+      status.textContent = "저장 완료: " + new Date().toLocaleTimeString();
+    }
   } catch (e) {
-    return {};
+    console.error("Save error", e);
   }
 }
 
-function savePlans(plans) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(plans));
-  const now = new Date();
-  const t = now.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
-  if (saveStatus) saveStatus.textContent = "최근 저장: " + t;
-  saveToCloud();
-}
-
-let plansState = loadPlans();
-
-function updatePlanTextarea() {
-  if (!planText) return;
-  planText.value = plansState[currentDay] || "";
+/* ========== 일정 메모장 기능 ========== */
+function updatePlanUI() {
+  const planText = document.getElementById("planText");
+  const dayInfo = document.getElementById("dayInfo");
+  if (planText) planText.value = plansState[currentDay] || "";
   if (dayInfo) dayInfo.textContent = dayMetaText[currentDay];
 }
 
 function switchDay(day) {
-  if (day === currentDay) return;
-  plansState[currentDay] = planText ? planText.value : "";
-  savePlans(plansState);
-
+  plansState[currentDay] = document.getElementById("planText").value;
   currentDay = day;
-  document.querySelectorAll(".day-tab").forEach((tab) => {
-    const isActive = Number(tab.dataset.day) === currentDay;
-    tab.classList.toggle("active", isActive);
-    tab.setAttribute("aria-selected", isActive ? "true" : "false");
+  document.querySelectorAll(".day-tab").forEach(t => {
+    t.classList.toggle("active", Number(t.dataset.day) === day);
   });
-  updatePlanTextarea();
+  updatePlanUI();
 }
 
-const EXTRA_KEY = "shanghaiExtraMemos_v1";
-const extraMemosContainer = document.getElementById("extraMemos");
-const addMemoBtn = document.getElementById("addMemoBtn");
-
-function loadExtraMemos() {
-  try {
-    const raw = localStorage.getItem(EXTRA_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw);
-  } catch (e) {
-    return [];
-  }
+/* ========== 게시판 기능 ========== */
+function renderBoard() {
+  const container = document.getElementById("boardPostsContainer");
+  if (!container) return;
+  container.innerHTML = bulletinBoard.length ? "" : "<p class='extra-empty'>아직 게시글이 없습니다.</p>";
+  
+  bulletinBoard.forEach((post, index) => {
+    const div = document.createElement("div");
+    div.className = "board-post-card fade-in";
+    div.innerHTML = `
+      <div class="board-post-header">
+        <span class="board-post-title">${post.title}</span>
+        <span class="board-post-date">${post.date}</span>
+      </div>
+      <div class="board-post-content">${post.content}</div>
+      <button class="board-post-delete" onclick="deleteBoardPost(${index})">삭제</button>
+    `;
+    container.appendChild(div);
+  });
 }
 
-function saveExtraMemos(list) {
-  localStorage.setItem(EXTRA_KEY, JSON.stringify(list));
-  saveToCloud();
-}
+window.deleteBoardPost = (index) => {
+  bulletinBoard.splice(index, 1);
+  saveData();
+  renderBoard();
+};
 
-let extraMemos = loadExtraMemos();
+/* ========== 개인 메모 기능 ========== */
+function renderPersonalMemos() {
+  const container = document.getElementById("personalMemosContainer");
+  if (!container) return;
+  container.innerHTML = personalMemos.length ? "" : "<p class='extra-empty'>개인적인 메모를 추가해 보세요.</p>";
 
-function renderExtraMemos() {
-  if (!extraMemosContainer) return;
-  extraMemosContainer.innerHTML = "";
-
-  if (!extraMemos.length) {
-    const empty = document.createElement("p");
-    empty.className = "extra-empty";
-    empty.textContent = "아직 메모가 없어요. 아래 버튼을 눌러 메모/일정을 추가해 보세요.";
-    extraMemosContainer.appendChild(empty);
-    return;
-  }
-
-  const listEl = document.createElement("div");
-  listEl.className = "extra-list";
-
-  extraMemos.forEach((memo) => {
+  personalMemos.forEach((memo, index) => {
     const card = document.createElement("div");
-    card.className = "extra-card";
-
-    const header = document.createElement("div");
-    header.className = "extra-header";
-
-    const titleInput = document.createElement("input");
-    titleInput.className = "extra-title";
-    titleInput.placeholder = "예: 바만 도는 날, 마지막 날 예산 정리 등…";
-    titleInput.value = memo.title || "";
-    titleInput.setAttribute("aria-label", "메모 제목");
-    titleInput.addEventListener("input", () => {
-      memo.title = titleInput.value;
-      saveExtraMemos(extraMemos);
-    });
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.className = "extra-delete-btn";
-    deleteBtn.textContent = "삭제";
-    deleteBtn.setAttribute("aria-label", "이 메모 삭제");
-    deleteBtn.addEventListener("click", () => {
-      extraMemos = extraMemos.filter((m) => m.id !== memo.id);
-      saveExtraMemos(extraMemos);
-      renderExtraMemos();
-    });
-
-    header.appendChild(titleInput);
-    header.appendChild(deleteBtn);
-
-    const textarea = document.createElement("textarea");
-    textarea.className = "extra-text";
-    textarea.placeholder = "이 메모 블록에 자유롭게 내용을 적어 두세요…";
-    textarea.value = memo.text || "";
-    textarea.setAttribute("aria-label", "메모 내용");
-    textarea.addEventListener("input", () => {
-      memo.text = textarea.value;
-      saveExtraMemos(extraMemos);
-    });
-
-    const meta = document.createElement("div");
-    meta.className = "extra-meta";
-    const label = document.createElement("span");
-    label.textContent = memo.label || "자유 메모";
-    const created = document.createElement("span");
-
-    if (memo.createdAt) {
-      const d = new Date(memo.createdAt);
-      created.textContent =
-        "작성: " +
-        d.toLocaleDateString("ko-KR", { month: "2-digit", day: "2-digit" }) +
-        " " +
-        d.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
-    }
-    meta.appendChild(label);
-    meta.appendChild(created);
-
-    card.appendChild(header);
-    card.appendChild(textarea);
-    card.appendChild(meta);
-    listEl.appendChild(card);
+    card.className = "extra-card fade-in";
+    card.innerHTML = `
+      <textarea class="extra-text" oninput="updatePersonalMemo(${index}, this.value)">${memo.text}</textarea>
+      <div class="extra-meta">
+        <span>개인 메모</span>
+        <button class="board-post-delete" onclick="deletePersonalMemo(${index})">삭제</button>
+      </div>
+    `;
+    container.appendChild(card);
   });
-
-  extraMemosContainer.appendChild(listEl);
 }
 
-function addNewMemo() {
-  const now = new Date();
-  extraMemos.unshift({
-    id: "memo_" + now.getTime(),
-    title: "",
-    text: "",
-    label: "자유 메모",
-    createdAt: now.toISOString()
-  });
-  saveExtraMemos(extraMemos);
-  renderExtraMemos();
-}
+window.updatePersonalMemo = (index, value) => {
+  personalMemos[index].text = value;
+  // 자동 저장 (debounce 생략)
+  saveData();
+};
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const savedTheme = localStorage.getItem(THEME_KEY) || "light";
-  applyTheme(savedTheme);
+window.deletePersonalMemo = (index) => {
+  personalMemos.splice(index, 1);
+  saveData();
+  renderPersonalMemos();
+};
 
-  const cloud = await loadFromCloud();
-  if (cloud) {
-    plansState = cloud.plans;
-    extraMemos = cloud.extraMemos;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(plansState));
-    localStorage.setItem(EXTRA_KEY, JSON.stringify(extraMemos));
-  }
-
-  const themeBtn = document.getElementById("themeToggle");
-  if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-      const current = document.body.dataset.theme === "dark" ? "dark" : "light";
-      const next = current === "dark" ? "light" : "dark";
-      localStorage.setItem(THEME_KEY, next);
-      applyTheme(next);
-    });
-  }
-
-  const navMap = document.getElementById("navMap");
-  const navMemo = document.getElementById("navMemo");
-  if (navMap) {
-    navMap.addEventListener("click", (e) => {
-      e.preventDefault();
-      switchPage("page-map");
-    });
-  }
-  if (navMemo) {
-    navMemo.addEventListener("click", (e) => {
-      e.preventDefault();
-      switchPage("page-memo");
-    });
-  }
-
-  function onHashChange() {
-    const hash = window.location.hash.slice(1) || "map";
-    const pageId = hash === "memo" ? "page-memo" : "page-map";
-    document.querySelectorAll(".page").forEach((p) => {
-      const isActive = p.id === pageId;
-      p.classList.toggle("active", isActive);
-      p.hidden = !isActive;
-    });
-    document.querySelectorAll(".nav-tab").forEach((a) => {
-      const isMap = a.getAttribute("href") === "#map";
-      a.classList.toggle("active", (hash === "memo" && !isMap) || (hash !== "memo" && isMap));
-    });
-    if (pageId === "page-map" && leafletMap) {
-      setTimeout(function () {
-        leafletMap.invalidateSize();
-      }, 100);
-    }
-  }
-
-  window.addEventListener("hashchange", onHashChange);
-  onHashChange();
-
+/* ========== 초기화 및 이벤트 ========== */
+document.addEventListener("DOMContentLoaded", () => {
+  fetchData();
   renderPlacePills();
   initLeafletMap();
 
-  const firstPlace = places.find((p) => p.id === "hotel_golden");
-  if (firstPlace) selectPlace("hotel_golden");
+  // 페이지 전환
+  const switchPage = (id) => {
+    document.querySelectorAll(".page").forEach(p => p.hidden = p.id !== "page-" + id);
+    document.querySelectorAll(".nav-tab").forEach(t => t.classList.toggle("active", t.id === "nav" + id.charAt(0).toUpperCase() + id.slice(1)));
+    if (id === "map" && leafletMap) setTimeout(() => leafletMap.invalidateSize(), 100);
+  };
 
-  if (dayTabs) {
-    dayTabs.addEventListener("click", (e) => {
-      const btn = e.target.closest(".day-tab");
-      if (!btn) return;
-      switchDay(Number(btn.dataset.day));
-    });
-  }
+  document.getElementById("navMap").onclick = () => switchPage("map");
+  document.getElementById("navMemo").onclick = () => switchPage("memo");
+  document.getElementById("navBoard").onclick = () => switchPage("board");
 
-  if (savePlanBtn) {
-    savePlanBtn.addEventListener("click", () => {
-      if (planText) plansState[currentDay] = planText.value;
-      savePlans(plansState);
-    });
-  }
+  // 일정 이벤트
+  document.getElementById("dayTabs").onclick = (e) => {
+    if (e.target.classList.contains("day-tab")) switchDay(Number(e.target.dataset.day));
+  };
+  document.getElementById("savePlanBtn").onclick = () => {
+    plansState[currentDay] = document.getElementById("planText").value;
+    saveData();
+  };
+  document.getElementById("insertTemplateBtn").onclick = () => {
+    document.getElementById("planText").value = dayTemplates[currentDay];
+    plansState[currentDay] = dayTemplates[currentDay];
+    saveData();
+  };
 
-  let autoSaveTimeout;
-  if (planText) {
-    planText.addEventListener("input", () => {
-      clearTimeout(autoSaveTimeout);
-      autoSaveTimeout = setTimeout(() => {
-        plansState[currentDay] = planText.value;
-        savePlans(plansState);
-      }, 600);
-    });
-  }
+  // 게시판 이벤트
+  document.getElementById("addBoardPostBtn").onclick = () => {
+    const title = document.getElementById("boardTitle").value;
+    const content = document.getElementById("boardContent").value;
+    if (!title || !content) return alert("제목과 내용을 입력하세요.");
+    bulletinBoard.unshift({ title, content, date: new Date().toLocaleDateString() });
+    document.getElementById("boardTitle").value = "";
+    document.getElementById("boardContent").value = "";
+    saveData();
+    renderBoard();
+  };
 
-  if (insertTemplateBtn && planText) {
-    insertTemplateBtn.addEventListener("click", () => {
-      if (!planText.value.trim()) {
-        planText.value = dayTemplates[currentDay] || "";
-      } else {
-        const add = "\n\n" + (dayTemplates[currentDay] || "");
-        if (!planText.value.includes(dayTemplates[currentDay])) planText.value += add;
-      }
-      plansState[currentDay] = planText.value;
-      savePlans(plansState);
-    });
-  }
+  // 개인 메모 이벤트
+  document.getElementById("addPersonalMemoBtn").onclick = () => {
+    personalMemos.unshift({ text: "", date: new Date().toISOString() });
+    renderPersonalMemos();
+    saveData();
+  };
 
-  if (addMemoBtn) addMemoBtn.addEventListener("click", addNewMemo);
-
-  updatePlanTextarea();
-  renderExtraMemos();
-
-  if (Object.keys(plansState).length === 0 && dayTemplates[1]) {
-    plansState[1] = dayTemplates[1];
-    savePlans(plansState);
-    updatePlanTextarea();
-  } else if (saveStatus) {
-    const now = new Date();
-    saveStatus.textContent = "최근 저장: " + now.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
-  }
+  // 테마 토글
+  const themeToggle = document.getElementById("themeToggle");
+  themeToggle.onclick = () => {
+    const isDark = document.body.dataset.theme === "dark";
+    document.body.dataset.theme = isDark ? "light" : "dark";
+    themeToggle.textContent = isDark ? "🌙 다크 모드" : "☀ 라이트 모드";
+  };
 });

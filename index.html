@@ -14,66 +14,51 @@
     <header class="header">
       <div class="pill">
         <span class="pill-dot" aria-hidden="true"></span>
-        <span>상하이 여행 동선 메모 · 모바일 전용</span>
+        <span>상하이 여행 플래너 · 고덕지도 연동 최적화</span>
       </div>
       <div class="title-row">
         <div>
           <h1 class="title-main">상하이 3박 4일</h1>
-          <p class="title-sub">2026.03.26 ~ 03.29 · 골든 튤립 번드 뉴 아시아</p>
+          <p class="title-sub">2026.03.26 ~ 03.29 · SHANGHAI TRIP</p>
         </div>
         <button type="button" class="theme-toggle" id="themeToggle" aria-label="다크 모드로 전환">🌙 다크 모드</button>
       </div>
       <nav class="nav-pages" aria-label="페이지">
-        <a href="#map" class="nav-tab active" id="navMap">일정·지도</a>
-        <a href="#memo" class="nav-tab" id="navMemo">일정 메모</a>
+        <a href="#map" class="nav-tab active" id="navMap">지형·지물</a>
+        <a href="#memo" class="nav-tab" id="navMemo">일정·메모</a>
+        <a href="#board" class="nav-tab" id="navBoard">공유·게시판</a>
       </nav>
-      <div class="tag-row">
-        <span class="tag">인천(ICN) ↔ 상하이 푸둥(PVG)</span>
-        <span class="tag">한자 복사 → 고덕지도</span>
-      </div>
     </header>
 
-    <main id="main" class="main" role="main">
-      <!-- 페이지 1: 일정 요약 + 지도 -->
+    <main id="main" class="main fade-in" role="main">
+      <!-- 페이지 1: 지형·지물 (지도 위주) -->
       <section id="page-map" class="page active" aria-labelledby="heading-trip">
-        <h2 id="heading-trip" class="visually-hidden">기본 일정 요약</h2>
-        <section class="section" aria-labelledby="heading-summary">
+        <section class="section summary-section" aria-labelledby="heading-summary">
           <div class="section-header">
-            <h3 id="heading-summary" class="section-title">✈️ 기본 일정 요약</h3>
+            <h3 id="heading-summary" class="section-title">🗓️ 기본 일정 요약</h3>
           </div>
-          <div class="trip-grid">
-            <div class="trip-card">
-              <div class="trip-label">
-                <span>출국 · 3월 26일(목)</span>
-                <span class="trip-badge">ICN → PVG</span>
-              </div>
-              <p class="trip-main">인천 16:20 출발</p>
-              <p class="trip-sub">상하이 푸둥 도착 후 호텔 체크인</p>
-              <div class="divider-dot" aria-hidden="true"></div>
-              <div class="trip-label">
-                <span>귀국 · 3월 29일(일)</span>
-                <span class="trip-badge">PVG → ICN</span>
-              </div>
-              <p class="trip-main">상하이 14:35 출발</p>
-              <p class="trip-sub">점심 후 공항 이동 여유 있게</p>
-            </div>
-            <div class="trip-card">
-              <div class="trip-label">
-                <span>숙소</span>
-                <span class="trip-badge hotel">⭐ 기준 위치</span>
-              </div>
-              <p class="trip-main">골든 튤립 번드 뉴 아시아</p>
-              <p class="trip-sub">Golden Tulip Bund New Asia</p>
-              <div class="divider-dot" aria-hidden="true"></div>
-              <div class="flight-times">
-                <span><strong>체크인</strong> · 3/26 저녁</span>
-                <span><strong>체크아웃</strong> · 3/29 오전</span>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-label">출국</span>
+              <div class="summary-content">
+                <strong>03.26(목) 16:20</strong>
+                <p>인천(ICN) → 푸둥(PVG)</p>
               </div>
             </div>
-          </div>
-          <div class="chips-row">
-            <span class="chip">택시 목적지 한자: 「外滩 新亚酒店」 근처</span>
-            <span class="chip">도시: 上海(상하이)</span>
+            <div class="summary-item">
+              <span class="summary-label">귀국</span>
+              <div class="summary-content">
+                <strong>03.29(일) 14:35</strong>
+                <p>푸둥(PVG) → 인천(ICN)</p>
+              </div>
+            </div>
+            <div class="summary-item full-width">
+              <span class="summary-label">숙소</span>
+              <div class="summary-content">
+                <strong>골든 튤립 번드 뉴 아시아 (Golden Tulip)</strong>
+                <p>「金郁金香外滩新亚酒店」 · 와이탄 근처</p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -82,53 +67,64 @@
             <h3 id="heading-map" class="section-title">🗺️ 상하이 동네 지도</h3>
           </div>
           <div class="map-wrapper">
-            <div class="map-legend">
-              <span class="legend-item"><span class="legend-dot attraction" aria-hidden="true"></span>관광 명소</span>
-              <span class="legend-item"><span class="legend-dot hotel" aria-hidden="true"></span>숙소</span>
-            </div>
             <div id="leafletMap" class="leaflet-map" role="img" aria-label="상하이 지도"></div>
-            <p class="map-note">아래 목록에서 장소를 누르면 정보가 표시됩니다.</p>
           </div>
           <div class="places-grid" id="placesScroll" role="list"></div>
           <div class="place-detail" id="placeDetail" aria-live="polite">
-            <p class="place-detail-empty">지도에서 핀을 누르거나 위 목록에서 장소를 선택하세요.</p>
+            <p class="place-detail-empty">목록에서 장소를 선택하면 상세 정보가 표시됩니다.</p>
           </div>
         </section>
       </section>
 
-      <!-- 페이지 2: 일정 메모 + 추가 메모 -->
+      <!-- 페이지 2: 일정·메모 (개인 메모장) -->
       <section id="page-memo" class="page" aria-labelledby="heading-plan" hidden>
-        <h2 id="heading-plan" class="visually-hidden">3박 4일 일정 메모</h2>
         <section class="section" aria-labelledby="heading-days">
           <div class="section-header">
-            <h3 id="heading-days" class="section-title">📝 3박 4일 일정 메모</h3>
+            <h3 id="heading-days" class="section-title">📝 3박 4일 일정 계획</h3>
           </div>
-          <div id="dayTabs" class="days-tabs" role="tablist" aria-label="날짜 선택">
-            <button type="button" class="day-tab active" role="tab" aria-selected="true" data-day="1">D1 · 3/26 (도착)</button>
-            <button type="button" class="day-tab" role="tab" aria-selected="false" data-day="2">D2 · 3/27</button>
-            <button type="button" class="day-tab" role="tab" aria-selected="false" data-day="3">D3 · 3/28</button>
-            <button type="button" class="day-tab" role="tab" aria-selected="false" data-day="4">D4 · 3/29 (귀국)</button>
+          <div id="dayTabs" class="days-tabs" role="tablist">
+            <button type="button" class="day-tab active" data-day="1">D1</button>
+            <button type="button" class="day-tab" data-day="2">D2</button>
+            <button type="button" class="day-tab" data-day="3">D3</button>
+            <button type="button" class="day-tab" data-day="4">D4</button>
           </div>
-          <div class="plan-meta">
-            <span class="plan-chip" id="dayInfo">도착날 · 저녁 와이탄 산책</span>
-            <span class="plan-auto-save"><span class="plan-dot" aria-hidden="true"></span>자동 저장</span>
+          <div class="plan-info-row">
+            <span class="plan-chip" id="dayInfo">D1 · 도착 및 와이탄 야경</span>
           </div>
-          <label for="planText" class="visually-hidden">당일 일정 입력</label>
-          <textarea id="planText" class="plan-textarea" placeholder="예: 공항 → 호텔 이동, 체크인 후 와이탄 야경…" autocomplete="off"></textarea>
+          <div class="plan-editor-group">
+            <label for="planText" class="editor-label">당일 일정 상세 입력</label>
+            <textarea id="planText" class="plan-textarea" placeholder="여기에 오늘의 세부 일정을 적어주세요..."></textarea>
+          </div>
           <div class="plan-buttons">
-            <button type="button" class="btn" id="insertTemplateBtn">추천 일정 불러오기</button>
-            <button type="button" class="btn btn-main" id="savePlanBtn">지금 저장</button>
+            <button type="button" class="btn" id="insertTemplateBtn">기본 틀 가져오기</button>
+            <button type="button" class="btn btn-main" id="savePlanBtn">저장하기</button>
           </div>
-          <p class="save-status" id="saveStatus" aria-live="polite">최근 저장: —</p>
+          <p class="save-status" id="saveStatus">자동 저장 활성</p>
         </section>
 
-        <section class="section" aria-labelledby="heading-extra">
+        <section class="section" aria-labelledby="heading-personal">
           <div class="section-header">
-            <h3 id="heading-extra" class="section-title">📌 추가 메모 · 자유 일정</h3>
+            <h3 id="heading-personal" class="section-title">📔 나만의 개인 메모장</h3>
           </div>
-          <p class="section-desc">약속, 예산, 동선 등을 블록 단위로 추가할 수 있습니다.</p>
-          <div id="extraMemos"></div>
-          <button type="button" class="btn btn-main" id="addMemoBtn">➕ 새 메모 블록 추가</button>
+          <p class="section-desc">잊지 말아야 할 개인적인 준비물이나 팁을 적어보세요.</p>
+          <div id="personalMemosContainer"></div>
+          <button type="button" class="btn btn-main" id="addPersonalMemoBtn">➕ 새 메모 추가</button>
+        </section>
+      </section>
+
+      <!-- 페이지 3: 공유 게시판 -->
+      <section id="page-board" class="page" aria-labelledby="heading-board" hidden>
+        <section class="section">
+          <div class="section-header">
+            <h3 id="heading-board" class="section-title">📢 여행 공유 게시판</h3>
+          </div>
+          <p class="section-desc">함께 여행하는 일행 모두가 볼 수 있는 게시판입니다.</p>
+          <div class="board-input-group">
+            <input type="text" id="boardTitle" class="board-title-input" placeholder="제목을 입력하세요 (예: 꼭 먹어봐야 할 것)">
+            <textarea id="boardContent" class="board-textarea" placeholder="내용을 입력하세요..."></textarea>
+            <button type="button" class="btn btn-main" id="addBoardPostBtn">게시글 등록</button>
+          </div>
+          <div id="boardPostsContainer" class="board-posts-list"></div>
         </section>
       </section>
     </main>
