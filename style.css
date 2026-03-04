@@ -1,14 +1,14 @@
 :root {
-  /* Premium Light Theme - Softened */
-  --bg-app: #f2f2f7;
-  --bg-gradient: linear-gradient(135deg, #f2f2f7 0%, #e5e5ea 100%);
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.5);
+  /* Premium Soft Brown (Shanghai Map) Theme */
+  --bg-app: #fcf8f2;
+  --bg-gradient: linear-gradient(135deg, #fcf8f2 0%, #f2e6db 100%);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(74, 58, 48, 0.15);
   --accent: #c48356;
   --accent-dark: #a66539;
-  --text-primary: #1c1c1e;
-  --text-secondary: #3a3a3c;
-  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  --text-primary: #4a3a30;
+  --text-secondary: #7a6a5e;
+  --card-shadow: 0 8px 32px rgba(74, 58, 48, 0.08);
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 12px;
