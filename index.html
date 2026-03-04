@@ -166,13 +166,19 @@
 
       <!-- 페이지: 가이드 -->
       <section id="page-guide" class="page" aria-labelledby="heading-guide" hidden>
-        <div class="guide-tabs">
-          <button type="button" class="guide-sub-tab active" data-guide="meituan">🥡 메이투안</button>
-          <button type="button" class="guide-sub-tab" data-guide="dianping">📊 디안핑</button>
-        </div>
         <section class="section">
-          <div id="guideContent" class="guide-content">
-            <!-- JS에서 렌더링 -->
+          <div class="section-header">
+            <h3 id="heading-guide" class="section-title">💡 상하이 생존 가이드</h3>
+          </div>
+
+          <div class="guide-tabs">
+            <button type="button" class="guide-tab active" data-guide="apps">필수 앱 활용</button>
+            <button type="button" class="guide-tab" data-guide="delivery">배달/마사지</button>
+            <button type="button" class="guide-tab" data-guide="notes">나의 가이드 노트</button>
+          </div>
+
+          <div id="guideContent" class="guide-content-area">
+            <!-- JavaScript로 렌더링 -->
           </div>
         </section>
       </section>
