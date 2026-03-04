@@ -574,33 +574,8 @@ window.deleteBoardPost = (index) => {
   renderBoard();
 };
 
-/* ========== 가이드 및 기타 렌더링 ========== */
-let activeGuide = 'meituan';
-function renderGuide() {
-  const container = document.getElementById("guideContent");
-  if (!container) return;
-  if (activeGuide === 'meituan') {
-    container.innerHTML = `
-            <div class="guide-item" style="margin-bottom:20px;">
-                <h4 style="color:var(--accent); margin-bottom:8px;">🥡 메이투안 배달 팁</h4>
-                <p style="font-size:14px; color:var(--text-secondary);">현지 번호가 없어도 위챗 연동으로 주문 가능합니다. 호텔 로비 주소를 미리 확인하세요.</p>
-            </div>
-            <div class="tip-card" style="background:var(--glass-bg); padding:16px; border-radius:12px; font-size:13px; border:1px solid var(--glass-border);">
-                💡 <b>주소 입력:</b> 호텔 데스크의 명함을 찍어 파파고 이미지 번역기로 번역 후 복사해넣으세요.
-            </div>
-        `;
-  } else {
-    container.innerHTML = `
-            <div class="guide-item" style="margin-bottom:20px;">
-                <h4 style="color:var(--accent); margin-bottom:8px;">📊 디안핑 스마트 활용</h4>
-                <p style="font-size:14px; color:var(--text-secondary);">별점 4.5 이상인 곳은 실패 확률이 적습니다. '미안엔부(买单)' 기능을 통해 할인을 받으세요.</p>
-            </div>
-        `;
-  }
-}
 
-/* ========== 초기화 ========== */
-/* ========== 가이드 렌더링 ========== */
+/* ========== 초기화 및 가이드 렌더링 ========== */
 function renderGuide(tab) {
   const container = document.getElementById("guideContent");
   if (!container) return;
@@ -695,15 +670,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   });
 
-  // 가이드 탭
-  document.querySelectorAll(".guide-sub-tab").forEach(tab => {
-    tab.onclick = () => {
-      document.querySelectorAll(".guide-sub-tab").forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      activeGuide = tab.dataset.guide;
-      renderGuide();
-    };
-  });
 
   // 이벤트 리스너 등록
   document.getElementById("dayTabs").onclick = (e) => {
@@ -713,18 +679,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addChecklistItemBtn").onclick = addChecklistItem;
   document.getElementById("addExpenseBtn").onclick = addExpense;
   document.getElementById("addPlaceBtn").onclick = addCustomPlace;
-
-  document.getElementById("addBoardPostBtn").onclick = () => {
-    const author = document.getElementById("boardAuthor").value;
-    const title = document.getElementById("boardTitle").value;
-    const content = document.getElementById("boardContent").value;
-    if (!author || !title || !content) return alert("빈칸을 채워주세요.");
-    bulletinBoard.unshift({ author, title, content, date: new Date().toLocaleDateString() });
-    document.getElementById("boardTitle").value = "";
-    document.getElementById("boardContent").value = "";
-    renderBoard();
-    saveData();
-  };
 
   document.getElementById("addBoardPostBtn").onclick = () => {
     const author = document.getElementById("boardAuthor").value;

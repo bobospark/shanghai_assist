@@ -11,10 +11,14 @@ export async function onRequestGet(context) {
     }
     const raw = await kv.get(KEY);
     // bulletinBoard: 게시판용, personalMemos: 개인 메모용, plans: 일자별 계획
-    const data = raw ? JSON.parse(raw) : { 
-      plans: {}, 
-      bulletinBoard: [], 
-      personalMemos: [] 
+    const data = raw ? JSON.parse(raw) : {
+      plans: {},
+      bulletinBoard: [],
+      checklist: [],
+      expenses: [],
+      userPlaces: [],
+      guideNotes: "",
+      personalMemos: []
     };
     return Response.json(data, {
       headers: {
@@ -36,6 +40,10 @@ export async function onRequestPost(context) {
     const payload = {
       plans: body.plans || {},
       bulletinBoard: Array.isArray(body.bulletinBoard) ? body.bulletinBoard : [],
+      checklist: Array.isArray(body.checklist) ? body.checklist : [],
+      expenses: Array.isArray(body.expenses) ? body.expenses : [],
+      userPlaces: Array.isArray(body.userPlaces) ? body.userPlaces : [],
+      guideNotes: body.guideNotes || "",
       personalMemos: Array.isArray(body.personalMemos) ? body.personalMemos : []
     };
     await kv.put(KEY, JSON.stringify(payload));
