@@ -52,21 +52,21 @@
               <span class="summary-label">출국</span>
               <div class="summary-content">
                 <strong>03.26(목) 16:20</strong>
-                <p>ICN → PVG</p>
+                <p>인천(ICN) → 푸둥(PVG)</p>
               </div>
             </div>
             <div class="summary-item">
               <span class="summary-label">귀국</span>
               <div class="summary-content">
                 <strong>03.29(일) 14:35</strong>
-                <p>PVG → ICN</p>
+                <p>푸둥(PVG) → 인천(ICN)</p>
               </div>
             </div>
             <div class="summary-item full-width">
               <span class="summary-label">숙소</span>
               <div class="summary-content">
                 <strong>골든 튤립 번드 뉴 아시아</strong>
-                <p>「金郁金香外滩新亚酒店」</p>
+                <p>「金郁金香外滩新亚酒店」 · 와이탄 근처</p>
               </div>
             </div>
           </div>
@@ -80,9 +80,26 @@
             <div id="leafletMap" class="leaflet-map" role="img" aria-label="상하이 지도"></div>
           </div>
           <div class="places-grid" id="placesScroll" role="list"></div>
+
+          <!-- 장소 추가 폼 -->
+          <div class="add-place-container">
+            <div class="add-place-title">📍 장소 추가하기</div>
+            <div class="add-place-row">
+              <input type="text" id="addPlaceName" class="input-modern" placeholder="장소명 (예: 소양생전)">
+              <select id="addPlaceType" class="input-modern">
+                <option value="food">음식점</option>
+                <option value="cafe">카페</option>
+                <option value="attraction">관광지</option>
+                <option value="dessert">디저트</option>
+              </select>
+            </div>
+            <textarea id="addPlaceInfo" class="input-modern" placeholder="메모할 정보를 입력하세요 (추천 메뉴 등)"></textarea>
+            <button type="button" class="btn btn-main" id="addPlaceBtn">목록에 추가</button>
+          </div>
+
           <div class="place-detail-container">
             <div class="place-detail" id="placeDetail" aria-live="polite">
-              <p class="place-detail-empty">장소를 선택하면 상세 정보가 나타납니다.</p>
+              <p class="place-detail-empty">장소를 선택하면 상세 정보와 거리가 표시됩니다.</p>
             </div>
           </div>
         </section>

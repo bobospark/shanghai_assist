@@ -1,15 +1,18 @@
-/* ========== 명소 데이터 ========== */
+/* ========== 명소 데이터 (확장 버전) ========== */
+const hotelLocation = { lat: 31.245, lng: 121.485 }; // 골든 튤립 번드 뉴 아시아 대략 좌표
+
 const places = [
   {
     id: "hotel_golden",
     type: "hotel",
-    emoji: "⭐",
+    emoji: "🏠",
     koreanName: "골든 튤립 번드 뉴 아시아",
-    chineseName: "金郁금香外滩新亚酒店",
-    areaKorean: "와이탄 · 난징동루",
-    info: "1934년에 지어진 유서 깊은 호텔로, 상해 여행의 중심지인 텐통루역 바로 앞에 위치해 있습니다.",
-    tips: ["지하철 10/12호선 텐통루역 6번 출구 상단", "와이탄 도보 10분 거리"],
-    tags: ["숙소", "역세권", "클래식"]
+    chineseName: "金郁金香外滩新亚酒店",
+    areaKorean: "와이탄 북쪽",
+    info: "1934년에 지어진 유서 깊은 호텔로, 상해 여행의 중심지입니다.",
+    tips: ["지하철 10/12호선 텐통루역 6번 출구 바로 앞", "와이탄까지 도보 10-15분"],
+    tags: ["베이스캠프", "클래식"],
+    lat: 31.2450, lng: 121.4850
   },
   {
     id: "bund",
@@ -18,9 +21,11 @@ const places = [
     koreanName: "와이탄",
     chineseName: "外滩",
     areaKorean: "황푸 강변",
-    info: "상하이의 심장부. 고전적 건축물과 건너편 푸동의 미래적 스카이라인이 공존하는 곳입니다.",
-    tips: ["야경 조명은 보통 19시~22시 사이입니다.", "유료 전망대보다 산책로 걷기를 추천합니다."],
-    tags: ["필수", "야경", "산책"]
+    info: "상하이의 상징. 유럽풍 건축물과 푸동의 스카이라인을 동시에 즐기는 곳.",
+    tips: ["조명 시간: 19:00~22:00", "페리를 타고 푸동으로 건너가보세요."],
+    tags: ["야경", "필수"],
+    lat: 31.2415, lng: 121.4910,
+    nearby: ["페리 선착장", "황푸 공원"]
   },
   {
     id: "yuyuan",
@@ -29,9 +34,11 @@ const places = [
     koreanName: "예원",
     chineseName: "豫园",
     areaKorean: "전통 정원",
-    info: "중국 전통 정원의 미를 느낄 수 있는 곳입니다. 주변 상가 지역도 야경이 매우 화려합니다.",
-    tips: ["정원 입장은 오후 4시 전까지입니다.", "밤에 조명이 켜진 후 방문하는 것을 추천합니다."],
-    tags: ["전통", "포토존"]
+    info: "명나라 시절의 사대부 정원으로 중국 전통 가옥의 정수를 보여줍니다.",
+    tips: ["남상만두 샤오롱바오가 유명합니다.", "밤의 예원 상성 야경이 일품입니다."],
+    tags: ["전통", "포토존"],
+    lat: 31.2272, lng: 121.4921,
+    nearby: ["예원 상성", "성황묘"]
   },
   {
     id: "nanjing_east",
@@ -40,53 +47,63 @@ const places = [
     koreanName: "난징동루",
     chineseName: "南京东路",
     areaKorean: "쇼핑 스트리트",
-    info: "상하이 최대의 번화가로, 다양한 상점과 먹거리가 가득한 보행자 전용 도로입니다.",
-    tips: ["엠앤엠즈 세계, 레고 스토어가 볼만합니다.", "아이러브상하이 지점은 인기가 많습니다."],
-    tags: ["쇼핑", "활기찬"]
+    info: "상하이의 명동이라 불리는 거대한 쇼핑 가도입니다.",
+    tips: ["제일식품상점에서 간식을 사보세요.", "관광 미니열차를 타면 편합니다."],
+    tags: ["쇼핑", "활기찬"],
+    lat: 31.2384, lng: 121.4815,
+    nearby: ["M&M 세계", "레고 스토어"]
   },
   {
-    id: "jingan_temple",
+    id: "xintiandi",
+    type: "attraction",
+    emoji: "🏛️",
+    koreanName: "신천지",
+    chineseName: "新天地",
+    areaKorean: "프랑스 조계지",
+    info: "전통 가옥인 석고문을 개조한 세련된 쇼핑 & 다이닝 공간입니다.",
+    tips: ["대한민국 임시정부 청사가 인접해 있습니다.", "브런치 장소로 강력 추천."],
+    tags: ["세련된", "임시정부"],
+    lat: 31.2223, lng: 121.4755,
+    nearby: ["임시정부 청사", "신천지 스타일 몰"]
+  },
+  {
+    id: "jingan",
     type: "attraction",
     emoji: "⛩️",
     koreanName: "정안사",
     chineseName: "静安寺",
-    areaKorean: "도심 속 사찰",
-    info: "화려한 황금색 지붕이 돋보이는 사찰로, 현대적인 빌딩 숲 사이에서 독특한 분위기를 자아냅니다.",
-    tips: ["밤에 조명이 켜지면 훨씬 화려합니다.", "주변 Kerry Centre 쇼핑몰과 묶어 방문하세요."],
-    tags: ["사찰", "랜드마크"]
+    areaKorean: "도심 사찰",
+    info: "현대적인 빌딩 숲 사이의 화려한 황금 빛 사찰입니다.",
+    tips: ["입장료는 약 50위안입니다.", "주변 Kerry Centre 쇼핑몰이 훌륭합니다."],
+    tags: ["사찰", "랜드마크"],
+    lat: 31.2246, lng: 121.4461,
+    nearby: ["Kerry Centre", "Reel Mall"]
   },
   {
-    id: "fengmao",
-    type: "food",
-    emoji: "🍢",
-    koreanName: "풍무양꼬치",
-    chineseName: "丰茂烤串",
-    areaKorean: "난징동루 등 다수",
-    info: "자동으로 구워주는 기계가 있는 깨끗한 양꼬치 전문점입니다. 현지인들에게도 인기입니다.",
-    tips: ["양어깨살(羊肉串)이 시그니처입니다.", "냉면과 함께 먹으면 더 맛있습니다."],
-    tags: ["양꼬치", "맛집", "체인점"]
+    id: "shanghai_tower",
+    type: "attraction",
+    emoji: "🗼",
+    koreanName: "상하이 타워",
+    chineseName: "上海中心大厦",
+    areaKorean: "푸동 금융지구",
+    info: "중국 최대, 세계 2위 높이의 마천루입니다.",
+    tips: ["118층 전망대에서 상하이 전경을 보세요.", "날씨가 맑은 날 방문 필수."],
+    tags: ["전망대", "초고층"],
+    lat: 31.2335, lng: 121.5056,
+    nearby: ["동방명주", "진마오 타워"]
   },
   {
-    id: "lillian",
-    type: "dessert",
-    emoji: "🥧",
-    koreanName: "릴리안 베이커리",
-    chineseName: "莉莲蛋挞",
-    areaKorean: "전역",
-    info: "상하이에서 꼭 먹어봐야 할 에그타르트 맛집입니다. 바삭한 도우가 특징입니다.",
-    tips: ["치즈 타르트와 기본 에그타르트 모두 추천합니다.", "지하철역 내부나 백화점 지하에서 쉽게 발견됩니다."],
-    tags: ["에그타르트", "간식"]
-  },
-  {
-    id: "manner",
-    type: "cafe",
-    emoji: "☕",
-    koreanName: "매너 커피",
-    chineseName: "Manner Coffee",
-    areaKorean: "전역",
-    info: "상하이 로컬 커피의 자존심. 좁은 공간에서 훌륭한 퀄리티의 커피를 제안합니다.",
-    tips: ["오트라떼(燕麦拿铁)가 시그니처입니다.", "개인 컵 지참 시 할인이 됩니다."],
-    tags: ["커피", "실속형"]
+    id: "tianzifang",
+    type: "attraction",
+    emoji: "🎨",
+    koreanName: "티엔즈팡",
+    chineseName: "田子坊",
+    areaKorean: "예술인 거리",
+    info: "미로 같은 골목길 사이로 작은 카페와 공방들이 숨어있는 곳.",
+    tips: ["길을 잃기 쉬우니 지도를 잘 보세요.", "아기자기한 기념품 사기 좋습니다."],
+    tags: ["골목", "예술"],
+    lat: 31.2091, lng: 121.4688,
+    nearby: ["다푸차오역 쇼핑몰"]
   }
 ];
 
@@ -108,6 +125,32 @@ const placeTypeColor = {
 
 const placeTypeOrder = ["hotel", "attraction", "food", "cafe", "dessert"];
 
+/* ========== 방향 및 거리 계산 로직 ========== */
+function getDirection(targetLat, targetLng) {
+  const latDiff = targetLat - hotelLocation.lat;
+  const lngDiff = targetLng - hotelLocation.lng;
+
+  let vertical = latDiff > 0 ? "북" : "남";
+  let horizontal = lngDiff > 0 ? "동" : "서";
+
+  // 차이가 크지 않으면 한 방향만 표시
+  if (Math.abs(latDiff) > Math.abs(lngDiff) * 2) return vertical;
+  if (Math.abs(lngDiff) > Math.abs(latDiff) * 2) return horizontal;
+
+  return vertical + horizontal;
+}
+
+function getDistanceKM(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Earth radius in KM
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return (R * c).toFixed(1);
+}
+
 const MAP_IMAGE_URL = "shanghaimap.png";
 let leafletMap = null;
 
@@ -116,6 +159,7 @@ let plansState = {};
 let bulletinBoard = [];
 let checklist = [];
 let expenses = [];
+let userPlaces = []; // 사용자가 추가한 장소
 let currentDay = 1;
 
 async function fetchData() {
@@ -126,11 +170,13 @@ async function fetchData() {
     bulletinBoard = data.bulletinBoard || [];
     checklist = data.checklist || [];
     expenses = data.expenses || [];
+    userPlaces = data.userPlaces || [];
 
     renderBoard();
     renderChecklist();
     renderExpenses();
     updatePlanUI();
+    renderPlacePills();
   } catch (e) {
     console.error("Data fetch error", e);
     // 폴백: 로컬 스토리지 사용
@@ -138,20 +184,23 @@ async function fetchData() {
     bulletinBoard = JSON.parse(localStorage.getItem("bulletinBoard") || "[]");
     checklist = JSON.parse(localStorage.getItem("checklist") || "[]");
     expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
+    userPlaces = JSON.parse(localStorage.getItem("userPlaces") || "[]");
     renderBoard();
     renderChecklist();
     renderExpenses();
     updatePlanUI();
+    renderPlacePills();
   }
 }
 
 async function saveData() {
-  const payload = { plans: plansState, bulletinBoard, checklist, expenses };
+  const payload = { plans: plansState, bulletinBoard, checklist, expenses, userPlaces };
   // 로컬 스토리지 저장
   localStorage.setItem("plansState", JSON.stringify(plansState));
   localStorage.setItem("bulletinBoard", JSON.stringify(bulletinBoard));
   localStorage.setItem("checklist", JSON.stringify(checklist));
   localStorage.setItem("expenses", JSON.stringify(expenses));
+  localStorage.setItem("userPlaces", JSON.stringify(userPlaces));
 
   try {
     await fetch("/api/data", {
@@ -190,12 +239,14 @@ function initLeafletMap() {
   };
 }
 
+/* ========== 장소 관리 ========== */
 function renderPlacePills() {
   const container = document.getElementById("placesScroll");
   if (!container) return;
   container.innerHTML = "";
 
-  const sorted = [...places].sort((a, b) => {
+  const allPlaces = [...places, ...userPlaces];
+  const sorted = allPlaces.sort((a, b) => {
     const ta = placeTypeOrder.indexOf(a.type);
     const tb = placeTypeOrder.indexOf(b.type);
     return ta - tb;
@@ -205,37 +256,83 @@ function renderPlacePills() {
     const btn = document.createElement("button");
     btn.className = "place-pill";
     btn.dataset.id = place.id;
-    btn.innerHTML = `${place.emoji}<span>${place.koreanName}</span>`;
+    btn.innerHTML = `${place.emoji || '📍'}<span>${place.koreanName}</span>`;
     btn.onclick = () => selectPlace(place.id);
     container.appendChild(btn);
   });
 }
 
 function selectPlace(id) {
-  const place = places.find(p => p.id === id);
+  const allPlaces = [...places, ...userPlaces];
+  const place = allPlaces.find(p => p.id === id);
   if (!place) return;
 
   document.querySelectorAll(".place-pill").forEach(el => {
     el.classList.toggle("active", el.dataset.id === id);
   });
 
+  const proximity = place.id === "hotel_golden" ? "기준점 (숙소)" :
+    `${getDirection(place.lat, place.lng)}쪽, 약 ${getDistanceKM(hotelLocation.lat, hotelLocation.lng, place.lat, place.lng)}km`;
+
   const detailBody = document.getElementById("placeDetail");
   detailBody.innerHTML = `
-    <div class="place-type-badge" style="background: ${placeTypeColor[place.type]}22; color: ${placeTypeColor[place.type]}; border: 1px solid ${placeTypeColor[place.type]}44;">
-      ${placeTypeLabel[place.type]}
+    <div class="place-type-badge" style="background: var(--accent); color: white;">
+      ${placeTypeLabel[place.type] || "커스텀"}
     </div>
-    <div class="place-name-korean">${place.emoji} ${place.koreanName}</div>
+    <div class="place-name-korean">${place.emoji || '📍'} ${place.koreanName}</div>
     <div class="place-name-chinese">${place.chineseName} <button class="btn-copy" onclick="copyText('${place.chineseName}')">📋</button></div>
-    <div class="place-info-text">${place.info}</div>
-    <div class="place-tips">
-      ${place.tips.map(t => `<div class="tip-item">· ${t}</div>`).join("")}
+    
+    <div class="place-proximity">
+        <span class="prox-label">숙소 기준 위치</span>
+        <span class="prox-value">${proximity}</span>
     </div>
+
+    <div class="place-info-text">${place.info}</div>
+    
+    <div class="place-section-title">💡 여행 팁</div>
+    <div class="place-tips">
+      ${place.tips ? place.tips.map(t => `<div class="tip-item">· ${t}</div>`).join("") : "등록된 팁이 없습니다."}
+    </div>
+
+    ${place.nearby ? `
+    <div class="place-section-title"> 주변 가볼만한 곳</div>
+    <div class="nearby-list">
+        ${place.nearby.map(n => `<span class="nearby-tag">${n}</span>`).join("")}
+    </div>
+    ` : ""}
   `;
 }
 
 window.copyText = async (text) => {
   await navigator.clipboard.writeText(text);
   alert("복사되었습니다!");
+}
+
+function addCustomPlace() {
+  const name = document.getElementById("addPlaceName").value;
+  const type = document.getElementById("addPlaceType").value;
+  const info = document.getElementById("addPlaceInfo").value;
+  if (!name) return alert("장소 이름을 입력해주세요.");
+
+  const newPlace = {
+    id: "user_" + Date.now(),
+    type: type,
+    emoji: "⭐",
+    koreanName: name,
+    chineseName: "사용자 추가 장소",
+    info: info,
+    tips: ["직접 추가한 장소입니다."],
+    lat: hotelLocation.lat + (Math.random() - 0.5) * 0.05, // 위치 정보가 없으므로 근처 랜덤 배정 (실제론 검색 연동 필요)
+    lng: hotelLocation.lng + (Math.random() - 0.5) * 0.05
+  };
+
+  userPlaces.push(newPlace);
+  saveData();
+  renderPlacePills();
+
+  // 필드 초기화
+  document.getElementById("addPlaceName").value = "";
+  document.getElementById("addPlaceInfo").value = "";
 }
 
 /* ========== 일정 관리 ========== */
@@ -436,6 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("addChecklistItemBtn").onclick = addChecklistItem;
   document.getElementById("addExpenseBtn").onclick = addExpense;
+  document.getElementById("addPlaceBtn").onclick = addCustomPlace;
 
   document.getElementById("addBoardPostBtn").onclick = () => {
     const author = document.getElementById("boardAuthor").value;
