@@ -104,6 +104,103 @@ const places = [
     tags: ["골목", "예술"],
     lat: 31.2091, lng: 121.4688,
     nearby: ["다푸차오역 쇼핑몰"]
+  },
+  {
+    id: "haidilao",
+    type: "food",
+    emoji: "🍲",
+    koreanName: "하이디라오",
+    chineseName: "海底捞",
+    areaKorean: "난징동루",
+    info: "세계적으로 유명한 서비스 끝판왕 훠궈 브랜드입니다.",
+    tips: ["웨이팅 중 네일 서비스 등을 받을 수 있습니다.", "수화면 퍼포먼스를 꼭 구경하세요."],
+    tags: ["훠궈", "서비스최고"],
+    lat: 31.2385, lng: 121.4820,
+    nearby: ["제일식품상점"]
+  },
+  {
+    id: "yangs",
+    type: "food",
+    emoji: "🥟",
+    koreanName: "소양생전",
+    chineseName: "小杨生煎",
+    areaKorean: "상하이 전역",
+    info: "바닥은 바삭하고 위는 촉촉한 상하이식 성젠바오 맛집.",
+    tips: ["육즙이 뜨거우니 젓가락으로 구멍을 내서 식혀 드세요.", "기본 맛과 새우 맛 추천."],
+    tags: ["성젠바오", "가성비"],
+    lat: 31.2390, lng: 121.4830
+  },
+  {
+    id: "jiajia",
+    type: "food",
+    emoji: "🥢",
+    koreanName: "가가탕포",
+    chineseName: "佳家汤包",
+    areaKorean: "인민광장 근처",
+    info: "현지인들이 줄 서서 먹는 샤오롱바오 성지입니다.",
+    tips: ["게살 샤오롱바오가 가장 인기 있습니다.", "오전 일찍 가야 품절을 피합니다."],
+    tags: ["샤오롱바오", "로컬맛집"],
+    lat: 31.2345, lng: 121.4740
+  },
+  {
+    id: "shuyu",
+    type: "food",
+    emoji: "🍗",
+    koreanName: "슈유 중식",
+    chineseName: "舒友海鲜大酒楼",
+    areaKorean: "와이탄",
+    info: "정갈한 상하이식 해산물 요리와 딤섬을 즐길 수 있는 곳.",
+    tips: ["경치가 아주 좋으니 창가 자리를 예약하세요.", "딤섬 종류가 매우 다양합니다."],
+    tags: ["해산물", "분위기맛집"],
+    lat: 31.2420, lng: 121.4920
+  },
+  {
+    id: "manner_special",
+    type: "cafe",
+    emoji: "☕",
+    koreanName: "매너 커피 (본점)",
+    chineseName: "Manner Coffee",
+    areaKorean: "정안사 근처",
+    info: "상하이 로컬 커피의 자존심. 매너 커피의 역사가 시작된 곳입니다.",
+    tips: ["공간이 좁으니 테이크아웃을 추천합니다.", "플랫 화이트가 유명합니다."],
+    tags: ["로컬커피", "힙한"],
+    lat: 31.2250, lng: 121.4470
+  },
+  {
+    id: "dragonfly",
+    type: "massage",
+    emoji: "💆",
+    koreanName: "드래곤플라이",
+    chineseName: "悠庭保健会所",
+    areaKorean: "신천지/프랑스조계지",
+    info: "외국인들에게도 인기 높은 깔끔하고 전문적인 마사지 샵.",
+    tips: ["미리 예약하는 것이 좋습니다.", "아로마 오일 마사지가 아주 훌륭합니다."],
+    tags: ["마사지", "힐링", "프리미엄"],
+    lat: 31.2215, lng: 121.4745
+  },
+  {
+    id: "taithai",
+    type: "massage",
+    emoji: "🏮",
+    koreanName: "타이 타이 마사지",
+    chineseName: "Thai Thai 泰式按摩",
+    areaKorean: "난징동루",
+    info: "정통 태국식 마사지를 상하이 도심에서 저렴하게 즐길 수 있습니다.",
+    tips: ["발 마사지만 받아도 피로가 확 풀립니다.", "디안핑에서 예약 시 할인이 큽니다."],
+    tags: ["태국식", "가성비", "야간가능"],
+    lat: 31.2370, lng: 121.4810
+  },
+  {
+    id: "qllspace",
+    type: "massage",
+    emoji: "🛀",
+    koreanName: "QLL 스페이스",
+    chineseName: "曲水兰亭",
+    areaKorean: "민항구(조금 멀지만 최고급)",
+    info: "상하이에서 가장 럭셔리한 24시간 스파 체험 공간입니다.",
+    tips: ["입장료에 고급 뷔페와 과일이 포함되어 있습니다.", "하루 종일 쉬어가기 좋습니다."],
+    tags: ["럭셔리", "스파", "호캉스"],
+    lat: 31.1850, lng: 121.3850
   }
 ];
 
@@ -112,7 +209,8 @@ const placeTypeLabel = {
   food: "식당",
   cafe: "카페",
   dessert: "디저트",
-  hotel: "숙소"
+  hotel: "숙소",
+  massage: "마사지"
 };
 
 const placeTypeColor = {
@@ -123,7 +221,7 @@ const placeTypeColor = {
   hotel: "#facc15"
 };
 
-const placeTypeOrder = ["hotel", "attraction", "food", "cafe", "dessert"];
+const placeTypeOrder = ["hotel", "attraction", "food", "cafe", "dessert", "massage"];
 
 /* ========== 방향 및 거리 계산 로직 ========== */
 function getDirection(targetLat, targetLng) {
@@ -133,6 +231,7 @@ function getDirection(targetLat, targetLng) {
   let vertical = latDiff > 0 ? "북" : "남";
   let horizontal = lngDiff > 0 ? "동" : "서";
 
+  if (Math.abs(latDiff) < 0.005 && Math.abs(lngDiff) < 0.005) return "근처";
   // 차이가 크지 않으면 한 방향만 표시
   if (Math.abs(latDiff) > Math.abs(lngDiff) * 2) return vertical;
   if (Math.abs(lngDiff) > Math.abs(latDiff) * 2) return horizontal;
@@ -160,6 +259,7 @@ let bulletinBoard = [];
 let checklist = [];
 let expenses = [];
 let userPlaces = []; // 사용자가 추가한 장소
+let guideNotes = ""; // 사용자의 가이드 메모
 let currentDay = 1;
 
 async function fetchData() {
@@ -171,12 +271,14 @@ async function fetchData() {
     checklist = data.checklist || [];
     expenses = data.expenses || [];
     userPlaces = data.userPlaces || [];
+    guideNotes = data.guideNotes || "";
 
     renderBoard();
     renderChecklist();
     renderExpenses();
     updatePlanUI();
     renderPlacePills();
+    renderGuide("apps");
   } catch (e) {
     console.error("Data fetch error", e);
     // 폴백: 로컬 스토리지 사용
@@ -185,22 +287,25 @@ async function fetchData() {
     checklist = JSON.parse(localStorage.getItem("checklist") || "[]");
     expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
     userPlaces = JSON.parse(localStorage.getItem("userPlaces") || "[]");
+    guideNotes = localStorage.getItem("guideNotes") || "";
     renderBoard();
     renderChecklist();
     renderExpenses();
     updatePlanUI();
     renderPlacePills();
+    renderGuide("apps");
   }
 }
 
 async function saveData() {
-  const payload = { plans: plansState, bulletinBoard, checklist, expenses, userPlaces };
+  const payload = { plans: plansState, bulletinBoard, checklist, expenses, userPlaces, guideNotes };
   // 로컬 스토리지 저장
   localStorage.setItem("plansState", JSON.stringify(plansState));
   localStorage.setItem("bulletinBoard", JSON.stringify(bulletinBoard));
   localStorage.setItem("checklist", JSON.stringify(checklist));
   localStorage.setItem("expenses", JSON.stringify(expenses));
   localStorage.setItem("userPlaces", JSON.stringify(userPlaces));
+  localStorage.setItem("guideNotes", guideNotes);
 
   try {
     await fetch("/api/data", {
@@ -495,6 +600,80 @@ function renderGuide() {
 }
 
 /* ========== 초기화 ========== */
+/* ========== 가이드 렌더링 ========== */
+function renderGuide(tab) {
+  const container = document.getElementById("guideContent");
+  if (!container) return;
+
+  document.querySelectorAll(".guide-tab").forEach(el => {
+    el.classList.toggle("active", el.dataset.guide === tab);
+  });
+
+  if (tab === "apps") {
+    container.innerHTML = `
+            <div class="tip-card">
+                <h4>📱 디안핑 (Dianping/大众点评) 활용법</h4>
+                <p>맛집, 마사지 등 모든 가게의 평점을 확인하는 필수 앱입니다.</p>
+                <ul class="tip-list">
+                    <li><span class="app-badge">평점 해석:</span> 4.5점 이상이면 실패 확률이 거의 없습니다.</li>
+                    <li><span class="app-badge">할인 쿠폰:</span> '买单(마이단)' 버튼으로 결제 시 자동 할인이 되거나 '代金券(다이진권)' 바우처를 미리 사서 쓸 수 있습니다.</li>
+                    <li><span class="app-badge">메뉴 확인:</span> '推荐(투이젠)' 탭에서 사람들이 많이 먹는 메뉴 사진을 보고 손가락으로 주문하세요.</li>
+                </ul>
+            </div>
+            <div class="tip-card">
+                <h4>🚴 메이투안 (Meituan/美团) 팁</h4>
+                <p>배달 뿐만 아니라 자전거 공유, 티켓 구매도 가능합니다.</p>
+                <ul class="tip-list">
+                    <li><span class="app-badge">배달 팁:</span> '月售(웨쇼우)'가 높은 집은 회전율이 좋아 신선하고 맛있을 확률이 높습니다.</li>
+                    <li><span class="app-badge">정보 해석:</span> 배달 완료 시 시진과 함께 메시지가 오니 번역기를 활용하세요.</li>
+                </ul>
+            </div>
+        `;
+  } else if (tab === "delivery") {
+    container.innerHTML = `
+            <div class="tip-card">
+                <h4>🍰 메이투안 디저트 배달 (TOP 3)</h4>
+                <ul class="tip-list">
+                    <li><strong>희차 (HEYTEA/喜茶):</strong> 웨이팅 없이 배달로 즐기는 치즈폼 과일티. '포도 치즈티' 강추.</li>
+                    <li><strong>릴리안 베이커리 (莉莲蛋挞):</strong> 매장에 못 갔다면 배달로! 겉바속촉 에그타르트의 정석.</li>
+                    <li><strong>이치도 (ICHIDO/宜芝多):</strong> 일본식 베이커리로 생크림 케이크와 부드러운 빵류가 훌륭합니다.</li>
+                </ul>
+            </div>
+            <div class="tip-card">
+                <h4>🌙 상하이 야식 배달 (TOP 3)</h4>
+                <ul class="tip-list">
+                    <li><strong>소양생전 (小杨生煎):</strong> 밤에 먹으면 더 맛있는 바삭한 성젠바오. 육즙 조심!</li>
+                    <li><strong>마라롱샤 (Crawfish):</strong> '화웨이 매운 가재' 등에서 주문하는 상하이 야식의 꽃.</li>
+                    <li><strong>꼬치구이 (Shaokao/烧烤):</strong> 풍무양꼬치 등 전문점에서 구워서 오는 양꼬치와 채소구이.</li>
+                </ul>
+            </div>
+            <div class="tip-card">
+                <h4>💆 추천 마사지 & 스파</h4>
+                <ul class="tip-list">
+                    <li><strong>드래곤플라이 (Dragonfly):</strong> 외국인 친화적, 깔끔한 시설.</li>
+                    <li><strong>유 마사지 (Yu Massage):</strong> 감각적인 인테리어의 실력파 샵.</li>
+                    <li><strong>젠 마사지 (Zen Massage):</b> 프랑스 조계지에 위치한 힐링 스팟.</li>
+                    <li><strong>맹인 안마 (Blind Massage):</strong> 가성비와 실력을 중시한다면 강추.</li>
+                </ul>
+            </div>
+        `;
+  } else if (tab === "notes") {
+    container.innerHTML = `
+            <div class="note-editor-container">
+                <p style="font-size: 13px; color: var(--text-secondary);">여행하며 알게 된 나만의 꿀팁을 적어두세요. (자동 저장)</p>
+                <textarea id="guideNoteInput" class="input-modern" placeholder="예: 난징동루 M&M 2층이 덜 붐빔, OOO 마사지사 6번 번호...">${guideNotes}</textarea>
+                <button class="btn btn-main" onclick="saveGuideNotes()">메모 저장</button>
+            </div>
+        `;
+  }
+}
+
+function saveGuideNotes() {
+  guideNotes = document.getElementById("guideNoteInput").value;
+  saveData();
+  alert("메모가 저장되었습니다!");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   fetchData();
   renderPlacePills();
@@ -546,6 +725,25 @@ document.addEventListener("DOMContentLoaded", () => {
     renderBoard();
     saveData();
   };
+
+  document.getElementById("addBoardPostBtn").onclick = () => {
+    const author = document.getElementById("boardAuthor").value;
+    const msg = document.getElementById("boardInput").value;
+    if (!msg) return;
+    bulletinBoard.unshift({ author: author || "익명", text: msg, date: new Date().toLocaleString() });
+    saveData();
+    renderBoard();
+    document.getElementById("boardInput").value = "";
+  };
+
+  // 가이드 탭 전환
+  document.querySelector(".guide-tabs").onclick = (e) => {
+    if (e.target.classList.contains("guide-tab")) {
+      renderGuide(e.target.dataset.guide);
+    }
+  };
+
+  renderGuide("apps");
 
   document.getElementById("savePlanBtn").onclick = () => {
     plansState[currentDay] = document.getElementById("planText").value;

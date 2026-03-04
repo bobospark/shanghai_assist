@@ -81,9 +81,15 @@
           </div>
           <div class="places-grid" id="placesScroll" role="list"></div>
 
-          <!-- 장소 추가 폼 -->
+          <div class="place-detail-container">
+            <div class="place-detail" id="placeDetail" aria-live="polite">
+              <p class="place-detail-empty">장소를 선택하면 상세 정보와 거리가 표시됩니다.</p>
+            </div>
+          </div>
+
+          <!-- 장소 추가 폼 (상세 정보 아래로 이동) -->
           <div class="add-place-container">
-            <div class="add-place-title">📍 장소 추가하기</div>
+            <div class="add-place-title">📍 직접 장소 추가하기</div>
             <div class="add-place-row">
               <input type="text" id="addPlaceName" class="input-modern" placeholder="장소명 (예: 소양생전)">
               <select id="addPlaceType" class="input-modern">
@@ -91,16 +97,11 @@
                 <option value="cafe">카페</option>
                 <option value="attraction">관광지</option>
                 <option value="dessert">디저트</option>
+                <option value="massage">마사지/스파</option>
               </select>
             </div>
             <textarea id="addPlaceInfo" class="input-modern" placeholder="메모할 정보를 입력하세요 (추천 메뉴 등)"></textarea>
             <button type="button" class="btn btn-main" id="addPlaceBtn">목록에 추가</button>
-          </div>
-
-          <div class="place-detail-container">
-            <div class="place-detail" id="placeDetail" aria-live="polite">
-              <p class="place-detail-empty">장소를 선택하면 상세 정보와 거리가 표시됩니다.</p>
-            </div>
           </div>
         </section>
       </section>
