@@ -1,17 +1,18 @@
 :root {
-  /* Premium Light Theme */
-  --bg-app: #fcfcfc;
-  --bg-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.4);
+  /* Premium Light Theme - Softened */
+  --bg-app: #f2f2f7;
+  --bg-gradient: linear-gradient(135deg, #f2f2f7 0%, #e5e5ea 100%);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.5);
   --accent: #c48356;
   --accent-dark: #a66539;
-  --text-primary: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+  --text-primary: #1c1c1e;
+  --text-secondary: #3a3a3c;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   --radius-lg: 24px;
   --radius-md: 16px;
   --radius-sm: 12px;
+  --text-on-accent: #ffffff;
 }
 
 body[data-theme="dark"] {
@@ -25,6 +26,7 @@ body[data-theme="dark"] {
   --text-primary: #f5f5f7;
   --text-secondary: #86868b;
   --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --text-on-accent: #1c1c1e;
 }
 
 * {
@@ -143,14 +145,17 @@ body {
 /* Navigation Overhaul */
 .nav-pages {
   display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
   gap: 8px;
-  padding: 4px;
+  padding: 8px 12px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 100px;
   margin-top: 24px;
   scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
 }
 
 .nav-pages::-webkit-scrollbar {
@@ -158,6 +163,7 @@ body {
 }
 
 .nav-tab {
+  flex-shrink: 0;
   white-space: nowrap;
   padding: 10px 20px;
   border-radius: 100px;
@@ -169,7 +175,7 @@ body {
 
 .nav-tab.active {
   background: var(--accent);
-  color: white;
+  color: var(--text-on-accent);
   box-shadow: 0 4px 12px rgba(196, 131, 86, 0.2);
 }
 
@@ -314,9 +320,10 @@ body {
 
 .places-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
   margin-bottom: 24px;
+  width: 100%;
 }
 
 .place-pill {
@@ -333,6 +340,8 @@ body {
   font-size: 11px;
   font-weight: 600;
   color: var(--text-primary);
+  overflow: hidden;
+  text-align: center;
 }
 
 .place-pill:hover {
@@ -342,7 +351,7 @@ body {
 
 .place-pill.active {
   background: var(--accent);
-  color: var(--bg-app);
+  color: var(--text-on-accent);
   border-color: var(--accent);
 }
 
@@ -350,6 +359,10 @@ body {
   display: block;
   text-align: center;
   margin-top: 4px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Place Detail Section */
