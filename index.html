@@ -79,6 +79,17 @@
           <div class="map-wrapper">
             <div id="leafletMap" class="leaflet-map" role="img" aria-label="상하이 지도"></div>
           </div>
+
+          <div class="category-filter" id="categoryFilter" role="group" aria-label="장소 카테고리 필터">
+            <button type="button" class="filter-btn active" data-category="all">전체</button>
+            <button type="button" class="filter-btn" data-category="hotel">🏠 숙소</button>
+            <button type="button" class="filter-btn" data-category="attraction">🌉 관광</button>
+            <button type="button" class="filter-btn" data-category="food">🍲 식당</button>
+            <button type="button" class="filter-btn" data-category="cafe">☕ 카페</button>
+            <button type="button" class="filter-btn" data-category="dessert">🍰 디저트</button>
+            <button type="button" class="filter-btn" data-category="massage">💆 마사지</button>
+          </div>
+
           <div class="places-grid" id="placesScroll" role="list"></div>
 
           <div class="place-detail-container">

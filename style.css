@@ -156,6 +156,12 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
   width: 100%;
+  cursor: grab;
+  user-select: none;
+}
+
+.nav-pages.grabbing {
+  cursor: grabbing;
 }
 
 .nav-pages::-webkit-scrollbar {
@@ -318,12 +324,65 @@ body {
   width: 100%;
 }
 
+.category-filter {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  padding: 4px 0 12px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.category-filter::-webkit-scrollbar {
+  display: none;
+}
+
+.category-filter.grabbing {
+  cursor: grabbing;
+}
+
+.filter-btn {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(196, 131, 86, 0.2);
+}
+
 .places-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin-bottom: 24px;
   width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.places-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.places-grid.grabbing {
+  cursor: grabbing;
 }
 
 .place-pill {
@@ -572,6 +631,18 @@ body {
   margin-bottom: 20px;
   overflow-x: auto;
   padding-bottom: 8px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.guide-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.guide-tabs.grabbing {
+  cursor: grabbing;
 }
 
 .guide-tab {
@@ -650,10 +721,79 @@ body {
   width: 100%;
 }
 
+.tip-card p,
+.tip-list li,
+.guide-content-area,
+.note-editor-container p {
+  color: #1a1a1a !important;
+  /* Force visibility with very dark color */
+}
+
 .app-badge {
   display: inline-block;
-  padding: 2px 6px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  background: var(--accent);
+  color: #ffffff;
   border-radius: 4px;
   font-weight: 700;
+  margin-right: 4px;
+}
+
+/* Bulletin Board Polish */
+.board-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.input-row {
+  display: flex;
+  gap: 12px;
+}
+
+.input-row .input-modern {
+  flex: 1;
+}
+
+.board-textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 18px 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  resize: vertical;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.board-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(196, 131, 86, 0.1);
+  background: white;
+}
+
+.board-post-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.board-post-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent);
+  opacity: 0.6;
 }

@@ -250,6 +250,35 @@ function getDistanceKM(lat1, lon1, lat2, lon2) {
   return (R * c).toFixed(1);
 }
 
+function setupDragScroll(el) {
+  if (!el) return;
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  el.addEventListener('mousedown', (e) => {
+    isDown = true;
+    el.classList.add('grabbing');
+    startX = e.pageX - el.offsetLeft;
+    scrollLeft = el.scrollLeft;
+  });
+  el.addEventListener('mouseleave', () => {
+    isDown = false;
+    el.classList.remove('grabbing');
+  });
+  el.addEventListener('mouseup', () => {
+    isDown = false;
+    el.classList.remove('grabbing');
+  });
+  el.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startX) * 2; // scroll-fast
+    el.scrollLeft = scrollLeft - walk;
+  });
+}
+
 const MAP_IMAGE_URL = "shanghaimap.png";
 let leafletMap = null;
 
@@ -261,6 +290,7 @@ let expenses = [];
 let userPlaces = []; // 사용자가 추가한 장소
 let guideNotes = ""; // 사용자의 가이드 메모
 let currentDay = 1;
+let currentFilter = "all";
 
 async function fetchData() {
   try {
@@ -351,7 +381,9 @@ function renderPlacePills() {
   container.innerHTML = "";
 
   const allPlaces = [...places, ...userPlaces];
-  const sorted = allPlaces.sort((a, b) => {
+  const filtered = currentFilter === "all" ? allPlaces : allPlaces.filter(p => p.type === currentFilter);
+
+  const sorted = filtered.sort((a, b) => {
     const ta = placeTypeOrder.indexOf(a.type);
     const tb = placeTypeOrder.indexOf(b.type);
     return ta - tb;
@@ -405,8 +437,22 @@ function selectPlace(id) {
         ${place.nearby.map(n => `<span class="nearby-tag">${n}</span>`).join("")}
     </div>
     ` : ""}
+
+    ${place.id.startsWith("user_") ? `
+    <div class="place-admin-buttons" style="margin-top: 24px; display: flex; gap: 8px;">
+        <button class="btn btn-secondary" style="flex: 1; color: #ef4444;" onclick="deleteUserPlace('${place.id}')">삭제하기</button>
+    </div>
+    ` : ""}
   `;
 }
+
+window.deleteUserPlace = (id) => {
+  if (!confirm("이 장소를 삭제하시겠습니까?")) return;
+  userPlaces = userPlaces.filter(p => p.id !== id);
+  saveData();
+  renderPlacePills();
+  document.getElementById("placeDetail").innerHTML = `<p class="place-detail-empty">장소가 삭제되었습니다.</p>`;
+};
 
 window.copyText = async (text) => {
   await navigator.clipboard.writeText(text);
@@ -576,7 +622,7 @@ window.deleteBoardPost = (index) => {
 
 
 /* ========== 초기화 및 가이드 렌더링 ========== */
-function renderGuide(tab) {
+function renderGuide(tab = "apps") {
   const container = document.getElementById("guideContent");
   if (!container) return;
 
@@ -654,12 +700,16 @@ document.addEventListener("DOMContentLoaded", () => {
   renderPlacePills();
   initLeafletMap();
 
+  setupDragScroll(document.querySelector(".nav-pages"));
+  setupDragScroll(document.querySelector(".guide-tabs"));
+  setupDragScroll(document.getElementById("placesScroll"));
+
   // 페이지 네비게이션
   const switchPage = (id) => {
     document.querySelectorAll(".page").forEach(p => p.hidden = p.id !== "page-" + id);
     document.querySelectorAll(".nav-tab").forEach(t => t.classList.toggle("active", t.id === "nav" + id.charAt(0).toUpperCase() + id.slice(1)));
     if (id === "map" && leafletMap) setTimeout(() => leafletMap.invalidateSize(), 100);
-    if (id === "guide") renderGuide();
+    if (id === "guide") renderGuide("apps");
   };
 
   document.querySelectorAll(".nav-tab").forEach(tab => {
@@ -682,12 +732,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("addBoardPostBtn").onclick = () => {
     const author = document.getElementById("boardAuthor").value;
-    const msg = document.getElementById("boardInput").value;
-    if (!msg) return;
-    bulletinBoard.unshift({ author: author || "익명", text: msg, date: new Date().toLocaleString() });
+    const title = document.getElementById("boardTitle").value;
+    const content = document.getElementById("boardContent").value;
+
+    if (!content) return alert("내용을 입력해주세요.");
+
+    bulletinBoard.unshift({
+      author: author || "익명",
+      title: title || "제목 없음",
+      content: content,
+      date: new Date().toLocaleString()
+    });
+
     saveData();
     renderBoard();
-    document.getElementById("boardInput").value = "";
+
+    // 필드 초기화
+    document.getElementById("boardAuthor").value = "";
+    document.getElementById("boardTitle").value = "";
+    document.getElementById("boardContent").value = "";
   };
 
   // 가이드 탭 전환
@@ -704,6 +767,25 @@ document.addEventListener("DOMContentLoaded", () => {
     saveData();
     alert("저장되었습니다.");
   };
+
+  document.getElementById("insertTemplateBtn").onclick = () => {
+    const template = `[오전]\n- \n\n[점심]\n- \n\n[오후]\n- \n\n[저녁]\n- \n\n[야간]\n- `;
+    const textarea = document.getElementById("planText");
+    if (textarea.value.trim() && !confirm("이미 작성된 내용이 있습니다. 템플릿을 추가하시겠습니까?")) return;
+    textarea.value = (textarea.value ? textarea.value + "\n\n" : "") + template;
+  };
+
+  // 카테고리 필터 클릭
+  document.getElementById("categoryFilter").onclick = (e) => {
+    if (e.target.classList.contains("filter-btn")) {
+      currentFilter = e.target.dataset.category;
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.category === currentFilter);
+      });
+      renderPlacePills();
+    }
+  };
+  setupDragScroll(document.getElementById("categoryFilter"));
 
   document.getElementById("themeToggle").onclick = () => {
     const isDark = document.body.dataset.theme === "dark";
