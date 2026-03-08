@@ -29,6 +29,22 @@ body[data-theme="dark"] {
   --text-on-accent: #1c1c1e;
 }
 
+.clickable-text {
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.clickable-text:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
+
+.clickable-text:active {
+  transform: translateY(0);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -312,6 +328,31 @@ body {
 }
 
 /* Map & Grid */
+.map-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.map-btn {
+  flex: 1;
+  padding: 10px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.map-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
 .map-wrapper {
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -370,19 +411,29 @@ body {
   gap: 8px;
   margin-bottom: 24px;
   width: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  cursor: grab;
-  user-select: none;
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  cursor: default;
 }
 
 .places-grid::-webkit-scrollbar {
-  display: none;
+  width: 6px;
+  display: block;
 }
 
-.places-grid.grabbing {
-  cursor: grabbing;
+.places-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.places-grid::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 10px;
+}
+
+.places-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 .place-pill {

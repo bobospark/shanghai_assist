@@ -65,8 +65,15 @@
             <div class="summary-item full-width">
               <span class="summary-label">숙소</span>
               <div class="summary-content">
-                <strong>골든 튤립 번드 뉴 아시아</strong>
-                <p>「金郁金香外滩新亚酒店」 · 와이탄 근처</p>
+                <div class="hotel-summary-row">
+                  <strong>1. 골든 튤립 번드 뉴 아시아</strong>
+                  <p class="clickable-text" onclick="copyText('金郁金香外滩新亚酒店')">「金郁金香外滩新亚酒店」</p>
+                </div>
+                <div class="hotel-summary-row"
+                  style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--glass-border);">
+                  <strong>2. JI 호텔 상하이 텐동루</strong>
+                  <p class="clickable-text" onclick="copyText('全季酒店上海外滩天潼路店')">「全季酒店上海外滩天潼路店」</p>
+                </div>
               </div>
             </div>
           </div>
@@ -75,6 +82,10 @@
         <section class="section" aria-labelledby="heading-map">
           <div class="section-header">
             <h3 id="heading-map" class="section-title">🗺️ 로컬 맵</h3>
+          </div>
+          <div class="map-selector" id="mapSelector" role="group" aria-label="지도 선택">
+            <button type="button" class="map-btn active" data-map="shanghaimap_1.png">지도 1</button>
+            <button type="button" class="map-btn" data-map="shanghaimap_2.jpg">지도 2</button>
           </div>
           <div class="map-wrapper">
             <div id="leafletMap" class="leaflet-map" role="img" aria-label="상하이 지도"></div>
@@ -85,7 +96,6 @@
             <button type="button" class="filter-btn" data-category="hotel">🏠 숙소</button>
             <button type="button" class="filter-btn" data-category="attraction">🌉 관광</button>
             <button type="button" class="filter-btn" data-category="food">🍲 식당</button>
-            <button type="button" class="filter-btn" data-category="cafe">☕ 카페</button>
             <button type="button" class="filter-btn" data-category="dessert">🍰 디저트</button>
             <button type="button" class="filter-btn" data-category="massage">💆 마사지</button>
           </div>
