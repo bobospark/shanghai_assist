@@ -37,6 +37,7 @@
         <a href="#expenses" class="nav-tab" id="navExpenses">가계부</a>
         <a href="#guide" class="nav-tab" id="navGuide">가이드</a>
         <a href="#board" class="nav-tab" id="navBoard">게시판</a>
+        <a href="#disney" class="nav-tab" id="navDisney">디즈니</a>
       </nav>
     </header>
 
@@ -147,6 +148,10 @@
           </div>
           <div class="plan-buttons">
             <button type="button" class="btn btn-secondary" id="insertTemplateBtn">기본 틀</button>
+            <div id="templateOptions" style="display: none; gap: 8px;">
+              <button type="button" class="btn btn-secondary" style="font-size: 11px; padding: 10px 14px;" onclick="insertPlanVersion(1)">Ver 1 (디즈니)</button>
+              <button type="button" class="btn btn-secondary" style="font-size: 11px; padding: 10px 14px;" onclick="insertPlanVersion(2)">Ver 2 (시외투어)</button>
+            </div>
             <button type="button" class="btn btn-main" id="savePlanBtn">저장하기</button>
           </div>
         </section>
@@ -219,6 +224,59 @@
             <button type="button" class="btn btn-main" id="addBoardPostBtn">게시글 등록</button>
           </div>
           <div id="boardPostsContainer" class="board-posts-list"></div>
+        </section>
+      </section>
+
+      <!-- 페이지: 디즈니 가이드 -->
+      <section id="page-disney" class="page" aria-labelledby="heading-disney" hidden>
+        <section class="section">
+          <div class="section-header">
+            <h3 id="heading-disney" class="section-title" style="color: #6366f1;">🏰 상하이 디즈니 완전 정복</h3>
+          </div>
+          
+          <div class="tip-card" style="border-left: 4px solid #6366f1;">
+            <h4>🛂 1. 출국 전 필살 준비물</h4>
+            <ul class="tip-list">
+              <li><strong>여권 필수:</strong> 30일 무비자 입국이지만 파크 입장 시 <strong>실물 여권</strong>이 없으면 입장이 불가능합니다. 절대 숙소에 두고 오지 마세요!</li>
+              <li><strong>공식 앱 미리 설치:</strong> 'Shanghai Disney Resort' 앱에서 티켓 등록, 대기 시간 확인, DPA 구매가 모두 이뤄집니다.</li>
+              <li><strong>결제 수단 세팅:</strong> 알리페이(Alipay)나 위챗페이에 카드 등록 필수. 200위안 이상 결제 시 수수료 주의!</li>
+              <li><strong>보조배터리 지참:</strong> 앱 확인과 결제로 배터리 소모가 극심합니다. 대용량으로 꼭 챙기세요.</li>
+            </ul>
+          </div>
+
+          <div class="tip-card" style="border-left: 4px solid #a855f7;">
+            <h4>🎢 2. 전략적 입장 & 주토피아</h4>
+            <ul class="tip-list">
+              <li><strong>오픈런 필수:</strong> 개장 1.5시간 전 도착 권장. 보안 검색 줄이 깁니다. 조기 입장 혜택이 있는 공식 호텔 투숙도 방법!</li>
+              <li><strong>주토피아(Zootopia):</strong> '핫 퍼슈트' 어트랙션은 대기가 엄청납니다. 혼자 타도 괜찮다면 <strong>'싱글 라이더'</strong> 줄로 시간을 절반 넘게 아끼세요.</li>
+            </ul>
+          </div>
+
+          <div class="tip-card" style="border-left: 4px solid #ec4899;">
+            <h4>🚀 3. Must-Ride 어트랙션</h4>
+            <ul class="tip-list">
+              <li><strong>캐리비안의 해적:</strong> 상하이 버전이 전 세계 압도적 1위! 몰입감이 장난 아닙니다.</li>
+              <li><strong>트론(TRON):</strong> 오토바이형 롤러코스터. 밤에 타면 미래적인 야경이 일품입니다.</li>
+              <li><strong>소어링 오버 더 호라이즌:</strong> 항상 줄이 기니 오전 일찍 타거나 DPA를 고려하세요.</li>
+            </ul>
+          </div>
+
+          <div class="tip-card" style="border-left: 4px solid #eab308;">
+            <h4>🍱 4. 식사, 휴식 & 날씨 대비</h4>
+            <ul class="tip-list">
+              <li><strong>식사는 '디즈니타운'에서:</strong> 파크 바로 옆 디즈니타운에 맛집이 더 많습니다. 재입장이 가능하니 나가서 드시는 걸 추천!</li>
+              <li><strong>식수와 간식:</strong> 식수대 리필용 빈 병과 줄 서서 먹을 에너지바를 챙기세요.</li>
+              <li><strong>3월 날씨(5~19°C):</strong> 일교차가 매우 큽니다. 가벼운 바람막이나 얇은 옷을 여러 겹 입으세요.</li>
+            </ul>
+          </div>
+
+          <div class="tip-card" style="border-left: 4px solid #3b82f6;">
+            <h4>✨ 5. 완벽한 마무리를 위한 팁</h4>
+            <ul class="tip-list">
+              <li><strong>불꽃놀이 명당:</strong> 성 바로 앞보다는 약간 뒤쪽 중앙(정원 구역)이 시야가 넓어 드론 쇼까지 보기 좋습니다.</li>
+              <li><strong>쇼핑은 마지막 1시간:</strong> 짐이 되면 힘드니 퇴장 직전에 몰아서 쇼핑하는 게 효율적입니다.</li>
+            </ul>
+          </div>
         </section>
       </section>
     </main>

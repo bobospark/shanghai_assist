@@ -1037,10 +1037,36 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.getElementById("insertTemplateBtn").onclick = () => {
-    const template = `[오전]\n- \n\n[점심]\n- \n\n[오후]\n- \n\n[저녁]\n- \n\n[야간]\n- `;
-    const textarea = document.getElementById("planText");
-    if (textarea.value.trim() && !confirm("이미 작성된 내용이 있습니다. 템플릿을 추가하시겠습니까?")) return;
-    textarea.value = (textarea.value ? textarea.value + "\n\n" : "") + template;
+    const options = document.getElementById("templateOptions");
+    if (options.style.display === "none") {
+      options.style.display = "flex";
+    } else {
+      options.style.display = "none";
+    }
+  };
+
+  const itineraryTemplates = {
+    1: {
+      1: `[오후]\n- 상하이 푸둥 공항 도착 및 입국 수속\n- 숙소(골든 튤립 번드 뉴 아시아) 체크인\n- 점심: 점도덕 (Tao Tao Ju) - 홍미창펀 필수 주문!\n\n[저녁]\n- 난징동루 거닐기 및 쇼핑 (미니소 인형 구매)\n- 간식: 릴리안 베이커리 에그타르트\n- 와이탄 야경 감상\n- 저녁: 헌지우이치엔 양꼬치 (한국인 정모 장소)\n\n[야간]\n- 헤이티 (Mango/Grape 음료) 마시기\n- 과일 배달로 하루 마무리`,
+      2: `[오전/오후]\n- 상하이 디즈니랜드 (Zootopia 테마 구역 필수 방문)\n\n[저녁]\n- 숙소 복귀 후 배달 음식 (국룰 조합)\n- 레드립스 마라반 or 소양생전 만두\n\n[야간]\n- 휴식 및 익일 일정 준비`,
+      3: `[오전]\n- 상해 임시정부 방문 (가슴 웅장해지는 코스)\n- 신천지 플루스 카페 토스트\n\n[점심]\n- 페이다추 (고추고기볶음)\n\n[오후]\n- 하메이 (HARMAY) 미니어처 화장품 쇼핑 (가격 주의!)\n- 티엔즈팡 골목 탐방\n- 패왕차희 (CHAGEE) 백아절현 시음\n\n[저녁]\n- 우캉맨션 사진 촬영 및 휴식\n- 강변성외 카오위 (마라/마늘 반반 추천)\n\n[야간]\n- 모어요거트 아보카도 아몬드 스무디`,
+      4: `[오전]\n- 아침 겸 점심: 홍쿠이지아 마라롱샤로 마무리\n- 마지막 기념품 쇼핑 및 과일 배달\n\n[오후]\n- 푸둥 공항 이동 및 출국`
+    },
+    2: {
+      1: `[오후]\n- 상하이 푸둥 공항 도착 및 입국 수속\n- 숙소(골든 튤립 번드 뉴 아시아) 체크인\n- 점심: 점도덕 (Tao Tao Ju) - 홍미창펀 필수 주문!\n\n[저녁]\n- 난징동루 거닐기 및 쇼핑 (미니소 인형 구매)\n- 간식: 릴리안 베이커리 에그타르트\n- 와이탄 야경 감상\n- 저녁: 헌지우이치엔 양꼬치 (한국인 정모 장소)\n\n[야간]\n- 헤이티 (Mango/Grape 음료) 마시기\n- 과일 배달로 하루 마무리`,
+      2: `[오전]\n- 상해 임시정부 방문 (가슴 웅장해지는 코스)\n- 신천지 플루스 카페 토스트\n\n[점심]\n- 페이다추 (고추고기볶음)\n\n[오후]\n- 하메이 (HARMAY) 미니어처 화장품 쇼핑 (가격 주의!)\n- 티엔즈팡 골목 탐방\n- 패왕차희 (CHAGEE) 백아절현 시음\n\n[저녁]\n- 우캉맨션 사진 촬영 및 휴식\n- 강변성외 카오위 (마라/마늘 반반 추천)\n\n[야간]\n- 모어요거트 아보카도 아몬드 스무디`,
+      3: `[오전/오후]\n- 우전(Wuzhen) 수항마을 전일 투어\n\n[저녁]\n- 현지 한국인 정모 식당 방문 (동안객잔 or 대주반)\n\n[야간]\n- 숙소 복귀 및 휴식`,
+      4: `[오전]\n- 아침 겸 점심: 홍쿠이지아 마라롱샤로 마무리\n- 마지막 기념품 쇼핑 및 과일 배달\n\n[오후]\n- 푸둥 공항 이동 및 출국`
+    }
+  };
+
+  window.insertPlanVersion = (vIdx) => {
+    if (!confirm(`Ver ${vIdx} 일정으로 전체 덮어쓰시겠습니까?`)) return;
+    plansState = itineraryTemplates[vIdx];
+    updatePlanUI();
+    saveData();
+    document.getElementById("templateOptions").style.display = "none";
+    alert(`Ver ${vIdx} 3박 4일 일정이 적용되었습니다.`);
   };
 
   // 카테고리 필터 클릭
