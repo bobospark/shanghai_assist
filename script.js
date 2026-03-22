@@ -947,6 +947,55 @@ function renderGuide(tab = "apps") {
                 </div>
             </div>
         `;
+  } else if (tab === "battery") {
+    container.innerHTML = `
+            <div class="tip-card" style="border-left: 4px solid #f87171;">
+                <h4>✈️ 1. 항공기 이용 시 규정 (가장 중요!)</h4>
+                <p>중국 공항 검색대는 보조배터리에 매우 엄격하므로 아래 수칙을 반드시 지키세요.</p>
+                <ul class="tip-list">
+                    <li><strong>무조건 '기내 휴대':</strong> 위탁 수하물로 부치는 캐리어에는 절대 넣지 마세요. 적발 시 압수됩니다.</li>
+                    <li><strong>용량 제한 (1인당 최대 2개):</strong>
+                        <br>· 100Wh 이하 (약 27,000mAh 미만): 별도 허가 없이 가능
+                        <br>· 100Wh ~ 160Wh: 항공사 사전 승인 시 가능
+                        <br>· 160Wh 초과 (약 43,000mAh 이상): 반입 절대 불가
+                    </li>
+                    <li><strong>표기 확인 필수:</strong> 배터리 표면에 <strong>용량(mAh/Wh)과 전압(V)</strong>이 선명하게 적혀 있어야 합니다. 글씨가 지워진 배터리는 무조건 압수됩니다.</li>
+                </ul>
+                <div style="margin-top: 12px; padding: 12px; background: #fee2e2; border-radius: 8px; border: 1px solid #fecaca; font-size: 13px;">
+                    <strong>[2026 최신] 기내 사용 금지:</strong> 중국 노선 비행 중 보조배터리 사용 및 충전이 금지되었습니다. 소지만 가능하니 주의하세요! (좌석 USB 포트는 사용 가능)
+                </div>
+            </div>
+
+            <div class="tip-card" style="border-left: 4px solid #fbbf24;">
+                <h4>🚞 2. 기차(고속철도) 및 지하철 규정</h4>
+                <ul class="tip-list">
+                    <li><strong>고속철도(HSR):</strong> 항공기보다 덜 까다롭지만 100Wh 이하, 1인당 2개를 권장합니다.</li>
+                    <li><strong>지하철:</strong> 짐 검사 시 유심히 봅니다. 보통 2개까지 무사 통과되지만, 규격 외 제품은 제지당할 수 있습니다.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card" style="border-left: 4px solid #60a5fa;">
+                <h4>🧮 3. 실전 내 배터리 Wh 계산기</h4>
+                <p>항공사 규정인 Wh(와트시) 계산법입니다. (기준 전압 3.7V)</p>
+                <div style="background: var(--bg-app); padding: 16px; border-radius: 12px; margin-bottom: 12px; font-family: monospace; font-size: 14px; text-align: center;">
+                    Wh = (mAh × 3.7V) ÷ 1000
+                </div>
+                <ul class="tip-list">
+                    <li><strong>10,000mAh:</strong> 약 37Wh (안전 ✅)</li>
+                    <li><strong>20,000mAh:</strong> 약 74Wh (안전 ✅)</li>
+                    <li><strong>30,000mAh:</strong> 약 111Wh (항공사 승인 필요할 수 있음 ⚠️)</li>
+                </ul>
+            </div>
+
+            <div class="tip-card" style="border-left: 4px solid #34d399;">
+                <h4>💡 4. 실전 꿀팁</h4>
+                <ul class="tip-list">
+                    <li><strong>중국 국내선 이용 시:</strong> 상하이에서 타 도시로 국내선을 탈 때 <strong>'3C(CCC) 인증'</strong> 마크를 확인하는 경우가 많습니다. 정품 배터리를 챙기세요.</li>
+                    <li><strong>대여 시스템 활용:</strong> 파크나 거리 어디든 <strong>'共享充电宝(공유 보조배터리)'</strong> 시스템이 잘 되어 있습니다. 알리페이/위챗페이로 1시간 400~600원에 대여 가능!</li>
+                    <li><strong>추천 조합:</strong> 20,000mAh 이하의 검증된 정품 하나만 챙기시는 걸 추천합니다.</li>
+                </ul>
+            </div>
+        `;
   } else if (tab === "notes") {
     container.innerHTML = `
             <div class="note-editor-container">
