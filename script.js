@@ -926,18 +926,17 @@ function renderGuide(tab = "apps") {
             </div>
             <div class="tip-card">
                 <h4>💆 추천 마사지 & 스파</h4>
-                <ul class="tip-list">
                     <li><strong>드래곤플라이 (Dragonfly):</strong> 외국인 친화적, 깔끔한 시설.</li>
                     <li><strong>유 마사지 (Yu Massage):</strong> 감각적인 인테리어의 실력파 샵.</li>
-                    <li><strong>젠 마사지 (Zen Massage):</b> 프랑스 조계지에 위치한 힐링 스팟.</li>
+                    <li><strong>젠 마사지 (Zen Massage):</strong> 프랑스 조계지에 위치한 힐링 스팟.</li>
                     <li><strong>맹인 안마 (Blind Massage):</strong> 가성비와 실력을 중시한다면 강추.</li>
                 </ul>
             </div>
             <div class="tip-card">
                 <h4>📱 필수 앱 활용</h4>
                 <ul class="tip-list">
-                    <li><strong>알리페이 (Alipay):</b> 결제, 지하철/버스 QR 승차권, 세금 환급 등 필수.</li>
-                    <li><strong>고덕지도 (Amap):</b> 바이두보다 정확한 실시간 길 찾기와 대중교통 정보.</li>
+                    <li><strong>알리페이 (Alipay):</strong> 결제, 지하철/버스 QR 승차권, 세금 환급 등 필수.</li>
+                    <li><strong>고덕지도 (Amap):</strong> 바이두보다 정확한 실시간 길 찾기와 대중교통 정보.</li>
                     <li><strong>따종디엔핑 (Dianping):</strong> 맛집 검색, 리뷰 확인, 모바일 웨이팅, 할인권 구매.</li>
                     <li><strong>트립닷컴 (Trip.com):</strong> 중국 기차표 예매와 호텔 예약이 가장 편리함.</li>
                 </ul>
@@ -994,6 +993,27 @@ function renderGuide(tab = "apps") {
                     <li><strong>대여 시스템 활용:</strong> 파크나 거리 어디든 <strong>'共享充电宝(공유 보조배터리)'</strong> 시스템이 잘 되어 있습니다. 알리페이/위챗페이로 1시간 400~600원에 대여 가능!</li>
                     <li><strong>추천 조합:</strong> 20,000mAh 이하의 검증된 정품 하나만 챙기시는 걸 추천합니다.</li>
                 </ul>
+            </div>
+        `;
+  } else if (tab === "items") {
+    container.innerHTML = `
+            <div class="tip-card" style="border-left: 4px solid var(--accent);">
+                <h4>🎒 1. 상하이 여행 필수 준비물 (TOP 8)</h4>
+                <p>즐겁고 편안한 상하이 여행을 위해 꼭 챙겨야 할 아이템들입니다.</p>
+                <ul class="tip-list">
+                    <li><strong>보조배터리 (Power Bank):</strong> 20,000mAh 이하 권장. 앱 사용과 결제로 배터리 소모가 매우 빠릅니다. (기내 휴대 필수!)</li>
+                    <li><strong>eSIM 또는 로밍 (Data):</strong> 구글 지도, 카카오톡, 인스타그램을 원활하게 쓰려면 한국 통신사 로밍이나 현지용 eSIM이 필수입니다.</li>
+                    <li><strong>알리페이/위챗페이 (Digital Pay):</strong> 중국은 현금 없는 사회입니다. 한국 카드를 미리 등록하고 실명 인증까지 완료하세요.</li>
+                    <li><strong>트래블로그/트래블월렛 카드:</strong> 현지 ATM 출금 및 카드 결제 시 수수료 혜택이 큽니다.</li>
+                    <li><strong>편한 운동화 (Walking Shoes):</strong> 상하이는 생각보다 많이 걷게 됩니다. 발이 편한 신발은 필수입니다.</li>
+                    <li><strong>파파고/구글 번역기 (Translation):</strong> 한국어-중국어 오프라인 언어팩을 미리 다운로드해 두면 인터넷이 느릴 때 유용합니다.</li>
+                    <li><strong>개인 위생용품 (Tissues):</strong> 식당에서 휴지를 유료로 판매하거나 없는 경우가 많으니 작은 휴대용 티슈와 물티슈를 챙기세요.</li>
+                    <li><strong>접이식 우산/우비:</strong> 상하이 날씨는 변덕스러울 수 있으니 가벼운 양우산 겸용 우산을 추천합니다.</li>
+                </ul>
+            </div>
+            <div class="tip-card">
+                <h4>💡 추가 팁</h4>
+                <p>동전이나 소액권 지폐를 조금 챙겨두면 자판기나 노점 등에서 결제가 안 될 때 비상용으로 유용합니다.</p>
             </div>
         `;
   } else if (tab === "notes") {
