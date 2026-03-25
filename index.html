@@ -179,16 +179,101 @@
           <div class="section-header">
             <h3 id="heading-expenses" class="section-title">💰 여행 가계부</h3>
           </div>
+
+          <!-- 일자 탭 -->
+          <div class="expense-day-tabs" id="expenseDayTabs">
+            <button type="button" class="expense-day-tab active" data-day="1">Day 1</button>
+            <button type="button" class="expense-day-tab" data-day="2">Day 2</button>
+            <button type="button" class="expense-day-tab" data-day="3">Day 3</button>
+            <button type="button" class="expense-day-tab" data-day="4">Day 4</button>
+          </div>
+
+          <!-- 환율 및 요약 -->
+          <div class="exchange-rate-container">
+            <span class="exchange-rate-label">오늘의 위안화 환율</span>
+            <div class="exchange-rate-input-wrapper">
+              <span style="font-size: 11px; color: var(--text-secondary);">1 ¥ =</span>
+              <input type="number" id="exchangeRateInput" class="input-small" value="190" step="0.1">
+              <span style="font-size: 11px; color: var(--text-secondary);">원</span>
+            </div>
+          </div>
+
           <div class="expense-summary-card">
-            <div class="expense-total-label">총 지출</div>
+            <div class="expense-total-label">오늘의 지출 (위안화)</div>
             <div class="expense-total-amount" id="totalExpenses">¥ 0</div>
           </div>
+
+          <!-- 지출 입력 폼 -->
           <div class="expense-input-grid">
-            <input type="text" id="expenseDesc" class="input-modern" placeholder="내역">
+            <input type="text" id="expenseDesc" class="input-modern" placeholder="내역 (예: 점심 식사)">
             <input type="number" id="expenseAmount" class="input-modern" placeholder="금액(¥)">
-            <button type="button" class="btn btn-main" id="addExpenseBtn">등록</button>
           </div>
+
+          <div class="participant-select-group">
+            <div>
+              <div class="group-title">결제한 사람</div>
+              <div class="payer-select-row">
+                <label class="chip-radio">
+                  <input type="radio" name="payer" value="박민호" checked>
+                  <span class="chip-label">박민호</span>
+                </label>
+                <label class="chip-radio">
+                  <input type="radio" name="payer" value="민경산">
+                  <span class="chip-label">민경산</span>
+                </label>
+                <label class="chip-radio">
+                  <input type="radio" name="payer" value="박성운">
+                  <span class="chip-label">박성운</span>
+                </label>
+                <label class="chip-radio">
+                  <input type="radio" name="payer" value="조윤재">
+                  <span class="chip-label">조윤재</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <div class="group-title">함께 사용한 사람</div>
+              <div class="participants-check-row">
+                <label class="chip-check">
+                  <input type="checkbox" name="participant" value="박민호" checked>
+                  <span class="chip-label">박민호</span>
+                </label>
+                <label class="chip-check">
+                  <input type="checkbox" name="participant" value="민경산" checked>
+                  <span class="chip-label">민경산</span>
+                </label>
+                <label class="chip-check">
+                  <input type="checkbox" name="participant" value="박성운" checked>
+                  <span class="chip-label">박성운</span>
+                </label>
+                <label class="chip-check">
+                  <input type="checkbox" name="participant" value="조윤재" checked>
+                  <span class="chip-label">조윤재</span>
+                </label>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-main" id="addExpenseBtn" style="margin-top: 8px;">지출 등록</button>
+          </div>
+
           <div id="expensesContainer" class="expense-list"></div>
+
+          <!-- 정산 결과 섹션 -->
+          <div class="settlement-section">
+            <div class="settlement-card">
+              <div class="settlement-title">📊 최종 정산 요약</div>
+              <div class="person-total-list" id="personTotalList">
+                <!-- JS에서 렌더링 -->
+              </div>
+              <div class="transfer-info-box" id="transferInfoBox">
+                <div class="transfer-title">💸 송금 필요 내역</div>
+                <div id="transferDetails">
+                  <p class="transfer-item">지출 내역이 없습니다.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </section>
 

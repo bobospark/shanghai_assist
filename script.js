@@ -15,6 +15,30 @@ const places = [
     lat: 31.2450, lng: 121.4850
   },
   {
+    id: "shandong_battercake",
+    type: "food",
+    emoji: "🥟",
+    koreanName: "산동잡곡전병 (데런리점)",
+    chineseName: "山东杂粮煎饼 (德仁里店)",
+    areaKorean: "난징동루/인민광장",
+    info: "현지인들이 아침 식사로 줄 서서 먹는 유명한 지엔빙 맛집입니다. 바삭한 식감과 고소한 맛이 일품.",
+    tips: ["아침 일찍 방문 추천", "기본 맛에 소시지나 계란 추가 가능"],
+    tags: ["지엔빙", "로컬아침", "줄서서먹는곳"],
+    lat: 31.2392, lng: 121.4785
+  },
+  {
+    id: "starbucks_reserve",
+    type: "dessert",
+    emoji: "☕",
+    koreanName: "스타벅스 리저브 로스터리 상하이",
+    chineseName: "星巴克臻选上海烘焙工坊",
+    areaKorean: "난징서로",
+    info: "세계 최대 규모급의 스타벅스 매장. 화려한 인테리어와 다양한 한정 메뉴, 굿즈를 만날 수 있습니다.",
+    tips: ["2층 티바나 구역도 볼만함", "한정판 원두와 굿즈 쇼핑 추천"],
+    tags: ["랜드마크", "인생샷", "초대형매장"],
+    lat: 31.2305, lng: 121.4581
+  },
+  {
     id: "bund",
     type: "attraction",
     emoji: "🌉",
@@ -543,6 +567,8 @@ let userPlaces = []; // 사용자가 추가한 장소
 let guideNotes = ""; // 사용자의 가이드 메모
 let currentDay = 1;
 let currentFilter = "all";
+let expenseDay = 1;
+let exchangeRates = { 1: 190, 2: 190, 3: 190, 4: 190 };
 
 async function fetchData() {
   try {
@@ -552,6 +578,7 @@ async function fetchData() {
     bulletinBoard = data.bulletinBoard || [];
     checklist = data.checklist || [];
     expenses = data.expenses || [];
+    exchangeRates = data.exchangeRates || { 1: 190, 2: 190, 3: 190, 4: 190 };
     userPlaces = data.userPlaces || [];
     guideNotes = data.guideNotes || "";
 
@@ -568,6 +595,7 @@ async function fetchData() {
     bulletinBoard = JSON.parse(localStorage.getItem("bulletinBoard") || "[]");
     checklist = JSON.parse(localStorage.getItem("checklist") || "[]");
     expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
+    exchangeRates = JSON.parse(localStorage.getItem("exchangeRates") || '{"1":190, "2":190, "3":190, "4":190}');
     userPlaces = JSON.parse(localStorage.getItem("userPlaces") || "[]");
     guideNotes = localStorage.getItem("guideNotes") || "";
     renderBoard();
@@ -580,12 +608,13 @@ async function fetchData() {
 }
 
 async function saveData() {
-  const payload = { plans: plansState, bulletinBoard, checklist, expenses, userPlaces, guideNotes };
+  const payload = { plans: plansState, bulletinBoard, checklist, expenses, exchangeRates, userPlaces, guideNotes };
   // 로컬 스토리지 저장
   localStorage.setItem("plansState", JSON.stringify(plansState));
   localStorage.setItem("bulletinBoard", JSON.stringify(bulletinBoard));
   localStorage.setItem("checklist", JSON.stringify(checklist));
   localStorage.setItem("expenses", JSON.stringify(expenses));
+  localStorage.setItem("exchangeRates", JSON.stringify(exchangeRates));
   localStorage.setItem("userPlaces", JSON.stringify(userPlaces));
   localStorage.setItem("guideNotes", guideNotes);
 
@@ -802,34 +831,132 @@ window.removeChecklist = (index) => {
   saveData();
 }
 
-/* ========== 가계부 관리 ========== */
+/* ========== 가계부 관리 (개편 버전) ========== */
+const participantsList = ["박민호", "민경산", "박성운", "조윤재"];
+
 function renderExpenses() {
   const container = document.getElementById("expensesContainer");
   const totalEl = document.getElementById("totalExpenses");
-  if (!container) return;
+  const settlementListEl = document.getElementById("personTotalList");
+  const transferDetailsEl = document.getElementById("transferDetails");
+  const rateInput = document.getElementById("exchangeRateInput");
+
+  if (!container || !totalEl) return;
+
+  // 현재 탭의 환율 설정
+  if (rateInput) {
+    rateInput.value = exchangeRates[expenseDay];
+  }
+
+  // 1. 현재 선택된 일자의 지출 목록 렌더링
   container.innerHTML = "";
-  let total = 0;
-  expenses.forEach((item, index) => {
-    total += Number(item.amount);
+  let dailyTotal = 0;
+  const dailyExpenses = expenses.filter(e => e.day === expenseDay);
+
+  dailyExpenses.forEach((item, index) => {
+    dailyTotal += Number(item.amount);
     const div = document.createElement("div");
-    div.className = "expense-item";
+    div.className = "expense-item fade-in";
     div.innerHTML = `
-            <div>
+            <div style="flex: 1;">
                 <div style="font-weight:600;">${item.desc}</div>
-                <div style="font-size:11px; color:var(--text-secondary);">¥ ${item.amount}</div>
+                <div class="expense-item-detail">
+                  <span class="payer-name">${item.payer}</span> 결제 · ${item.participants.join(", ")}
+                </div>
+                <div style="font-size:12px; font-weight:700; color:var(--accent); margin-top:4px;">¥ ${item.amount} (${(item.amount * exchangeRates[expenseDay]).toLocaleString()}원)</div>
             </div>
-            <button class="btn-delete" onclick="removeExpense(${index})">✕</button>
+            <button class="btn-delete" onclick="removeExpense(${expenses.indexOf(item)})">✕</button>
         `;
     container.appendChild(div);
   });
-  totalEl.textContent = `¥ ${total.toLocaleString()}`;
+  totalEl.textContent = `¥ ${dailyTotal.toLocaleString()}`;
+
+  // 2. 전체 정산 계산 (모든 날짜 합산)
+  const balances = { "박민호": 0, "민경산": 0, "박성운": 0, "조윤재": 0 };
+  const paidTotal = { "박민호": 0, "민경산": 0, "박성운": 0, "조윤재": 0 };
+
+  expenses.forEach(exp => {
+    const amount = Number(exp.amount);
+    const payer = exp.payer;
+    const parts = exp.participants;
+    const share = amount / parts.length;
+
+    // 결제자는 일단 낸 돈만큼 이득(받아야 할 돈)
+    balances[payer] += amount;
+    paidTotal[payer] += amount;
+
+    // 참여자들은 각자 몫만큼 손해(내야 할 돈)
+    parts.forEach(p => {
+      balances[p] -= share;
+    });
+  });
+
+  // 3. 인별 총 지출 요약 렌더링
+  if (settlementListEl) {
+    settlementListEl.innerHTML = participantsList.map(name => `
+      <div class="person-total-item">
+        <span class="person-name">${name}</span>
+        <span class="person-amount">¥ ${paidTotal[name].toLocaleString()}</span>
+      </div>
+    `).join("");
+  }
+
+  // 4. 송금 필요 내역 계산 algorithm (Debt simplification)
+  if (transferDetailsEl) {
+    const debtors = [];
+    const creditors = [];
+
+    for (let name in balances) {
+      if (balances[name] < -0.01) {
+        debtors.push({ name, amount: Math.abs(balances[name]) });
+      } else if (balances[name] > 0.01) {
+        creditors.push({ name, amount: balances[name] });
+      }
+    }
+
+    // 환율 적용하여 KRW로 변환하여 표시 (가장 최근 환율 또는 평균 환율 고민되지만, 
+    // 정산은 보통 최종적으로 하므로 현재 설정된 환율 중 하나를 쓰거나 안내 필요. 
+    // 여기서는 CNY 기준으로 계산 후 전체 정산 시점의 기준 환율 안내 자막 추가)
+    
+    let transferHtml = "";
+    let d = 0, c = 0;
+    while (d < debtors.length && c < creditors.length) {
+      const settleAmount = Math.min(debtors[d].amount, creditors[c].amount);
+      const currentRate = exchangeRates[expenseDay] || 190;
+      const krwAmount = Math.round(settleAmount * currentRate);
+
+      transferHtml += `<p class="transfer-item"><strong>${debtors[d].name}</strong> → <strong>${creditors[c].name}</strong>: ¥${settleAmount.toFixed(1)} <span>(약 ${krwAmount.toLocaleString()}원)</span></p>`;
+
+      debtors[d].amount -= settleAmount;
+      creditors[c].amount -= settleAmount;
+
+      if (debtors[d].amount < 0.01) d++;
+      if (creditors[c].amount < 0.01) c++;
+    }
+
+    transferDetailsEl.innerHTML = transferHtml || '<p class="transfer-item">완벽하게 정산되었습니다! 👏</p>';
+  }
 }
 
 function addExpense() {
   const desc = document.getElementById("expenseDesc");
   const amount = document.getElementById("expenseAmount");
-  if (!desc.value || !amount.value) return;
-  expenses.push({ desc: desc.value, amount: amount.value });
+  const payer = document.querySelector('input[name="payer"]:checked').value;
+  const participantNodes = document.querySelectorAll('input[name="participant"]:checked');
+  
+  const participants = Array.from(participantNodes).map(n => n.value);
+
+  if (!desc.value || !amount.value) return alert("내ory과 금액을 입력해주세요.");
+  if (participants.length === 0) return alert("함께 사용한 사람을 한 명 이상 선택해주세요.");
+
+  expenses.push({
+    day: expenseDay,
+    desc: desc.value,
+    amount: amount.value,
+    payer: payer,
+    participants: participants
+  });
+
   desc.value = "";
   amount.value = "";
   renderExpenses();
@@ -837,7 +964,22 @@ function addExpense() {
 }
 
 window.removeExpense = (index) => {
+  if(!confirm("이 지출 내역을 삭제하시겠습니까?")) return;
   expenses.splice(index, 1);
+  renderExpenses();
+  saveData();
+}
+
+function switchExpenseDay(day) {
+  expenseDay = day;
+  document.querySelectorAll(".expense-day-tab").forEach(t => {
+    t.classList.toggle("active", Number(t.dataset.day) === day);
+  });
+  renderExpenses();
+}
+
+function updateExchangeRate(rate) {
+  exchangeRates[expenseDay] = Number(rate);
   renderExpenses();
   saveData();
 }
@@ -923,6 +1065,27 @@ function renderGuide(tab = "apps") {
                     <li><strong>마라롱샤 (Crawfish):</strong> '화웨이 매운 가재' 등에서 주문하는 상하이 야식의 꽃.</li>
                     <li><strong>꼬치구이 (Shaokao/烧烤):</strong> 풍무양꼬치 등 전문점에서 구워서 오는 양꼬치와 채소구이.</li>
                 </ul>
+            </div>
+            <div class="tip-card" style="border-left: 4px solid #f472b6;">
+                <h4>🍓 팡팡수제모찌 (芳芳手作麻糍) 배달 꿀팁</h4>
+                <p>徐汇区 甜品榜 제10위! 과일과 크림치즈의 환상적인 조합을 숙소에서 즐겨보세요.</p>
+                <div style="margin-bottom: 12px; padding: 12px; background: #fff1f2; border-radius: 8px; border: 1px solid #fecdd3;">
+                    <p style="font-size: 13px; font-weight: 700; color: #e11d48; margin-bottom: 4px;">📱 메이투안(Meituan) 주문 방법</p>
+                    <ol class="tip-list" style="margin-top: 8px;">
+                        <li><strong>1️⃣ 앱 실행:</strong> 美团 (Meituan) 실행 후 <strong>外卖</strong>(배달) 클릭</li>
+                        <li><strong>2️⃣ 검색:</strong> 검색창에 <code>奶酪麻糍 nailao maci</code> 입력</li>
+                        <li><strong>3️⃣ 가게 선택:</strong> 주변 모찌 가게 중 <strong>芳芳手作麻糍</strong>(팡팡수제모찌) 선택</li>
+                        <li><strong>4️⃣ 추천 조합:</strong> 과일 + 크림치즈 모찌 추천! (망고, 말차딸기 조합 인기)</li>
+                        <li><strong>💰 가격:</strong> 1개 약 16위안 (약 3,000원대)</li>
+                    </ol>
+                </div>
+                <div style="padding: 12px; background: #f0f9ff; border-radius: 8px; border: 1px solid #bae6fd;">
+                    <p style="font-size: 13px; font-weight: 700; color: #0369a1; margin-bottom: 4px;">📌 주소 입력 (호텔 배달 팁)</p>
+                    <p style="font-size: 12px; color: #075985; line-height: 1.5;">
+                        메이투안에서 지도 버튼(<strong>地图选点</strong>)을 눌러 호텔 주소를 직접 선택하세요. 
+                        주문이 어려울 경우 호텔 로비의 직원분께 번역기나 한국어 가능 직원분을 통해 부탁드려보세요!
+                    </p>
+                </div>
             </div>
             <div class="tip-card">
                 <h4>💆 추천 마사지 & 스파</h4>
@@ -1066,6 +1229,21 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addChecklistItemBtn").onclick = addChecklistItem;
   document.getElementById("addExpenseBtn").onclick = addExpense;
   document.getElementById("addPlaceBtn").onclick = addCustomPlace;
+
+  // 가계부 날짜 탭 및 환율 입력 리스너
+  const expenseTabs = document.getElementById("expenseDayTabs");
+  if (expenseTabs) {
+    expenseTabs.onclick = (e) => {
+      if (e.target.classList.contains("expense-day-tab")) {
+        switchExpenseDay(Number(e.target.dataset.day));
+      }
+    };
+  }
+
+  const rateInput = document.getElementById("exchangeRateInput");
+  if (rateInput) {
+    rateInput.oninput = (e) => updateExchangeRate(e.target.value);
+  }
 
   document.getElementById("addBoardPostBtn").onclick = () => {
     const author = document.getElementById("boardAuthor").value;
