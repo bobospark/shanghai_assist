@@ -580,13 +580,25 @@ body {
 }
 
 /* Expense Summary */
+.expense-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 400px) {
+  .expense-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .expense-summary-card {
   background: var(--accent);
   color: white;
-  padding: 24px;
+  padding: 20px 16px;
   border-radius: var(--radius-lg);
   text-align: center;
-  margin-bottom: 24px;
 }
 
 .expense-total-label {

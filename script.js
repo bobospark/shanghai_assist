@@ -616,7 +616,7 @@ let guideNotes = ""; // 사용자의 가이드 메모
 let currentDay = 1;
 let currentFilter = "all";
 let expenseDay = 1;
-let exchangeRates = { 1: 190, 2: 190, 3: 190, 4: 190 };
+let exchangeRate = 190;
 
 async function fetchData() {
   try {
@@ -626,7 +626,7 @@ async function fetchData() {
     bulletinBoard = data.bulletinBoard || [];
     checklist = data.checklist || [];
     expenses = data.expenses || [];
-    exchangeRates = data.exchangeRates || { 1: 190, 2: 190, 3: 190, 4: 190 };
+    exchangeRate = data.exchangeRate || 190;
     userPlaces = data.userPlaces || [];
     guideNotes = data.guideNotes || "";
 
@@ -643,7 +643,7 @@ async function fetchData() {
     bulletinBoard = JSON.parse(localStorage.getItem("bulletinBoard") || "[]");
     checklist = JSON.parse(localStorage.getItem("checklist") || "[]");
     expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
-    exchangeRates = JSON.parse(localStorage.getItem("exchangeRates") || '{"1":190, "2":190, "3":190, "4":190}');
+    exchangeRate = Number(localStorage.getItem("exchangeRate") || "190");
     userPlaces = JSON.parse(localStorage.getItem("userPlaces") || "[]");
     guideNotes = localStorage.getItem("guideNotes") || "";
     renderBoard();
@@ -653,16 +653,27 @@ async function fetchData() {
     renderPlacePills();
     renderGuide("apps");
   }
+
+  // 기본 체크리스트 추가 (데이터가 아예 없는 경우)
+  if (checklist.length === 0) {
+    checklist = [
+      { text: "여권 챙기기", completed: false },
+      { text: "알리페이/위챗페이 등록 확인", completed: false },
+      { text: "보조배터리 충전 완료", completed: false }
+    ];
+    renderChecklist();
+    saveData();
+  }
 }
 
 async function saveData() {
-  const payload = { plans: plansState, bulletinBoard, checklist, expenses, exchangeRates, userPlaces, guideNotes };
+  const payload = { plans: plansState, bulletinBoard, checklist, expenses, exchangeRate, userPlaces, guideNotes };
   // 로컬 스토리지 저장
   localStorage.setItem("plansState", JSON.stringify(plansState));
   localStorage.setItem("bulletinBoard", JSON.stringify(bulletinBoard));
   localStorage.setItem("checklist", JSON.stringify(checklist));
   localStorage.setItem("expenses", JSON.stringify(expenses));
-  localStorage.setItem("exchangeRates", JSON.stringify(exchangeRates));
+  localStorage.setItem("exchangeRate", exchangeRate);
   localStorage.setItem("userPlaces", JSON.stringify(userPlaces));
   localStorage.setItem("guideNotes", guideNotes);
 
@@ -885,15 +896,16 @@ const participantsList = ["박민호", "민경산", "박성운", "조윤재"];
 function renderExpenses() {
   const container = document.getElementById("expensesContainer");
   const totalEl = document.getElementById("totalExpenses");
+  const entireTotalEl = document.getElementById("entireTotalExpenses");
   const settlementListEl = document.getElementById("personTotalList");
   const transferDetailsEl = document.getElementById("transferDetails");
   const rateInput = document.getElementById("exchangeRateInput");
 
   if (!container || !totalEl) return;
 
-  // 현재 탭의 환율 설정
+  // 환율 설정
   if (rateInput) {
-    rateInput.value = exchangeRates[expenseDay];
+    rateInput.value = exchangeRate;
   }
 
   // 1. 현재 선택된 일자의 지출 목록 렌더링
@@ -911,13 +923,19 @@ function renderExpenses() {
                 <div class="expense-item-detail">
                   <span class="payer-name">${item.payer}</span> 결제 · ${item.participants.join(", ")}
                 </div>
-                <div style="font-size:12px; font-weight:700; color:var(--accent); margin-top:4px;">¥ ${item.amount} (${(item.amount * exchangeRates[expenseDay]).toLocaleString()}원)</div>
+                <div style="font-size:12px; font-weight:700; color:var(--accent); margin-top:4px;">¥ ${item.amount} (${(item.amount * exchangeRate).toLocaleString()}원)</div>
             </div>
             <button class="btn-delete" onclick="removeExpense(${expenses.indexOf(item)})">✕</button>
         `;
     container.appendChild(div);
   });
   totalEl.textContent = `¥ ${dailyTotal.toLocaleString()}`;
+
+  // 전체 지출 계산
+  const entireTotal = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0);
+  if (entireTotalEl) {
+    entireTotalEl.textContent = `¥ ${entireTotal.toLocaleString()}`;
+  }
 
   // 2. 전체 정산 계산 (모든 날짜 합산)
   const balances = { "박민호": 0, "민경산": 0, "박성운": 0, "조윤재": 0 };
@@ -970,8 +988,7 @@ function renderExpenses() {
     let d = 0, c = 0;
     while (d < debtors.length && c < creditors.length) {
       const settleAmount = Math.min(debtors[d].amount, creditors[c].amount);
-      const currentRate = exchangeRates[expenseDay] || 190;
-      const krwAmount = Math.round(settleAmount * currentRate);
+      const krwAmount = Math.round(settleAmount * exchangeRate);
 
       transferHtml += `<p class="transfer-item"><strong>${debtors[d].name}</strong> → <strong>${creditors[c].name}</strong>: ¥${settleAmount.toFixed(1)} <span>(약 ${krwAmount.toLocaleString()}원)</span></p>`;
 
@@ -1027,7 +1044,7 @@ function switchExpenseDay(day) {
 }
 
 function updateExchangeRate(rate) {
-  exchangeRates[expenseDay] = Number(rate);
+  exchangeRate = Number(rate);
   renderExpenses();
   saveData();
 }
